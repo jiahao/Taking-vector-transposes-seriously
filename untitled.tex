@@ -1,1 +1,24 @@
-Hey, welcome. Double click anywhere on the text to start writing. In addition to simple text you can also add text formatted in \textbf{boldface}, \textit{italic}, and yes, math too: $E  =  mc^{2}$! Add images by drag'n'drop or click on the "Insert Figure" button.
+\section{Definitions of the transpose}
+
+Let's have a look at how the matrix transpose is defined in the mathematical literature.
+
+[Gantmacher, vol. 1, p. 230, Definition 10] defines the transpose to have the following properties;
+
+For a linear operator $A$ over $\mathbb F^n$, [check if general field F is implied]
+
+the transpose $A^T$ is the operator such that for any two vectors $x, y \in \mathbb R^n$,
+
+\[
+\left\langle Ax, y \right\rangle = \left\langle x, A^T y \right\rangle
+\]
+
+and has the properties
+
+\begin{align}
+
+(A^T)^T & = A \\
+(A + B)^T & = A^T + B^T \\
+(\alpha A)^T & = \alpha A^T \text{ for all real numbers } \alpha \\
+(A B)^T & = B^T A^T
+
+\end{align}
