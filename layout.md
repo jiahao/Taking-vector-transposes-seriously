@@ -1,2 +1,3 @@
 untitled.tex
 cite_p_91_Apostol1969_defines__.tex
+subsection_The_outer_product_In__.tex
