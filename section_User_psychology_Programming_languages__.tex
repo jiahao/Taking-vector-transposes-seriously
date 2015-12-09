@@ -1,0 +1,18 @@
+\section{User psychology}
+
+Programming languages designed for scientific computing have many users which are familiar with linear algebraic constructs expressible using various products and quotients involving matrix and vector quantities. Some of these quantities include:
+
+\begin{itemize}
+  \item Inner products, $u^\prime v$
+  \item Outer products, $u v^\prime$
+  \item Bilinear forms, $u^\prime A v$
+  \item Quadratic/Hermitian forms, $v^\prime A v$
+\end{itemize}
+
+The notation for these quantities were systematized by Householder \cite{Householder1953,Householder1955}, who used capital Roman letters for matrices, small Roman letters for (column) vectors, and small Greek letters for scalars. Importantly, Householder also uses the vector transpose notation $u^\prime$ to express row vectors, which are then used to construct the above products and forms. \cite{Householder1955} uses $u^T = (u_1, \cdots, u_n)^T$ to express row vectors as tuples, a construct which we shall see later as having ample precedent. \cite{Householder1955} writes the inner product as $u^* v$, noting that $*$ ``denotes the conjugate transpose''. \cite[Sec. 4.01]{Householder1953} introduces the Hermitian form . \cite[Sec. 2.04]{Householder1953} introduces the row vector $u^T$ corresponding to the column vector $u$. Householder also acknowledges in \cite[Sec. 2.04]{Householder1953} the analogy between a numerical vector (as a column of a matrix) and a geometric vector in the sense of Gibbs. He writes the vector transpose as if it follows immediately from the matrix transpose: 
+
+If each column of a matrix $M$ is written as a row, the order remaining the same, the resulting matrix is known as the transpose of the original and is designated $M^T$. In particular, if $x$ is the column vector of the $\xi_i$, $x^T$ is the row vector of the $\xi_i$.
+
+The outer product shows up in \cite[Sec. 2.24]{Householder1953}, although Householder does not give the quantity $u v^T$ a special name \footnote{while \cite[Sec. 2.03]{Householder1953} introduces ``outer products'' $[u v]$ , these quantities are known today as bivectors and are conventionally denoted $u \wedge v$.}, and the discussion in context clearly implies that Householder considers vector-scalar-vector products $u \sigma v^T$ special cases of matrix products $U S V^T$.
+
+Interstingly, \cite{Householder1953} does not use the terms ``bilinear form'', ``quadratic form'', or ``Hermitian form''. He uses ``scalar product''. \cite{Householder1955} clearly spells out his notational convention. (\cite{Householder1953} has a missing page which might also spell it out, but it's not clear.)
