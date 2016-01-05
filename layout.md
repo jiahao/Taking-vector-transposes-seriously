@@ -1,4 +1,5 @@
 section_Introduction_The_thesis_of__.tex
+Examples_of_linear_algebraic_expressions__.tex
 untitled.tex
 cite_p_91_Apostol1969_defines__.tex
 section_User_psychology_Programming_languages__.tex
