@@ -1,0 +1,40 @@
+In Grassmann's Aus1862 he describes general structures to form products of two or more vectors. In modern language, Chapter 2 begins by saying that if you express two vectors in some basis
+
+\begin{aligned}
+u = \sum_i c_i e_i \\
+v = \sum_i d_i e_i \\
+\end{aligned}
+
+and you have some vector product operation $\circ$ you want to define, then it suffices to describe the result of the operation $\circ$ on the basis vectors $e_i$, since 
+
+\[
+u \circ v = \sum_{ij} c_i d_i (e_i \circ e_j)
+\]
+
+If $e_i \circ e_j = \delta_{ij}$, then one recovers the ordinary inner product (Grassmann calls it that), i.e. $\circ = \cdot$.
+
+If $e_i \circ e_j = - e_j \circ e_i$, then one recovers Grassmann's exterior product (which Grassmann calls the combinatorial product). Today, we would write $\circ = \wedge$ for this product.
+
+Grassmann does not give the general product $\circ$ a special name, instead referring to it informally in the text defining his notation:
+
+,,Ein Produkt, in welchern die Faktoren $a, b, \cdots$ irgend wie enthalten find, werde ich[...] mit $P_{a,b,...}$ bezeichnen`` \cite[p. 24, \S 43]{Grassmann1862}
+
+``A product in which the factors a, b, ... are included in any way I will[...] denote by $P_{a,b,...}$''~\cite[p. 22, \S 43]{Grassmann2000}
+
+Later in his discussion of symmetric tensors, Grassmann refers to ``ein beliebiges Produkt'' $P_{a_1, a_2, ..., a_n}$  (``an arbitrary product''~\cite[p. 196, \S 353]{Grassmann2000}), which Gibbs in his Multiple Algebra (collected works, Vol 2, p 109) picked up on as being of significance and bequeathed the name ``indeterminate product'', being the most general product from which all the other products Grassmann discusses can be derived.
+
+Grassmann's other contribution to this topic is the concept of ,,offne Produkt`` or ``open product''~\footnote{Somewhat confusingly, Grassmann's 1862 book defines open products, or ``product[s] with n {interchangable openings''~\cite[\S\S 353, p. 196]{Grassmann2000}, in a way which we would recognize today as symmetric tensors of rank $n$.}, which he writes in Ausdehnungslehre 1844, Sec 172, p 267 (English pp 271-2) with the notation $[A() . B]$, acting on a vector $P$ by
+
+\[
+[A() . B] P = AP . B,
+\]
+
+or in modern notation,
+
+\[
+(b a^T) p = (a\cdotp) b,
+\]
+
+transcribing vectors into lower case letters in line with Householder's convention. In other words, Grassmann's open product is what we would call today the outer product, where ``open'' refers to the presence of the empty parenthesis denoting an ``opening''. Gibbs recognized the open product as a matrix in Multiple Algebra, Collected Works vol 2, p 94, but it is specifically a rank 1 matrix. (\textbf{TODO} Possibly the notion of rank did not exist then...?) 
+
+In Gibbs's lecture notes of 1884, Sec. 107, p. 53 of Collected Works v2, he names the result of the indeterminate product of two vectors (in three dimensions) a dyad, and the linear combination of three dyads a dyadic, or what we would call today a 3x3 matrix. c.f. published version in Wilson1901.
