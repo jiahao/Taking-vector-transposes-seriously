@@ -1,0 +1,45 @@
+% SIAM Shared Information Template
+% This is information that is shared between the main document and any
+% supplement. If no supplement is required, then this information can
+% be included directly in the main document.
+
+
+% Packages and macros go here
+\usepackage{lipsum}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{algorithmic}
+\ifpdf
+  \DeclareGraphicsExtensions{.eps,.pdf,.png,.jpg}
+\else
+  \DeclareGraphicsExtensions{.eps}
+\fi
+
+% Declare title and authors, without \thanks
+\newcommand{\TheTitle}{\include{title}}
+\newcommand{\TheAuthors}{J. Chen and A. S. Edelman}
+
+% Sets running headers as well as PDF title and authors
+\headers{\TheTitle}{\TheAuthors}
+
+% Title. If the supplement option is on, then "Supplementary Material"
+% is automatically inserted before the title.
+\title{{\TheTitle}\thanks{This work was funded by the Fog Research Institute under contract no.~FRI-454.}}
+
+% Authors: full names plus addresses.
+\author{
+  Jiahao Chen
+  \and
+  Alan S. Edelman\thanks{Department of Mathematics, and The Computer Science And Artificial Intelligence Laboratory, Massachusetts Institute of Technology, Cambridge, MA
+  (\email{\{jiahao,edelman\}@mit.edu})},
+}
+
+\usepackage{amsopn}
+\DeclareMathOperator{\diag}{diag}
+
+
+%%% Local Variables:
+%%% mode:latex
+%%% TeX-master: "ex_article"
+%%% End:
