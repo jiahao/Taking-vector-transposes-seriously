@@ -3,8 +3,7 @@ Examples_of_linear_algebraic_expressions__.tex
 section_What_users_want_The__.tex
 subsection_The_outer_product_The__.tex
 subsection_The_contributions_of_Grassmann__.tex
-untitled.tex
-cite_p_91_Apostol1969_defines__.tex
+transpose.tex
+transpose_permutedims.tex
 section_User_psychology_Programming_languages__.tex
-subsection_The_outer_product_In__.tex
 section_Linear_algebra_can_be__.tex
