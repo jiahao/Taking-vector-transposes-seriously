@@ -18,38 +18,15 @@ The outer product shows up in \cite[Sec. 2.24]{Householder1953}, although Househ
 Interstingly, \cite{Householder1953} does not use the terms ``bilinear form'', ``quadratic form'', or ``Hermitian form''. He uses ``scalar product''. \cite{Householder1955} clearly spells out his notational convention. (\cite{Householder1953} has a missing page which might also spell it out, but it's not clear.)
 
 
-\subsection{History}
-
-
-\begin{tabular}{l}
-Mostly matrices \\
-\hline
-Cullis (1913-28) \\
-\end{tabular}
-
-\begin{tabular}{l}
-Mostly vectors \\
-\hline
-Grassmann (1842-1866) \\
-\end{tabular}
-
-\begin{tabular}{l}
-Matrices are primary \\
-\hline
-Macduffee (1933) \\
-Fadeev and Faddeeva (1959) \\
-\end{tabular}
-
-
-\begin{tabular}{l}
-Vectors are primary \\
-\hline
-
-\end{tabular}
 
 \section{A timeline of the development of key ideas}
 
 A rough sketch.
+Several noteworthy secondary sources:~\cite{Taber1890,Parshall1985,Kleiner2007,Higham2009}
+
+\paragraph{Gauss1795}
+
+Bilinear and quadratic forms go back to Gauss, 1795-1801
 
 \paragraph{Möbius (1827), Calcolo geometrico}
 
@@ -123,27 +100,49 @@ B. Peirce (1874)~\cite{Peirce1874} explains that these units, which he called ``
 
 In 1883~\cite{Peirce1883} C. S. recognizes the significance for the algebra of matrices, called then by Clifford ``quadrics''.
 
-\paragraph{Frobenius (1878) - Ueber lineare Substitutionen und bilineare Formen}
+\paragraph{Frobenius (1878)~\cite{Frobenius1878}}
 
 May have invented the term ``bilinear form''.
-
+The product is similar to the product law of two determinants (matrices?) (p. 346)
 
 
 \paragraph{Clifford (1878)~\cite{Clifford1878}}
 
-Clifford’s associative geometric product ŒClifford 1878 of two vectors simply adds the
+Clifford’s associative geometric product
+Clifford 1878 of two vectors simply adds the
 (symmetric) inner product to the (antisymmetric) outer product of Grassmann, - does it mean that he used the term also?
+
+
+\paragraph{Gibbs (1881)~\cite{Gibbs1881}}
+
+Unpublished lecture notes on vectors (see \cite{Wilson1901} for published version).
+
+Introduced notation of small Roman letter in boldfact (``Clarendon type'') for vectors.
+
+The dot product is $\mathbf a \cdot \mathbf b$.
+\cite[p. 55]{Wilson1901} introduces the direct product, ``read \textbf{A} \textit{dot} \textbf{B} and therefore may be called the dot product instead of the direct product. It is also called the scalar product owing to the fact that its value is scalar.''.
+
+He acknowledges Grassmann's \textit{Ausdehnungslehre} as containing important concepts that were unnamed. Gibbs decides to call the general product case an ``indeterminate product''.
+
+Gibbs discusses vectors in the case of $n=3$ dimensions only. In this setting the outer product is called a dyad, written with the variables juxtaposed, $\mathbf{ a \; b }$.
+Gibbs stresses to think of this as a formal product waiting to act upon a vector
+
+The dyadic or dyadic product is $\mathbf{ a \; b } + \mathbf{ c \; d } + \mathbf{ e \; f }$ and is what we would recognize today as the rank 1 expansion of a $3 \times 3$ matrix in outer products.
+
+TODO Did Gibbs do any of this in the primary literature before this work?
+
+TODO Gibbs 1886 is also worth discussion separately
 
 
 \paragraph{Weierstrass (1884)~\cite{Weierstrass1884}}
 
 Publishes the notion of defining formal linear algebra through its structure constants. (He does not give the numbers a name.)
 
+
+
 \paragraph{Dedekind (1885)~\cite{Dedekind1885}}
 
 Extends Weierstrass to give the restriction on the structure constants so that the resulting algebra is associative. (He does not give the numbers a name either.)
-
-
 
 
 
@@ -158,9 +157,12 @@ were called ‘segmenti’). He used
 again later [Peano 1891a] and called it “prodotto
 (interno o geometrico).”
 
+
+
 \paragraph{Scheffers (1889)~\cite{Scheffers1889}}
 
 Formal linear algebra. Did he copy Weierstrass?? His paper has the same name.
+
 
 
 \paragraph{Molien (1892)}
@@ -178,9 +180,23 @@ Creation of Group Representation Theory," pp. 262-64.
 
 Gibbs and Heaviside (????) - may have introduced the scalar product?
 
-\paragraph{Wilson (after Gibbs, 1901)}
 
-\cite[p. 55]{Wilson1901} introduces the direct product, ``read \textbf{A} \textit{dot} \textbf{B} and therefore may be called the dot product instead of the direct product. It is also called the scalar product owing to the fact that its value is scalar.''.
+
+\paragraph{Ricci and Levi-Civita (1900)~\cite{Ricci1900,Hermann1975}}
+
+The famous paper on differential geometry and tensor analysis.
+
+They introduce the tensor product, but simply call it the
+«produit des deux systèmes [covariants ou contrevariants]»~\cite[p. 133]{Ricci1900}, translated as
+``the (tensor) product of the two (covariant [or contravariant]) tensor fields''~\cite[p. 28]{Hermann1975}.
+
+p. 135 introduces the quadratic form of two 3-dimensional differential elements as a «forme fondamentale $\varphi$[...] en coordonnées générales» (``fundamental form $\varphi$[...] in general coordinates)
+
+\[
+\varphi = \sum_1^3 \text{\tiny{rs}} a_{rs} dx_r dx_s
+\]
+
+in other words, they spell out the quadratic form in terms of the elements.
 
 
 
@@ -188,12 +204,92 @@ Gibbs and Heaviside (????) - may have introduced the scalar product?
 
 Recommended the notation of $\mathbf{a} \cdot \mathbf{b}$ a la Gibbs but called it the inner product à la Grassmann.
 
+
+
 \paragraph{Burali-Forti and Marcolongo (1907-1908) - Per l’unificazione delle notazioni vettoriali.}
 
 Proposed $\mathbf{a}\times\mathbf{b}$ for the scalar product and  $\mathbf{a}\wedge\mathbf{b}$ for the vector product.
 
 
-\paragraph{Born and Jordan (1927)}
+
+\paragraph{Hahn (1911)~\cite{Hahn1911}}
+
+Possibly the earliest mention of the word ,,eigenvektor`` (``eigenvector'') \cite[p. 35]{Hahn1911}.
+He introduces eigenvectors as representations of integrated eigenfunctions corresponding to a finite-dimensional integral kernel.
+
+
+
+\paragraph{Cullis (1913)}
+
+First monograph on matrices that pays attention to the properties of rectangular matrices, not just square ones.
+A and x are their own objects, not just tables of numbers.
+Cullis is notable for introducing the modern typographic conventions for types variables. In particular matrices are capital Roman, vectors (as ``horizontal rows'' or ``vertical rows'' of a matrix) are small Roman, and scalars as small Greek appear here.
+Another notable notational convention is the use of $A = [a]^m_n$ and the transpose as $A' = \overbracket{\underbracket{a}}^m_n$. The prime in $A'$ is used informally in the sense of ``a quantity derived from A'', but often (if not always) is used to denote the transpose.
+The bracket convention for the transpose is worth explaining further in how it works to fill in the symbolic entries...
+Another notational convention that is noteworthy is Cullis's use of what we would today call the trailing singleton dimension rule. For column and row matrices, the elements of those matrices are not denoted by $a_{1n}$ or $a_{m1}$, but rather just $a_n$ or $a_m$. In other words, he drops the 1 when convenient. He also does this to the brackets: $x = [x]_n$ is equivalent to $[x]^1$.
+Cullis 1928 introduces bilinear forms in notation that is almost recognizable to us today...
+
+
+
+\paragraph{Einstein and Grossmann (1913)}
+
+A pamphlet on general relativity, divided into two parts for the physical and mathematical content. In Part II (by Grossmann) we see
+
+\begin{quote}
+
+,Die der gewöhnlichen Vektoranalysis entnommenen Bezeichnungen ,,äußeres und inneres Produkt`` rechtfetigen sich, weil jene Operationen sich letzten Endes als besondere Fälle der hier betrachteten ergenen.`~\cite[p. 26]{Einstein1913}\cite[p. 327]{Einstein1995}
+
+`The designations ``inner and outer product'', which are taken from ordinary vector analysis, are justified because, when all is said and done, those operations prove to be special cases of the operations considered here.'~\cite[p. 175]{Einstein1996}
+\end{quote}
+The name ``outer product'', however, appears to be original. This pamphlet references only \cite{Ricci1900}, but that paper only contains the term ``produit''.
+The borrowing of the term ``outer product'' may be responsible for the conflation of the two meanings in present usage, as later English books about relativity consistently use one meaning or the other. either meaning. For example,
+
+\cite[p. 25]{Murnaghan1922} uses ``outer product'' in Grassmann's sense, ``direct product'' for tensor product, and ``inner product'':
+\begin{quote}
+``The difference $X_{rs} - \overline X_{rs}$ [...] should be more important than either of the direct products $X_{rs}$ [$\equiv X_r \cdot \overline X_s = X \cdot \overline X$] or $\overline X_{rs}$. It is what Grassmann called the \textit{outer product} of the two tensors $X, \overline X$.''
+\end{quote}
+
+\cite[p. 87]{Carmichael1920} uses ``outer product'' for the tensor product and the ``inner product'' in line with Einstein and Grossmann:
+\begin{quote}
+``[W]e used the term product of two tensors to denote the tensor whose component elements are all the elements formed by multiplying an element of one tensor by the element of another tensor. This may be called their \textit{outer product}. We also need the notion of \textit{inner product} of two vectors, say of $A_\mu$ and $B^\mu$; and this is defined to be the quantity $\sum_\mu A_\mu B^\mu$; that is, the sum of products of corresponding elements.''
+\end{quote}
+(These terms are absent in his first edition of 1913)
+
+\cite{Silberstein1922} is interesting for the mention of the ``outer product of two vectors'', and also discussing the inner product as being derived from the contraction of the outer product.
+\begin{quote}
+(\S 15, p. 43) Consider, on the other hand, what is known as \textit{the outer product} of two vectors, of the same or of opposite kinds, \textit{i.e.}, $A_\iota B_\kappa$, or $A^\iota B^\kappa$, or $A_\iota B^\kappa$.
+
+(\S 18, p. 48) \textit{The inner multiplication}, already meThe outer multiplication combined with contraction (when there are indices to contract) gives the inner product. Thus the inner product of $A_\iota$ and $B^\kappa$ is
+\[
+A_\kappa B^\kappa = M^\kappa_\kappa = M,
+\]
+an invariant. (There is no inner product of $A_\iota$, $B_\kappa$.)
+\end{quote}
+
+
+
+\paragraph{Courant (1920)}
+
+Next earliest use of the word ,,eigenvektor`` (after Hahn, 1911).
+In, \S 10 he specifically talks about "vectorial eigenvalue problems". He writes
+
+\begin{quote}
+,,Man kann ferner analoge Eigenwertprobleme untersuchen, bei denen an Stelle der gesuchten Funktion $u$ ein Vektor $u$ steht, welcher ebenfalls am Rande gewissen homogenen Randbedingungen unterworfen ist.``
+
+``One can further examine analogous eigenvalue problems, where instead of the unknown function $u$ a vector $u$ stands in, which is also subject to certain homogeneous boundary conditions on the edge.''
+\end{quote}
+
+Clearly the implication here is that eigenvalue problems have been traditionally about eigenfunctions, not eigenvectors.
+
+
+
+\paragraph{Hilbert and Courant (1924)}
+
+The monumental work on mathematical physics. Apparently the first systematic treatment of matrix algebra for the physics audience?
+
+
+
+\paragraph{Born and Jordan (1925)~\cite{Born1925}}
 
 Explains quantum mechanics as matrix mechanics. First major work to introduce matrices into the physics literature.
 
@@ -201,14 +297,50 @@ They are familiar with the notions of vector analysis, but mainly in 3 and 4 dim
 
 ,,skalare Produkt`` $(\mathfrak A, \mathfrak B)$ (p. 885)
 
-\url{http://link.springer.com.libproxy.mit.edu/article/10.1007/BF01328531}
+
+
+\paragraph{ Van der Waerden (1930)}
+
+Credited in \cite{Kleiner2007} as the origin of the term "Linear algebra". But see
+Peirce (1874).
+
+
+
+\paragraph{Weyl (1931)~\cite{Weyl1931}}
+
+Introduces a vector $\mathfrak x$ as ``a set of $n$ ordered numbers $(x_1, x_2 \cdots, x_n)$.
+
+The ``inner product... can be written in matrix notation as''
+$\xi^*x$ or $x^*\xi$.
+
+A very curious thing: "outer or $\times$ m[ultiplication] of spaces, vectors, operators" shows up in the index of the English translation, but the word ``outer'' is absent on the cross-referenced pages both in the English and German editions. The original German editions don't have an entry with ``outer'' at all. So we must conclude that this was an invention of the English translator, who is himself a notable American physicist.
+
+
+\paragraph{Turnbull and Aitken (1932)}
+
+Emphasis on systematic notation for quadratic and bilinear forms as $x'Ay$.
+To be distinguished from their earlier 1926 book, which does not adopt this notational convention.
+They credit Cullis for his emphasis on the algebra of rectangular matrices. Although they do not credit him also for the notation, it is clear that his typographic conventions were adopted in their exposition.
+
 
 
 \paragraph{MacDuffee (1933)~\cite{MacDuffee1933}}
 
+preface mentions bilinear and quadratic forms (not sure if book does)
+probably quoting eisenstein
+
+"Denote by (x) the vector or one-column array" - p10
+
+"A matrix is often considered as a linear vector function." - p16
+
+"A matrix may be interpreted as a linear homogeneous transformation in
+vector space. From this point of view similar matrices represent the
+same transformation referred to different bases. All the theorems of
+this chapter may be interpreted from this standpoint." - p68
+
 Starts with the abstract axioms of linear algebra and shows that the algebra may be represented by naturally by matrices and matrix multiplication. Also defines array as an ordered set with a known number of elements.
 
-\paragraph{Wedderburn (1934) - Lectures on Matrices}
+\paragraph{Wedderburn (1934)~\cite{Wedderburn1934}}
 
 Starts with vectors as ordered sets of numbers as matrices as collections of coefficients in systems of linear equations.
 
@@ -220,17 +352,162 @@ Using the $S$-prefix notation for scalar product he also writes the bilinear for
 
 He calls the outer product a ``tensor product'' (\S 5.09, pp. 72-73).
 
-
-
-
-
-\url{http://www.maths.ed.ac.uk/~aar/papers/matrices.pdf}
-
+Alternates between "vectors"
+and "hypernumbers". On p72, Sec 5.09, he defined "vector products" as
+"tensor product". He attributed in Footnote 3 that Grassmann invented
+this product as the "general product" or "indeterminate product".
 
 Follows \cite{Scheffers1889}.
 
-\paragraph{Ritt (1950)}
+
+
+\paragraph{King (1934)}
+
+A chemistry paper from 1934 using the term "outer product" in
+our modern usage. which notes that it is closely related to both Kronecker products on
+matrices and the indeterminate product (dyad) of vectors. All the
+citations in [1] refer to Kronecker products, with the original
+citation being Zehfuss, 1858. [3] refers to Gibbs's terminology of
+dyad, also indeterminate product.
+
+\paragraph{Schwerdtfeger (1938)~\cite{Schwerdtfeger1938}}
+
+A book about matrix functions.
+Vectors come first as «$n$-uple»s (``$n$-tuples'') that represent points. \S 2, pp. 1-2, which discusses change of coordinates, he writes
+\begin{quote}
+«$y_1, \dots, y_n$ serait un autre $n$-uple par lequel on pourrait représenter le point $x$. Dans cette conception, le point x aurait le caractère d'un vecteur.»
+
+``$y_1, \dots, y_n$ would be another $n$-tuple by which one could represent the point $x$. In this design, the point $x$ would have the character of a vector.''
+\end{quote}
+
+In \S 3, p. 2, he introduces the representations of points «par des symboles de colonnes» (``by columns of symbols'')
+\[
+x =\begin{pmatrix}x_1\\x_2\\:\\x_n\end{pmatrix}
+\]
+and a $n \times p$ matrix is introduces as «un système de $p$ colonnes» (``a system of $p$ columns'')
+
+Here we also see the transposition of a vector, although it is not described as such.
+\begin{quote}
+«La matrice à une ligne, ayant les mêmes coordonnées que la matrice à une colonne $x$, sera désignée par
+
+\[
+x^\prime = \begin{pmatrix}x_1 & x_2 & \cdots & x_n\end{pmatrix}
+\]
+
+En enployant encore une fois cette opération de ``\textit{transposition}'' on sera ramenée au point $x$ ($= x^{\prime\prime}$).»
+
+``
+The matrix with one line, having the same coordinates at the matrix with one column $x$, will be designated by[...]
+
+Employing once again this operation of ``transposition'' one will reduced to the point $x$ ($= x^{\prime\prime}$).''
+
+\end{quote}
+Here we see the notion that the transpose is idempotent, i.e. $x = x^{\prime\prime}$.
+In \S 8 we see mention of Le «\textit{produit intérieur} (ou \textit{scalaire})» as defined as the number $x^\prime y$ defined in \S 3. Le «\textit{produit extérieur}» refers to the cross product and there is a discussion of the representation of the exterior product in the algebra of skew-symmetric matrices.
+
+Citations:
+
+von Neumann, Allgemeine Eigenwerttheorie Hermitesche Funktionaloperatoren
+Math Ann 201 1929 49-131 (A = A' as projection operators)
+
+cites the use of fundamental notions of modern algebra and algebraic numbers
+
+Hasse, Hohere Algebra I, Samml  Goeschen 931, 1926
+
+O Ore, Les corps algébriques et al théorie des idéaux, Mémorial des Sc. Math 64 1934
+
+
+
+
+\paragraph{Ritt (1950)~\cite{Ritt1950}}
 
 First use of the term ``structure constant'' ?
 
 \url{http://www.jstor.org/stable/1969444?seq=1#page_scan_tab_contents}
+
+
+
+\paragraph{Householder (1953)~\cite{Householder1953}}
+
+The first book on linear algebra focusing on numerical algorithms.
+
+Householder is famous for insisting on a systematic notation for various quantities.
+The convention for matrix variables written in capital Roman letters, vectors in small Roman letters, and scalars in small Greek letters was popularized by him. Note however that the works of Cullis already used such a systematic convention.
+There is also the superscript $T$ for transpose, with expressions like $x^T y$ and $1 - x y^T$.
+Although Householder never uses the term ``outer product'', we see expressions like $D - u v^T$ in the book, so we see diagonal plus rank one terms everywhere. He does not present $u v^T$ as an expression deserving of its own identity.
+
+
+
+\paragraph{Iverson (1962)~\cite{Iverson1962}}
+
+Possibly noteworthy as the first publication of a computer program for numerical linear algebra using vectorized operations, as implemented in APL.
+Resurrects (?) the outer product in a paper describing the implementation of Gauss-Jordan elimination using vectorized APL operations. The description of Program 2 (and its accompanying footnote) states that
+
+\begin{quote}
+`[S]tep 8 subtracts from $\underline{\textit{M}}$ the outer product of the first row (except that the first element is replaced by zero) with its first column. The outer product $\underline{\textit{Z}}$ of a vector $\underline{\textit{x}}$ by vector $\underline{\textit{y}}$ id the ``column by row product'' denoted by $\underline{\textit{Z}} \leftarrow \underline{\textit{x}} \times \underline{\textit{y}}$ and defined by $\underline{\textit{Z}}^{\; i}_j = \underline{\textit{x}}_i \times \underline{\textit{y}}_j$.'
+\end{quote}
+
+This paper cites an ALGOL implementation of Gauss-Jordan elimination, but this algorithm never computes the outer product explicitly, instead computing the outer product on the fly as part of the update of the matrix:~\cite{Cohen1961}
+
+\begin{quote}
+\begin{verbatim}
+a[k,j] := a[k,i] - b[j] x c[k]
+\end{verbatim}
+\end{quote}
+
+Iverson does not claim that his APL version is equivalent to the ALGOL one, but none of his references ever refer to the $b c^\prime$ matrix as the outer product of vectors.
+
+It is fair to say that by 1962, Iverson recognized the quantity $b c^\prime$ as having its own existence outside of the diagonal+rank1 expression $I - b c^\prime$, and that he did so independently of anyone else. In this paper and the APL book Iverson meant the notation to be useful for both machine computation and analysis by hand, so it is unclear if Iverson ever intended $b c^\prime$ to be constructed explicitly on a machine. (It seems unlikely given the context of matrix inversion.) Whether or not anyone else noticed before that is debatable - Rutishauser didn't in 1959.
+
+(Curiously, the APL book does not mention the phrase ``outer product'', despite having it in the index!~\cite{Iverson1962book})
+
+
+\paragraph{Wilkinson's "The algebraic eigenvalue problem", 1964}
+
+Did he have anything notationally significant?
+
+
+
+\paragraph{Forsythe and Moler (1967)~\cite{Forsythe1967}}
+
+They present the vector transpose on p. 2.
+\begin{quote}
+``Let $x = (x_1, x_2, \dots, x_n)^T$ denote a column vector in real $n$-dimensional space $R^n$. Let $x^T$ denote the row vector which is the transpose of $x$.''~\cite[p. 2]{Forsythe1967}
+\end{quote}
+
+Although they cite \cite{Faddeev1959} for the introductory material, \cite{Faddeev1959} itself is firmly rooted in the ``matrices only'' tradition, with column vectors treated as synonymous with column matrices.
+
+
+
+\section{Classficiation of the four main schools of vectors and matrices}
+
+\begin{tabular}{l}
+Mostly matrices \\
+\hline
+Cullis (1913-28) \\
+\end{tabular}
+
+\begin{tabular}{l}
+Mostly vectors \\
+\hline
+Grassmann (1842-1866) \\
+\end{tabular}
+
+\begin{tabular}{l}
+Matrices are primary \\
+\hline
+Macduffee (1933) \\
+Fadeev and Faddeeva (1959) \\
+\end{tabular}
+
+
+\begin{tabular}{l}
+Vectors are primary \\
+\hline
+\end{tabular}
+
+\section{Other quotes Alan likes}
+
+\begin{quote}
+``In linear algebra, better theorems and more insight emerge if complex numbers are investigated along with real numbers.''-\cite[p. 1]{Axler2015}
+\end{quote}
