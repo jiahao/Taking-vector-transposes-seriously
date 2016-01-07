@@ -5,11 +5,11 @@
 
 
 % Packages and macros go here
-\usepackage{lipsum}
 \usepackage{amsfonts}
-\usepackage{graphicx}
-\usepackage{epstopdf}
-\usepackage{algorithmic}
+\usepackage[utf8]{inputenc}
+%\usepackage{graphicx}
+%\usepackage{epstopdf}
+%\usepackage{algorithmic}
 \ifpdf
   \DeclareGraphicsExtensions{.eps,.pdf,.png,.jpg}
 \else
@@ -17,7 +17,7 @@
 \fi
 
 % Declare title and authors, without \thanks
-\newcommand{\TheTitle}{\include{title}}
+\newcommand{\TheTitle}{Taking vector transposes seriously}
 \newcommand{\TheAuthors}{J. Chen and A. S. Edelman}
 
 % Sets running headers as well as PDF title and authors
@@ -29,10 +29,10 @@
 
 % Authors: full names plus addresses.
 \author{
-  Jiahao Chen
+  Jiahao Chen\thanks{Department of Mathematics, and The Computer Science And Artificial Intelligence Laboratory, Massachusetts Institute of Technology, Cambridge, MA
+  (\email{jiahao@mit.edu}, \email{edelman@mit.edu}, \url{http://jiahao.github.io})}
   \and
-  Alan S. Edelman\thanks{Department of Mathematics, and The Computer Science And Artificial Intelligence Laboratory, Massachusetts Institute of Technology, Cambridge, MA
-  (\email{\{jiahao,edelman\}@mit.edu})},
+  Alan S. Edelman\footnotemark[2]
 }
 
 \usepackage{amsopn}

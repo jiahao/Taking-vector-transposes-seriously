@@ -9,10 +9,191 @@ Programming languages designed for scientific computing have many users which ar
   \item Quadratic/Hermitian forms, $v^\prime A v$
 \end{itemize}
 
-The notation for these quantities were systematized by Householder \cite{Householder1953,Householder1955}, who used capital Roman letters for matrices, small Roman letters for (column) vectors, and small Greek letters for scalars. Importantly, Householder also uses the vector transpose notation $u^\prime$ to express row vectors, which are then used to construct the above products and forms. \cite{Householder1955} uses $u^T = (u_1, \cdots, u_n)^T$ to express row vectors as tuples, a construct which we shall see later as having ample precedent. \cite{Householder1955} writes the inner product as $u^* v$, noting that $*$ ``denotes the conjugate transpose''. \cite[Sec. 4.01]{Householder1953} introduces the Hermitian form . \cite[Sec. 2.04]{Householder1953} introduces the row vector $u^T$ corresponding to the column vector $u$. Householder also acknowledges in \cite[Sec. 2.04]{Householder1953} the analogy between a numerical vector (as a column of a matrix) and a geometric vector in the sense of Gibbs. He writes the vector transpose as if it follows immediately from the matrix transpose: 
+The notation for these quantities were systematized by Householder \cite{Householder1953,Householder1955}, who used capital Roman letters for matrices, small Roman letters for (column) vectors, and small Greek letters for scalars. Importantly, Householder also uses the vector transpose notation $u^\prime$ to express row vectors, which are then used to construct the above products and forms. \cite{Householder1955} uses $u^T = (u_1, \cdots, u_n)^T$ to express row vectors as tuples, a construct which we shall see later as having ample precedent. \cite{Householder1955} writes the inner product as $u^* v$, noting that $*$ ``denotes the conjugate transpose''. \cite[Sec. 4.01]{Householder1953} introduces the Hermitian form . \cite[Sec. 2.04]{Householder1953} introduces the row vector $u^T$ corresponding to the column vector $u$. Householder also acknowledges in \cite[Sec. 2.04]{Householder1953} the analogy between a numerical vector (as a column of a matrix) and a geometric vector in the sense of Gibbs. He writes the vector transpose as if it follows immediately from the matrix transpose:
 
 If each column of a matrix $M$ is written as a row, the order remaining the same, the resulting matrix is known as the transpose of the original and is designated $M^T$. In particular, if $x$ is the column vector of the $\xi_i$, $x^T$ is the row vector of the $\xi_i$.
 
 The outer product shows up in \cite[Sec. 2.24]{Householder1953}, although Householder does not give the quantity $u v^T$ a special name \footnote{while \cite[Sec. 2.03]{Householder1953} introduces ``outer products'' $[u v]$ , these quantities are known today as bivectors and are conventionally denoted $u \wedge v$.}, and the discussion in context clearly implies that Householder considers vector-scalar-vector products $u \sigma v^T$ special cases of matrix products $U S V^T$.
 
 Interstingly, \cite{Householder1953} does not use the terms ``bilinear form'', ``quadratic form'', or ``Hermitian form''. He uses ``scalar product''. \cite{Householder1955} clearly spells out his notational convention. (\cite{Householder1953} has a missing page which might also spell it out, but it's not clear.)
+
+
+\subsection{History}
+
+
+\begin{tabular}{l}
+Mostly matrices \\
+\hline
+Cullis (1913-28) \\
+\end{tabular}
+
+\begin{tabular}{l}
+Mostly vectors \\
+\hline
+Grassmann (1842-1866) \\
+\end{tabular}
+
+\begin{tabular}{l}
+Matrices are primary \\
+\hline
+Macduffee (1933) \\
+Fadeev and Faddeeva (1959) \\
+\end{tabular}
+
+
+\begin{tabular}{l}
+Vectors are primary \\
+\hline
+
+\end{tabular}
+
+\section{A timeline of the development of key ideas}
+
+A rough sketch.
+
+\paragraph{Möbius (1827), Calcolo geometrico}
+
+May have introduced the scalar product
+
+\paragraph{Grassmann (1844) - Ausdehnungslehre I}
+
+Vectors were called ``extensive magnitudes''. Relative vectors were called ``displacements'' (,,Strecke``) (\S 14) and were distinguished from absolute vectors, being coordinates of points.
+
+Systematic convention: Capital Roman letters were names of points (absolute vectors). Small Roman letters were names of displacements (relative vectors).
+
+Ausdehnungslehre I introduced the ``open product'' (,,offne Produkt``) (\S 172) as the quantity
+\[
+S = [A_1().B_1 + A_2().B_2 + \dots]
+\]
+
+or in modern notation, what we recognize today as the expansion of a matrix $S$ in rank-1 outer products
+
+\[
+S = \sum_i b_i a_i^T
+\]
+
+A single term, written $[A().B]$ in Grassmann's notation, is a ,,Produkt mit ein Lücke`` (product with one opening), which is generalized to multiple openings in Ausdehnungslehre II. Such a single time is what we would today call an outer product of two vectors, or a rank 1 matrix.
+
+Ausdehnungslehre I introduces the concept of outer multiplication (,,äussere Multiplikation``) (\S 34, p.57, p.81English) as what we would today call the exterior product or wedge product. The term ``outer product'' (,,äusseres Produkt``) appears in \S 36, p. 60, p. 84English.
+
+\paragraph{Grassmann (1847)~\cite{Grassmann1847} - ,,Geometrische Analyse``}
+
+\S 7 p. 334 English, introduces the inner product $a \times b$, and the inner square $a^2 = a \times a$.
+
+\paragraph{Hamilton (1847)~\cite{Hamilton1847} - ``On Symbolical Geometry''}
+
+Introduces the term ``scalar product'' as part of the quaternion product. \S. 12 introduces the term ``scalar product'' for the case of parallel vectors (which differs from modern usage by a negative sign). He does not appear to have introduced the general case of non-parallel vectors.
+
+\paragraph{Cauchy (1853)~\cite{Cauchy1853}.} clefs algébriques??? influenced Grassmann 1862 for notation in the inner product???
+
+\paragraph{Cayley (1858)~\cite{Cayley1858}} - invented matrix product and matrix transpose.
+Notation for matrix:
+\begin{verbatim}
+( a, b, c)
+| d, e, f|
+| g, h, i|
+\end{verbatim}
+
+matvec product $(a, b, c)\!\!(d, e, f)$
+
+
+\paragraph{Grassmann (1862)~\cite{Grassmann1862} - Ausdehnungslehre II.}
+
+Writes inner product as $[A | B]$, mentions $[A \times B]$ as an alternative notation (\S 137, p93 English).
+
+The outer (tensor) product is introduced without a name (Remark after \S 51)
+
+\begin{quote}
+,,Ein Produkt, in welchern die Faktoren $a, b, \cdots$ irgend wie enthalten find, werde ich[...] mit $P_{a,b,...}$ bezeichnen`` \cite[p. 24, \S 43]{Grassmann1862}
+
+``A product in which the factors a, b, ... are included in any way I will[...] denote by $P_{a,b,...}$''~\cite[p. 22, \S 43]{Grassmann2000}
+\end{quote}
+
+Later, the same quantity is referred to informally as
+,,ein beliebiges Produkt $P_{a_1, a_2, ..., a_n}$``~\cite[\S 353]{Grassmann1862} (``an arbitrary product''~\cite[p. 196, \S 353]{Grassmann2000})
+
+Also introduced the combinatorial product (Ch. 3), which we recognize today as the determinant.
+
+
+\paragraph{B. Peirce (1873)~\cite{Peirce1873} and C. S. Peirce (1874)~\cite{Peirce1874}}
+
+Developed the notion of matrix unit, which he called ``elementary relative'' in \cite[p.359]{Peirce1873}.
+
+B. Peirce (1874)~\cite{Peirce1874} explains that these units, which he called ``vids'', form the basis of a linear algebra. This paper also appears to be the earliest use of the phrase ``linear algebra'' (at least, in English).
+
+In 1883~\cite{Peirce1883} C. S. recognizes the significance for the algebra of matrices, called then by Clifford ``quadrics''.
+
+\paragraph{Frobenius (1878) - Ueber lineare Substitutionen und bilineare Formen}
+
+May have invented the term ``bilinear form''.
+
+
+
+\paragraph{Clifford (1878)~\cite{Clifford1878}}
+
+Clifford’s associative geometric product ŒClifford 1878 of two vectors simply adds the
+(symmetric) inner product to the (antisymmetric) outer product of Grassmann, - does it mean that he used the term also?
+
+
+\paragraph{Weierstrass (1884)~\cite{Weierstrass1884}}
+
+Publishes the notion of defining formal linear algebra through its structure constants. (He does not give the numbers a name.)
+
+\paragraph{Dedekind (1885)~\cite{Dedekind1885}}
+
+Extends Weierstrass to give the restriction on the structure constants so that the resulting algebra is associative. (He does not give the numbers a name either.)
+
+
+
+
+
+\paragraph{Peano (1888)~\cite{Peano1888}}
+
+Formalized axioms of vector space latent in Grassmann's work.
+May have also reintroduced the scalar product?
+
+Peano used [Peano 1887]
+for the scalar product, but called it “prodotto di due segmenti” (since in this book vectors
+were called ‘segmenti’). He used
+again later [Peano 1891a] and called it “prodotto
+(interno o geometrico).”
+
+\paragraph{Scheffers (1889)~\cite{Scheffers1889}}
+
+Formal linear algebra. Did he copy Weierstrass?? His paper has the same name.
+
+
+\paragraph{Molien (1892)}
+
+PhD thesis
+
+THEODOR MOHEN, "Ueber Systeme höherer complexer Zahlen," pp. 83-156.
+
+may have introduced the term ``Basis''
+
+also relates hypercomplexes to matrices (148-156)
+
+Hawkins, "Hypercomplex Numbers, Lie Groups, and the
+Creation of Group Representation Theory," pp. 262-64.
+
+Gibbs and Heaviside (????) - may have introduced the scalar product?
+
+\paragraph{Prandtl (1903) and the German Vector commission}
+
+Recommended the notation of $\mathbf{a} \cdot \mathbf{b}$ a la Gibbs but called it the inner product à la Grassmann.
+
+\paragraph{Burali-Forti and Marcolongo (1907-1908) - Per l’unificazione delle notazioni vettoriali.}
+
+Proposed $\mathbf{a}\times\mathbf{b}$ for the scalar product and  $\mathbf{a}\wedge\mathbf{b}$ for the vector product.
+
+\paragraph{MacDuffee (1933)~\cite{MacDuffee1933}}
+
+Starts with the abstract axioms of linear algebra and shows that the algebra may be represented by naturally by matrices and matrix multiplication. Also defines array as an ordered set with a known number of elements.
+
+Follows \cite{Scheffers1889}.
+
+\paragraph{Ritt (1950)}
+
+First use of the term ``structure constant'' ?
+
+\url{http://www.jstor.org/stable/1969444?seq=1#page_scan_tab_contents}
