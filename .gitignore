@@ -7,6 +7,7 @@
 *.log
 *.out
 *.synctex*
+*.thm
 *.toc
 include.tex
 main.dvi
