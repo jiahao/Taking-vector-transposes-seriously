@@ -115,11 +115,13 @@ the entry of any vector or matrix are named with small Greek
 letters.~\cite{Householder1964}}
 The preceding discussion requires the following to hold:
 
-\begin{enumerate}[label=\bfseries{}A\arabic*]
-\item The equivalence between indexing and inner products holds for
+%\begin{enumerate}[label=\bfseries{}A\arabic*]
+%\item 
+The equivalence between indexing and inner products holds for
 		any data type for which the integer 1 is a multiplicative
-		identity. \label{point1}
-\end{enumerate}
+		identity. 
+%\label{point1}
+%\end{enumerate}
 %
 %TODO unital algebra
 %
@@ -176,22 +178,27 @@ should not be thought of as the concatenation of vectors, but rather $n\times1$
 matrices. Thus one sees here the intermixing of indexing semantics and
 algebraic semantics, since one now has two choices of indexing semantics:
 
-\begin{enumerate}[label=\bfseries{}C\arabic*]
-\item A column slice \lstinline|A[:, i]| returns an $(n,)$-array.\label{rule:col1}
-\item A column slice \lstinline|A[:, i]| returns an $(n,1)$-array.\label{rule:col2}
-\end{enumerate}
+%begin{enumerate}[label=\bfseries{}C\arabic*]
+%\item 
+A column slice \lstinline|A[:, i]| returns an $(n,)$-array.\label{rule:col1}
+%\item 
+A column slice \lstinline|A[:, i]| returns an $(n,1)$-array.\label{rule:col2}
+%\end{enumerate}
 
 Bearing these two choices in mind, we can now list possible choices for the
 meaning of the expression \lstinline|v^\prime|. Let \lstinline|v| be a $(n,)$-array. Then:
 
-\begin{enumerate}[label=\bfseries{}T\arabic*]
-\item Transposing a vector, \lstinline|v^\prime|, returns a $(n,)$-array, which is just
+%\begin{enumerate}[label=\bfseries{}T\arabic*]
+%\item
+Transposing a vector, \lstinline|v^\prime|, returns a $(n,)$-array, which is just
       $v$.\label{rule:v'1}
-\item Transposing a vector, \lstinline|v^\prime|, returns a $(1,n)$-array.\label{rule:v'2}
-\item Transposing a vector, \lstinline|v^\prime|, returns an object of shape $(n,)$,
+%\item 
+Transposing a vector, \lstinline|v^\prime|, returns a $(1,n)$-array.\label{rule:v'2}
+%\item 
+Transposing a vector, \lstinline|v^\prime|, returns an object of shape $(n,)$,
       which is in a dual space of some sort. \textit{not} a conventional array
       that lies outside our current system.\label{rule:v'3}
-\end{enumerate}
+%\end{enumerate}
 %
 %TODO T2 requires a cast of v vector into (v,) matrix. then you transpose it.
 %
@@ -231,14 +238,15 @@ programming languages like MATLAB employ an additional rule to circumvent this
 problem, which is to define scalars and $(1,)$-vectors to be equivalent for the
 purposes of equality comparison. More generally, we have the rule
 
-\begin{enumerate}[label=\bfseries{}I\arabic*]
-\item An array $A$ of shape $(n_1, n_2, \dots, n_k)$ defines an equivalence
+%\begin{enumerate}[label=\bfseries{}I\arabic*]
+%\item 
+An array $A$ of shape $(n_1, n_2, \dots, n_k)$ defines an equivalence
 class which also includes reshapings of $A$ into arrays of shape $(n_1, n_2,
 \dots, n_k, 1)$, $(n_1, n_2, \dots, n_k, 1, 1)$, and other shapes with an
 arbitrary number of trailing singleton dimensions, all of which contain the
 same values. For $n = k = 1$, scalar quantities are also included in this
 equivalence class.\label{rule:trail1}
-\end{enumerate}
+%\end{enumerate}
 
 The equivalences defined by \ref{rule:trail1} remove some of the semantic
 distinctions made earlier. First, the result of column indexing is no longer
@@ -413,12 +421,13 @@ the indexing semantics and algebraic semantics are fully compatible.
 
 Matrices have a natural representation in 2-arrays:
 
-\begin{enumerate}[label=\bfseries{}M\arabic*]
-\item An $m \times n$ matrix $A$ with $m$ rows and $n$ columns can be
+%\begin{enumerate}[label=\bfseries{}M\arabic*]
+%\item 
+An $m \times n$ matrix $A$ with $m$ rows and $n$ columns can be
 	represented by a $(m,n)$-array, i.e.\ an array of rank 2, size $m$ in
 	the first dimension, and size $n$ in the second
 	dimension).\label{rule:mat}
-\end{enumerate}
+%\end{enumerate}
 
 
 %Such slicing notation was originally developed for array indexing, but has
