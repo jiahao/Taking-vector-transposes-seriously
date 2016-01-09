@@ -1,0 +1,551 @@
+\section{Old Introduction (Proposed) }
+
+Humans, to a fault, are so good at special casing abstractions
+by context that it would be easy to conclude that a discussion
+of how linear algebra fits into computer languages would hardly
+seem necessary.  Decades after APL made multidimensional
+arrays first class objects, and MATLAB made matrix laboratory
+syntax popular,  we recently  reached an inescapable conclusion,
+one we preferred not to believe, that  
+vectors, in the sense of computer languages,
+and linear algebra vectors have serious coexistence issues.
+
+
+
+To set the stage, in nearly every computer language (other than MATLAB (!!) )
+a ``vector"  is a one dimensional container.  In concrete
+linear algebra there are column vectors and row vectors.
+In  both concrete and abstract linear algebra, vectors are quantities that are subject
+to addition, multiplication by scalars, linear transformations, and 
+play a role in scalar and outer products.
+As we shall see, the  seemingly innocuous idea of transposing a vector turns out to be
+a highly contentious subject.
+
+
+Consider the following familiar  statements  \begin{itemize}
+\item A matrix times a vector is a vector
+\item Matrix Multiplication of $A$ and $B$ is defined by taking the scalar product
+of a row of $A$ with a column of $B$.
+\item  The scalar product is defined on a pair of vectors.
+The scalar product of  $v$ with itself is a non-negative number known as
+$\|v\|^2$.
+\end{itemize}
+
+and consider common  notations in math or software:
+\begin{itemize}
+\item  \verb+A[i,:]*B[:,j]+ or \verb+dot(A[i,:],B[:,j]) +
+\item   $v^T\!v=(v,v)=$ \verb+v'*v+=\verb+dot(v,v)+
+\end{itemize}
+
+(more coming)
+
+ 
+
+
+
+
+\section{Introduction (original)}
+
+
+
+Matrices and vectors are fundamental concepts for both computer science
+~\cite{Knuth1967,Pratt2001} and computational
+science~\cite{Strang2003,Trefethen1997}. Nevertheless, the terms ``vector'' and
+``matrix'' mean different things in the contexts of data structures and linear
+algebra. As data structures, they are simply arrays, whereas as linear
+algebraic objects, vectors are elements of a vector space and matrices are linear transformations.
+When we represent linear algebra vectors and linear algebra transformation in a basis,
+we obtain the familiar containers we know simply as vectors and matrices.
+
+
+
+Computer science focuses primarily on the homogeneous container semantics of
+vectors and matrices. Oftentimes they are considered synonymous with arrays of
+rank 1 and 2 respectively. The seminal work of \cite{Iliffe1961} says
+%
+\begin{quote}
+``Depending on the organization of the array it may
+be treated as a \textit{set}, a \textit{vector}, or a \textit{matrix}.''
+\end{quote}
+%
+The classic \cite{Knuth1967} focuses only on indexing semantics; the index
+entry for ``two-dimensional array'' cross-references the entry for ``matrix''.
+Even today, the conflation persists. A modern textbook on programming language
+design writes~\cite[p. 215]{Pratt2001}:
+%
+\begin{quote}
+A vector is a one-dimensional array; a matrix composed of rows and columns of
+components is a two-dimensional array[.]
+\end{quote}
+
+%PZ p 217 also has a nice description of linear indexing semantics adopted from
+%Fortran. Slicing came from PL/I.
+
+In contrast, vectors and matrices in linear algebra are defined by their
+algebraic properties, such as inner products and matrix-vector products.
+
+The aim of this paper is to identify if and when the semantics of array
+indexing and linear algebra may conflict.
+
+
+
+\section{Vector indexing and inner products}
+
+\paragraph{Indexing is an inner product operation}
+Indexing is a key aspect of array semantics. For array data structures, the
+most basic form of indexing maps an index to an element of a homogeneous
+collection. For numeric data types, the indexing operation \lstinline|v[i]| on
+a one-dimension array \lstinline|v| of length $n$ can also be expressed in the
+language of linear algebra as an inner product of two vectors
+\begin{equation}
+	v_i = e_i \cdot v,\label{eq:idx1}
+\end{equation}
+where $v$ is the array \lstinline|v| interpreted as a vector $(v_1, v_2, \dots,
+v_n)$, and $e_i$ is the $i$th canonical basis vector $(0, 0, \dots, 0, 1, 0,
+\dots, 0)$ where the $i$th entry is nonzero.%
+\footnote{In this paper, we assume column major order and one-based indexing,
+which is prevalent in the numerical computing literature and also in
+programming languages which are popular for numerical computing such as
+FORTRAN, MATLAB and Julia. The discussion in this paper apply equally to row
+major order and/or zero-based indexes with only minor notational changes. Also,
+we use the Householder notation convention that is ubiquitous in the numerical
+linear algebra literature, where vectors are named with small Latin letters,
+matrices are named with capital Latin letters, and scalars not associated with
+the entry of any vector or matrix are named with small Greek
+letters.~\cite{Householder1964}}
+The preceding discussion requires the following to hold:
+
+\begin{enumerate}[label=\bfseries{}A\arabic*]
+\item The equivalence between indexing and inner products holds for
+		any data type for which the integer 1 is a multiplicative
+		identity. \label{point1}
+\end{enumerate}
+%
+%TODO unital algebra
+%
+%TODO indexing is more fundamanetal than linalg. You can index vectors of strings, for example.
+
+
+\paragraph{Slicing is a vector-matrix product}
+Many languages for technical computing like FORTRAN, APL, MATLAB, Python/NumPy,
+and Julia also feature more sophisticated indexing semantics, such as slicing.
+Slicing takes an array of indexes rather than a single scalar index, and returns
+another array containing the respective elements. For example, a Julia
+expression like \lstinline|v[1:3]| returns a new vector with entries
+\lstinline|v[1], v[2], v[3]|.
+
+Now consider the analogous argument that a slicing operation can also be
+expressed in the language of linear algebra: \lstinline|v[1:3]| corresponds to
+the matrix-vector product
+\begin{equation}
+	\begin{pmatrix}e_1 & e_2 & e_3\end{pmatrix}^\prime v,\label{eq:idx2}
+\end{equation}
+where $\begin{pmatrix}e_1 & e_2 & e_3\end{pmatrix}$ is the $n \times 3$
+matrix with columns $e_1$, $e_2$ and $e_3$ respectively and $'$ denotes matrix
+transposition.%
+\footnote{For simplicity, we consider only real numeric types, although the
+discussion holds also for other algebraic fields such as complex numbers when
+complex conjugations are combined appropriately with transposition.}
+The equivalence follows from working out the product row by row,
+and noting that
+\begin{equation}
+	e_i^\prime v = e_i \cdot v = v_i,\label{eq:v'}
+\end{equation}
+where the last equality follows from \eqref{eq:idx1}.
+
+The astute reader would have noted that in going from \eqref{eq:idx2} to
+\eqref{eq:v'}, we sneaked in the notion of a \textit{vector transpose}, having
+extracted rows of a matrix for subcomputations of the form \eqref{eq:v'}.
+Whereas $(e_1)$ is an $n \times 1$ matrix, $e_1$ is an $(n,)$-vector. This
+distinction is glossed over by numerical analysts, but the conflation of these
+two objects poses a problem for computer scientists: $(e_1)^\prime$ must be
+a $1 \times n$ matrix from the rules of matrix transposition, but what then is
+$e_1^\prime$? Recall that the transpose of an $m \times n$ matrix $A$ is an
+$n \times m$ matrix $A^\prime$ whose element in the $i$th row and $j$th column
+is
+\begin{equation}
+	\left(A^\prime\right)_{ij} = A_{ji}.\label{eq:A'}
+\end{equation}
+Transposition clearly swaps the two indexes. But what should transposition do
+for an $(n,)$-vector, which has only one dimension?
+
+The semantic problem posed by vector transposition arose from the assertion
+that the columns of a matrix are column vectors. One could argue that an
+expression of the form $\begin{pmatrix}v_1 & v_2 & \dots v_k \end{pmatrix}$
+should not be thought of as the concatenation of vectors, but rather $n\times1$
+matrices. Thus one sees here the intermixing of indexing semantics and
+algebraic semantics, since one now has two choices of indexing semantics:
+
+\begin{enumerate}[label=\bfseries{}C\arabic*]
+\item A column slice \lstinline|A[:, i]| returns an $(n,)$-array.\label{rule:col1}
+\item A column slice \lstinline|A[:, i]| returns an $(n,1)$-array.\label{rule:col2}
+\end{enumerate}
+
+Bearing these two choices in mind, we can now list possible choices for the
+meaning of the expression \lstinline|v^\prime|. Let \lstinline|v| be a $(n,)$-array. Then:
+
+\begin{enumerate}[label=\bfseries{}T\arabic*]
+\item Transposing a vector, \lstinline|v^\prime|, returns a $(n,)$-array, which is just
+      $v$.\label{rule:v'1}
+\item Transposing a vector, \lstinline|v^\prime|, returns a $(1,n)$-array.\label{rule:v'2}
+\item Transposing a vector, \lstinline|v^\prime|, returns an object of shape $(n,)$,
+      which is in a dual space of some sort. \textit{not} a conventional array
+      that lies outside our current system.\label{rule:v'3}
+\end{enumerate}
+%
+%TODO T2 requires a cast of v vector into (v,) matrix. then you transpose it.
+%
+\ref{rule:v'2} follows naturally from \ref{rule:col2} and the definition of
+matrix transposition in \eqref{eq:A'}, which swaps the indexes. Similarly,
+\ref{rule:v'1} follows naturally from \ref{rule:col1} and noting that
+``swapping'' the order of indexes is a no-op, since the identity is the only
+permutation of length 1. \ref{rule:v'3} is perhaps the least intuitive, but
+can be justified by noting that \lstinline|v^\prime| is a row vector, which is not
+identical to a column vector and therefore cannot have the same representation.
+A less conventional justification of \ref{rule:v'3} is to regard \lstinline|v^\prime|
+not as an array, but a dot product expression which is curried in the first
+argument. In other words, \lstinline|v^\prime| is an incomplete expression waiting to
+be multiplied with another $(n,)$-vector \lstinline|w| so that
+%
+\begin{equation}
+	\alpha = v^\prime w = v \cdot w,\label{eq:w'v}
+\end{equation}
+%
+%TODO clarify the point is that we want equality between the rules of matrix
+%multiply (lhs) of second equality, and the rhs is vector dot product.
+%Remind people tht (mxn) x n => m.
+%Make the point that T1, T3 it is natural to take this equation as the definition as
+%of the product whereas T2 has to already obey matmul.
+%
+%TODO v*w actually means matmul. But Alan wants to consider the case where we overload * to mean scalar*non-scalar also as a special case.
+
+
+This interpretation of \lstinline|v^\prime| corresponds closely to the notion of a
+linear functional, which is used in functional analysis.
+
+We see immediately that while \ref{rule:v'1} and \ref{rule:v'3} satisfy
+\eqref{eq:w'v}, producing a scalar result, \ref{rule:v'2} results in a product
+involving quantities of shapes $(1,n)$ and $(n,)$, which by the usual rules of
+linear algebra must produce a quantity of shape $(1,)$ and not a scalar. Some
+programming languages like MATLAB employ an additional rule to circumvent this
+problem, which is to define scalars and $(1,)$-vectors to be equivalent for the
+purposes of equality comparison. More generally, we have the rule
+
+\begin{enumerate}[label=\bfseries{}I\arabic*]
+\item An array $A$ of shape $(n_1, n_2, \dots, n_k)$ defines an equivalence
+class which also includes reshapings of $A$ into arrays of shape $(n_1, n_2,
+\dots, n_k, 1)$, $(n_1, n_2, \dots, n_k, 1, 1)$, and other shapes with an
+arbitrary number of trailing singleton dimensions, all of which contain the
+same values. For $n = k = 1$, scalar quantities are also included in this
+equivalence class.\label{rule:trail1}
+\end{enumerate}
+
+The equivalences defined by \ref{rule:trail1} remove some of the semantic
+distinctions made earlier. First, the result of column indexing is no longer
+ambiguous, as the combination \ref{rule:trail1}+\ref{rule:col1} is equivalent
+to \ref{rule:trail1}+\ref{rule:col2}. Second, the objection to \ref{rule:v'2}
+on the grounds of the inner product is mollified, as each of
+\ref{rule:v'1}, \ref{rule:trail1}+\ref{rule:v'2} and \ref{rule:v'3} define
+correct inner products \eqref{eq:w'v}.
+
+
+
+\section{Outer products}
+
+Inner products are not the only kind of vector-vector product in linear
+algebra. There is also the outer product $vu'$, which for a $(n,)$-vector $v$
+and a $(m,)$-vector $u$ is the $n \times m$ matrix whose element in the $i$th
+row and $j$th column is $v_i w_j$. One can think of the outer product as a
+particular kind of matrix-matrix product, generated from the product of a $n
+\times 1$ matrix and a $1 \times m$ matrix.
+
+It turns out that the outer product cannot be written as \lstinline|v*u'| with
+\ref{rule:v'1} semantics, since \lstinline|vu'| is the product of a $(n,)$
+vector with a $(m,)$ vector. This product is not defined except for $n = m$,
+whence \lstinline|v*u'| evaluates to the inner product! This result follows
+from \ref{rule:v'1} semantics and \eqref{eq:w'v}, since $vu^\prime = vu =
+v^\prime u = v \cdot u$.
+
+\ref{rule:v'2} is also problematic, as it yields the product $(n,) \times (1,
+m)$, which is incommensurate. Only the combination
+\ref{rule:trail1}+\ref{rule:v'2} allows this product to be defined sensibly,
+since \ref{rule:trail1} allows $(n,)$ to be reshaped to $(n,1)$, and then the
+product can be evaluated using the ordinary rules of matrix-matrix
+multiplication.
+
+\ref{rule:v'3} semantics give us the flexibility of defining the outer product
+axiomatically as the product \lstinline|u*v^\prime|, since $v^\prime$ is represented
+by a different type.
+
+
+
+\section{Bilinear forms and the trace operation}
+
+In this section we consider bilinear forms, which are vector-matrix-vector
+products of the form $v'Aw$ for an $n$-vector $v$, $n\times m$ matrix $A$, and
+$m$-vector $w$ and whose result is a scalar:
+%
+\begin{equation}
+	\beta = \sum_{i=1}^n \sum_{j=1}^m v_i A_{ij} w_j.\label{eq:v'Aw}
+\end{equation}
+
+By definition, a bilinear form can also be written using the trace operator.
+The trace of a $n \times n$ matrix $A$ is defined as the sum of its diagonal
+entries, i.e.
+%
+\begin{equation}
+	\gamma = \mathrm{tr }A = \sum_{i=1}^n A_{ii}.\label{eq:tr}
+\end{equation}
+
+The bilinear form therefore must satisfy the identity
+%
+\begin{equation}
+	\beta = v^\prime Aw = \mathrm{tr }Awv^\prime.\label{eq:trid}
+\end{equation}
+
+For this identity to be expressible in code of the form
+\begin{lstlisting}
+v'*A*w == tr(A*w*v')
+\end{lstlisting}
+, we need the semantics for both inner products and outer products.
+Thus the only minimal sets of semantics that obey this identity are
+\ref{rule:trail1}+\ref{rule:v'2} or \ref{rule:v'3}.
+
+%TODO say that for the special case of A=I then you can satisfy (5) and be happy.
+
+
+\section{Invalid operations}
+
+Equally important to the story of capturing algebraic semantics is the story of
+capturing \textit{invalid} semantics. Examples of invalid products are
+
+\begin{enumerate}
+\item Vector-vector products $vw$,
+\item Transposed vector-transposed vector products $v^\prime w^\prime$,
+\item Vector-matrix products $vA$, and
+\item Matrix-transposed vector products $Av^\prime$.
+\end{enumerate}
+
+All these expressions are valid with \ref{rule:v'1} semantics, since any
+vector-vector product is the inner product regardless of transposition,
+$vA = v^\prime A$, and $Av^\prime = Av$.
+
+\ref{rule:v'2} semantics sometimes yield valid expressions for these products:
+%
+\begin{enumerate}
+\item When $v$ and $w$ are each $1$-vectors, $v^\prime w^\prime$ is a matrix
+product yielding a $1\times 1$ matrix.
+\item When $A$ is a $n\times 1$ matrix and $v$ is an arbitrary vector (say of
+length $m$), $Av^\prime$ yields a $n\times m$ matrix.
+\end{enumerate}
+%
+In this case, considering also \ref{rule:trail1} semantics
+exacerbates the problem by creating \textit{more} valid cases:
+%
+\begin{enumerate}
+\item When $v$ and $w$ are each $1$-vectors, $vw$ can be interpreted as a
+matrix product of two $1\times1$ matrices, yielding a $1\times1$ matrix.
+\item When $A$ is a $1\times n$ matrix and $v$ is an arbitrary vector of length
+$m$, then $vA$ produces a $m\times n$ matrix.
+\end{enumerate}
+%
+Thus one could say that \ref{rule:trail1}+\ref{rule:v'2} enables the expression
+of inner products, outer products and bilinear forms, but at the price of
+falsely allowing some invalid products as valid expressions.
+
+Only \ref{rule:v'3} semantics can be shown to reject all these expressions as
+invalid products. With the flexibility afforded by considering a transposed
+vector as a different type, we can simply define $v^\prime w^\prime$ and
+$Av^\prime$ to be erroneous. The other two products $vw$ and $vA$ are already
+errors by default, unless \ref{rule:trail1} is also active, in which case $vw$
+and $vA$ can be erroneously valid also.
+
+We therefore conclude that \ref{rule:v'3} is the only valid semantic rule that
+correctly excludes all erroneous products.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN CRUFT
+
+Vectors are also defined
+by taking rows and columns of matrices. A typical linear algebra text
+introduces notation for columns of a matrix by rewriting a matrix $A$ as
+$A = [a_1, a_2, \dots, a_n]$ or even ~\cite[for example,
+p. 6]{Trefethen1997}
+\[
+A = \left[\left.\begin{array}{c}
+\\
+\\
+a_1\\
+\\
+\\
+\end{array}\right|\begin{array}{c}
+\\
+\\
+a_2\\
+\\
+\\
+\end{array}\left|\begin{array}{c}
+\\
+\\
+\ \cdots\ \\
+\\
+\\
+\end{array}\right|\begin{array}{c}
+\\
+\\
+a_n\\
+\\
+\\
+\end{array}\right]
+	.\label{eq:cols}
+\]
+%
+$a_k$ is therefore a vector that is the $k$th column of $A$.  Thus we can see that
+the indexing semantics are close in spirit to the operation of extracting
+submatrices from matrices. However, it is less clear from the definitions if
+the indexing semantics and algebraic semantics are fully compatible.
+
+
+
+\section{Matrix slices and column vectors}
+
+Matrices have a natural representation in 2-arrays:
+
+\begin{enumerate}[label=\bfseries{}M\arabic*]
+\item An $m \times n$ matrix $A$ with $m$ rows and $n$ columns can be
+	represented by a $(m,n)$-array, i.e.\ an array of rank 2, size $m$ in
+	the first dimension, and size $n$ in the second
+	dimension).\label{rule:mat}
+\end{enumerate}
+
+
+%Such slicing notation was originally developed for array indexing, but has
+%since found its way into the mathematical literature, particularly in applied
+%mathematics, where notation like $V(:, 1)$~\cite[p.
+%2]{Higham2002},\cite[p. 38]{Strang2003} can be found in mathematical formulae.
+%Similarly, slice indexing semantics are convenient for defining subblocks of
+%matrices, such as
+%\begin{lstlisting}
+%B = A[1:p, 1:q]
+%\end{lstlisting}
+%which extracts the first $p$ rows and first $q$ columns of a matrix $A$ into a
+%new matrix $B$.
+
+\section{Generalizations to higher rank}
+
+\ref{rule:col1} is a special case of the indexing rule where the rank of the
+result is the sum of the ranks of the indexes. This indexing rule is used by
+some languages such as APL. The history of this rule is discussed in
+Sec.~\ref{sec:related}.
+
+It is tempting to generalize \ref{rule:v'1} to arrays of general rank, by
+considering $A^\prime$ as the array constructed by reversing all the indexes of
+$A$. While by itself a valid rule, it is fundamentally incompatible with
+\ref{rule:trail1} semantics. Applying the ``reverse all indexes'' rule to the
+equivalence class defined in \ref{rule:trail1} produces an equivalence class
+comprising arrays of shapes $(n_k, n_{k-1}, \dots, n_1)$, $(1, n_k, n_{k-1},
+\dots, n_1)$, $(1, 1, n_k, n_{k-1}, \dots, n_1)$, and so on. In other words,
+the resulting equivalence class under transposition defines an arbitrary number
+of \textit{leading} singleton dimensions, with the result that the first
+dimension of the array is no longer uniquely defined. We therefore reject the
+combination of \ref{rule:trail1}+\ref{rule:v'1} semantics as mutually
+inconsistent.
+
+
+
+\section{Data structures for sparse matrices}
+
+This discussion may seem a little silly, but one should recognize
+that the situation for sparse matrices is a confusing hodgepodge of
+both kinds of semantics. The so-called compressed sparse column or
+compressed sparse row representations can only support A1 semantics.
+These data structures are analogous to representations of $\left(m,n\right)$-tries.
+In contrast, the so-called coordinate or IJV format naturally generalizes
+to any number of dimensions.
+
+\section{Implementations in current languages}
+
+
+...
+
+Inconsistent design choices can cause user frustration. For example,
+consider the Rayleigh quotient, denoted $v^{\prime}Av/v^{\prime}v$.
+If $v^{\prime}v$ produced a scalar, the quotient can produce a scalar.
+Similarly, if $v^{\prime}v$ produced a $\left(1,1\right)$-array,
+we can interpret the result as a $1\times1$ matrix and interpret
+the division $/$ as a matrix-matrix right division, i.e. the operation
+$A/B=AB^{-1}$. However, if $v^{\prime}v$ produced a $\left(1,\right)$-array,
+the usual correspondence to a 1-vector causes this operation to be
+undefined, since right division by a vector is undefined. A $(1,)$-array
+can be formed if $v^{\prime}$ produced a $1\times N$ matrix, which
+when postmultiplied by a $N$-vector must produce a $1$-vector by
+the rules of linear algebra. One could special case the length 1 case
+but this feels unnatural. Yet another possibility is to define \textbf{implicit
+trailing dimensions}, which is a type conversion rule that (in this
+context) says that a $(1,)$-array can behave as if it is a $(1,1)$-array
+when convenient. With implicit trailing dimensions, right division
+by $v^{\prime}v$ can be defined by converting the $(1,)$-array into
+a $(1,1)$-array and using the matrix right-division rule. Note that
+implicit trailing dimensions allows the data structures of A2 to adopt
+the semantics of A1.
+
+%END CRUFT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Related work}\label{sec:related}
+
+\paragraph{Array theory} The APL literature contains a comprehensive discussion
+of multidimensional array indexing semantics~\cite{Brown1982}, which were
+absent in the classical APL of \cite{Iverson1962}. \cite{Ruehr1982,Gerth1988}
+surveyed the development of array semantics in APL.
+
+What we refer to as APL style indexing was first written down in the APL/360
+manual~\cite{Falkoff1968}, albeit only for rank 2 only, where indexing by a
+matrix returned a matrix. \cite{Haegi1976} noted an inconsistency . The general
+case has been termed ``scatter-point indexing'' or ``choose indexing''
+\cite{Brown1972,Ruehr1982}, and was perhaps most clearly described
+in~\cite{More1979}. \cite{Gull1979} emphasized the importance of preserving
+the rank of the index set in the rank of the output for multidimensional
+arrays.
+
+\cite{More1973} built a theory of multidimensional arrays using recursive
+nesting of one-dimensional arrays, formalized upon axiomatic set theory.
+\cite{Ghandour1973} emphasized the ordering of elements as a defining
+characteristic of arrays. \cite{Gerth1988} emphasized indexing as a function on
+arrays from index sets to value sets. We do not consider functional aspects of
+indexing in this paper.
+
+The APL literature makes some mention of linear algebra semantics, but does not
+consider the interplay with array indexing semantics.
+
+\begin{enumerate}
+\item \cite{More1973} mentions the inner product returning a scalar as an
+	important rule for guiding array semantics.
+
+\item \cite{Haegi1976} bemoans the conflation of scalars and $(1,)$-arrays in
+	classical APL.
+
+\item \cite[p. 153]{More1973} also suggests the possibility of more complicated
+	multidimensional array semantics:
+
+\begin{quote}
+Let $V$ be an $n$-dimensional vector space over a field. Disregarding
+considerations of contravariance and covariance, a tensor of valence $q$ on $V$
+is a multilinear mapping of the Cartesian product of the list $V V \dots V$ of
+length $q$ into a vector space. If $V$ has a base, then a tensor of valence $q$
+on $V$ can be represented by a \textit{component tensor}, which is an array on
+$q$ axes, each of length $n$.
+\end{quote}
+
+\end{enumerate}
+
+\section{Summary}
+
+The discussion of column and row indexing rules reveals a fundamental tension
+between arrays and matrices which we believe have not been given due
+consideration in the literature nor in the design of practical programming
+languages for scientific applications.
+
