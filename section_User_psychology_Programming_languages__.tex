@@ -22,7 +22,7 @@ Interstingly, \cite{Householder1953} does not use the terms ``bilinear form'', `
 \section{A timeline of the development of key ideas}
 
 A rough sketch.
-Several noteworthy secondary sources:~\cite{Taber1890,Parshall1985,Kleiner2007,Higham2009}
+Several noteworthy secondary sources:~\cite{Parshall1985,Kleiner2007,Higham2009}
 
 \paragraph{Gauss1795}
 
@@ -146,6 +146,18 @@ Extends Weierstrass to give the restriction on the structure constants so that t
 
 
 
+\paragraph{Heaviside (1886)~\cite{Heaviside1886}}
+
+Of significance for systematically introducing boldface small Roman letters (in ``Clarendon type'') to denote vector variables.~\cite{Heaviside1886}. (Heaviside gives a very amusing diatribe against the prevailing custom of Greek latters by Tait and Germanic Gothic letters by Maxwell in \cite[\S 103, pp. 139-142]{Heaviside1894})
+
+TODO did Gibbs use bold face too? When?
+
+\cite[\S 107]{Heaviside1894} defines the scalar product as
+\[
+\mathbf{AB} = \mathrm{AB} \cos \theta
+\]
+and calls A and B the ``tensors'' of $\mathbf{A}$ and $\mathbf{B}$. The cross product $\mathbf a \times \mathbf b$ he writes as $\mathbf{V a b}$.
+
 \paragraph{Peano (1888)~\cite{Peano1888}}
 
 Formalized axioms of vector space latent in Grassmann's work.
@@ -164,19 +176,61 @@ again later [Peano 1891a] and called it “prodotto
 Formal linear algebra. Did he copy Weierstrass?? His paper has the same name.
 
 
+\paragraph{Taber (1890)~\cite{Taber1890}}
 
-\paragraph{Molien (1892)}
+A historical overview of the development of the theory of matrices.
+Recognized that matrices were latent in the theory of vectors as developed by Hamilton in his \textit{Lectures on Quaternions}\~cite{Hamilton1852}.
+Taber has a sense of outer product and its role in defining matrices (``linear unit operator[s]'') via bilinear forms. In modern language,
+a matrix $\rho$ is written in the rank-1 expansion form:
+\[
+\rho = x_1 \alpha_1 + x_2 \alpha_2 + \dots + x_\omega \alpha_\omega
+\]
+then the linear unit operator $\phi$ can be expressed as a matrix by considering its action on each basis vector $\alpha$
+\[
+\phi\rho = x_1.\phi\alpha_1 + x_2.\phi\alpha_2 + \dots + x_\omega.\phi\alpha
+\]
+which can be used to develop the system of equations
+\begin{align}
+\phi \alpha_1 & = a_{11} \alpha_1 + a_{21} \alpha_2 + \dots + a_{\omega 1} \alpha_\omega \\
+\phi \alpha_2 & = a_{12} \alpha_1 + a_{22} \alpha_2 + \dots + a_{\omega 2} \alpha_\omega \\
+              & \cdots \cdots \cdots \\
+\phi \alpha_\omega & = a_{1\omega} \alpha_1 + a_{2\omega} \alpha_2 + \dots + a_{\omega \omega} \alpha_\omega \\
+\end{align}
+thus turning the definition of $\phi$ into a system of linear equations over the basis vectors $\alpha$, when then defines the linear transformation $\phi$ using the matrix of coefficients $(a)_{ij}$ in the system of equations.
+(Note that Tabor's indexing is row major, in contrast with modern convention.)
+Intriguingly, Tabor also uses a very suggestive notation
+\[
+\phi\rho = (\phi|x_1)\alpha_1 + (\phi|x_2)\alpha_2 + \dots + (\phi|x_\omega)\alpha
+\]
+Furthermore, Taber reviews C S Peirce's ``forms'' or ``vids'' $(\alpha_i : \alpha_j)$, and says they are equivalent to ``elementary units'' of a matrix. It is clear fhat Peirce's notation corresponds to $a_j a_i^T$ today.
+He introduces Clifford's ``quadrates'' (which are just matrices).
+\begin{quote}
+I shall therefore call an algebra linear in $\omega^2$ of these vids a quadrate algebra of order $\omega$; and any expression linear in the vids, a \textit{quadrate form}.
+\end{quote}
+Thus introducing the term that is almost the modern form, a quadratic form.
 
-PhD thesis
+\paragraph{Molien (1892)~\cite{Molien1892}}
 
-THEODOR MOHEN, "Ueber Systeme höherer complexer Zahlen," pp. 83-156.
+Presents the first systematic treatment of the linear algebra of hypercomplex numbers.
+In modern terms, we would say that the algebra is characterized by structure constants $c_{ij}^k$ such that each basis element of the algebra satisfies the multiplicative identities
+\[
+e_i e_j = \sum_k c^k_{ij} e_k
+\]
+Molien presents the inverse relation.
+\begin{quote}
+,,Das distributive Gesetz der Multiplication verlangt, dass das Product
+zweier complexer Zahlen eine Zahl sei, deren Parameter sieh als bilineare
+Formen darstellen, die mit Hilfe constanter Grössen aus den beiden
+Reihen der Parameter der Factoren gebildet sind.``
+\end{quote}
+For $u, x, x^\prime$ in the hypercomplex number system, the multiplication law
+requires
+\[
+x_i^\prime = \sum_{kl} a^i_{kl} x_k u_l
+\]
+Molien also uses the word ,,Basis des Zahlensystems`` (basis of the number system).
 
-may have introduced the term ``Basis''
-
-also relates hypercomplexes to matrices (148-156)
-
-Hawkins, "Hypercomplex Numbers, Lie Groups, and the
-Creation of Group Representation Theory," pp. 262-64.
+An important secondary source for the significance of Molien's work is~\cite{Hawkins1972}.
 
 Gibbs and Heaviside (????) - may have introduced the scalar product?
 
