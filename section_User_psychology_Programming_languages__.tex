@@ -61,6 +61,10 @@ Ausdehnungslehre I introduces the concept of outer multiplication (,,äussere Mu
 
 Introduces the term ``scalar product'' as part of the quaternion product. \S. 12 introduces the term ``scalar product'' for the case of parallel vectors (which differs from modern usage by a negative sign). He does not appear to have introduced the general case of non-parallel vectors.
 
+\paragraph{Cauchy (1847) - analytical mechanics}
+
+set of $n$ variables is an ``analytic product''
+
 \paragraph{Cauchy (1853)~\cite{Cauchy1853}.} clefs algébriques??? influenced Grassmann 1862 for notation in the inner product???
 
 \paragraph{Cayley (1858)~\cite{Cayley1858}} - invented matrix product and matrix transpose.
@@ -471,6 +475,62 @@ Hasse, Hohere Algebra I, Samml  Goeschen 931, 1926
 O Ore, Les corps algébriques et al théorie des idéaux, Mémorial des Sc. Math 64 1934
 
 
+\paragraph{Aitken (1939)~\cite{Aitken1939}}
+
+Matrices first. Column and row vectors defined synonymously with their matrix equivalents.
+of orders $n\times1$ and $1\times p$.
+column vectors are $x = \{x_1\;x_2\;\dots\;x_n\}$,
+row vectors are $u = [u_1\;u_2\;\dots\;u_p]$.
+
+\S 4, p. 5
+
+\S 10 - bilinear, qudratic and Hermitian forms $x^\prime A y$.
+
+No mention of inner or outer products.
+
+
+\paragraph{Margenau \& Murphy~\cite{Margenau1943}}
+
+An influential textbook ``Mathematics of Physics and Chemistry'' defines arrays
+effectively as matrices without linear algebra~\cite[\S 10.1, p. 288]{Margenau1943}:
+
+\begin{quote}
+A collection of real or complex quantities is called an
+\textit{array} if it can be displayed in an orderly table of \textit{rows} and \textit{columns}.
+\end{quote}
+
+They consider row and column vectors as matrices as determinants as a particular kind of array.
+
+A matrix is typeset in bold italic capital Roman, $\boldsymbol A$.
+A vector is typeset in bold small Roman, $\textbf u$ or enclosed in braces, $\{ \textbf u \}$.
+Row are $[\textbf u ]$.
+Kronecker product of matrices is the direct product.
+Transpose is $\tilde{\boldsymbol A}$.
+Scalar product (10-11), $\tilde{\mathbf x} \mathbf y$ or $[\mathbf x] \{\mathbf y\}$ (10-7).
+Hermitian scalar product is $\mathbf x^\dagger \mathbf y$
+
+
+
+(Notes above are for second edition)
+
+
+
+\paragraph{Wade (1948)~\cite{Wade1948}}
+
+Cited in second edition of \cite{Margenau1943}.
+
+Vectors come first as $n$-tuples with vector space structure.
+Vectors are $\alpha$, matrices are $A = [a]^m_n$
+inner product is $\alpha \cdot \beta$, synonymous with dot product, scalar product, direct product.
+outer product and forms absent.
+in Ch. 5, matrices, vectors are introduces as constitutents of matrices
+\S 5.4 p 36 - Matrices as ordered sets of row vectors (primarily) or column vectors (secondarily).
+\S 5.5 p 37 $A = [a]^1_n = (a_1, a_2, \dots, a_n)$ is a row matrix,
+$A = [a]^m_1 = \{a_1, a_2, \dots, a_m \}$ is a column matrix. (Also appears vertically)
+\S 5.5 p 38 - matrix transpose is $A^\prime$.
+\S 5.5 p 39 - the transpose of a column vector is a row vector.
+\S 5.5 p 39 - Column vectors are $\alpha$.
+
 
 
 \paragraph{Ritt (1950)~\cite{Ritt1950}}
@@ -479,6 +539,21 @@ First use of the term ``structure constant'' ?
 
 \url{http://www.jstor.org/stable/1969444?seq=1#page_scan_tab_contents}
 
+
+\paragraph{Perlis (1952)~\cite{Perlis1952}}
+
+Matrices first. Column and row vectors defined synonymously with their matrix equivalents.
+
+Column vectors are $X = \textrm{col }(x_1, \dots, x_s)$ - p. 4, \S 1.2.
+\S 1-4, p. 9 - scalar product is scalar-matrix product, $c A$.
+
+Vector spaces come in Ch. 2. Vectors as $n$-tuples. are small Greek letters.
+
+\begin{quote}
+Thus ordered $n$-tuples will be regarded here as objects which may be represented as rows, or columns, whichever may be convenitn at the moment.
+
+p. 24, \S2-2.
+\end{quote}
 
 
 \paragraph{Householder (1953)~\cite{Householder1953}}
@@ -491,6 +566,21 @@ There is also the superscript $T$ for transpose, with expressions like $x^T y$ a
 Although Householder never uses the term ``outer product'', we see expressions like $D - u v^T$ in the book, so we see diagonal plus rank one terms everywhere. He does not present $u v^T$ as an expression deserving of its own identity.
 
 
+\paragraph{Faddeev and Faddeeva - \cite{Faddeev1959}}
+
+Matrices first.
+
+\paragraph{Schreier and Sperner (1959)~\cite{Schreier1959}}
+
+Vectors first.
+Vectors are fraktur, $\mathfrak a = \{a_1, a_2, \cdots, a_n\}$
+Scalar product $\mathfrak a \cdot \mathfrak b$. - end of \S 2
+
+\S6 Associate a vector with each column of [a] matrix - \S 6
+
+No mention of forms, inner product or outer product.
+
+TODO Original first edition requested. (1931)
 
 \paragraph{Iverson (1962)~\cite{Iverson1962}}
 
@@ -530,6 +620,68 @@ They present the vector transpose on p. 2.
 \end{quote}
 
 Although they cite \cite{Faddeev1959} for the introductory material, \cite{Faddeev1959} itself is firmly rooted in the ``matrices only'' tradition, with column vectors treated as synonymous with column matrices.
+
+
+
+
+\paragraph{Strachey (1967)~\cite{Strachey1967}}
+
+By the time computer scientists thought of formalizing the grammar and semantics of programming languages,
+vectors and arrays are considered well-understood data structures. \cite[\S 3.7.7, pp. 43--44]{Strachey1967} writes:
+\begin{quote}
+Vectors and arrays are reasonably well understood. They are parametric types so that the type of an array includes its dimensionality (the number of
+its dimensions but not their size) and also the type of its elements[...]
+all the elements of an array have to be of the same type, though their number may vary dynamically.
+It is convenient, though perhaps not really necessary, to regard an $n$-array
+(i.e., one with $n$ dimensions) as a vector whose elements are ($n-1$)-arrays.
+We can then regard the R-value of a vector as something [that] gives access (or points to) the elements rather than containing them.
+\end{quote}
+We recognize herein the modern description of the array data type being defined by
+two parameters: the number of dimensions and the type of elements.
+
+\cite{Landin1965}:
+\begin{quote}
+An array is considered as a function whose domain is a subset of the set of integer-lists.
+It is initialized with the appropriate domain (not subsequently altered) and with all of its elements equal.
+\end{quote}
+
+TODO Requested: secondary references in "History of Fortran i-3" by Backus
+
+Moser - A-2 compiler (1954) and one other thing
+
+mention of array o subscript variables?
+
+TODO TAoCP v3 credits Von Neumann with inventing merge sort. Did he also invent the array?
+
+TODO De Bakker 1967 requested; does it mention vectors as data types?
+
+Algol 1958 - array variables may be multidimensional, must correspond to subscripted variable with as many empty parameter positions as dimensions.
+In other words, the dimensionality of an array in Algol is crucial to determine how many indexes to supply.
+
+PL/I
+\begin{quote}
+Since it appears to be the
+easiest way during interpretation to handle data aggregates by recursively defined
+functions or instructions level by level, the structuring of data attributes is
+described level by level :
+
+(a)
+Arrays. A multi-dimensional array is decomposed into a nested sequence of
+one-dimensional arrays; e.g. a two-dimensional array of scalars is handled
+as a one-dimensional array, whose elements are themselves one-dimensional
+arrays of scalars. An array of structures or cells is naturally handled in
+the same way with the only difference that its base elements are described
+as structures or cells . so , an abstract program has only one-dimensional
+array data attributes; the elements may be arrays , structures , cells or
+scalars.
+
+Array data attributes consist of three components: An expression denoting
+·the lower bound (if missing in the concrete program, the constant 1 is inserted
+by the translator) , an expression denoting the upper bound and the
+data attributes of the elements of the array
+
+--- \cite[\S 2.3.1, pp. 2-8--9]{Lucas1968}
+\end{quote}
 
 
 
