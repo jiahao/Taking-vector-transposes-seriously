@@ -66,7 +66,7 @@ rayleigh(A, x) = x'A*x/x'x
 function outact(x, y, z)
     w = (x*y')*z
     if w == x*(y'*z)
-         return z
+         return w
     else
         error("Not associative")
     end

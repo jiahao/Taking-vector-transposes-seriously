@@ -1,3 +1,6 @@
+include("rankstability.jl")
+
+info("Mathematica semantics")
 
 #Mathematica's Dot and Transpose functions
 

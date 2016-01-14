@@ -32,6 +32,7 @@ info("Python 3.5/NumPy semantics")
 
 x = Vec()
 y = Vec()
+z = Vec()
 A = Mat()
 
 @tryout inner(x, y)
