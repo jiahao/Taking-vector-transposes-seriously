@@ -24,13 +24,30 @@ Interstingly, \cite{Householder1953} does not use the terms ``bilinear form'', `
 A rough sketch.
 Several noteworthy secondary sources:~\cite{Parshall1985,Kleiner2007,Higham2009}
 
-\paragraph{Gauss1795}
-
-Bilinear and quadratic forms go back to Gauss, 1795-1801
-
 \paragraph{Möbius (1827), Calcolo geometrico}
 
 May have introduced the scalar product
+
+\paragraph{Eisenstein (1844)~\cite{Eisenstein1844}}
+
+Credited with the use of a single letter to refer to a matrix in its algebraic relations in \cite{Dorier1995}.
+
+\cite[p. 327]{Eisenstein1844} in a lemma assigns the letter $\boldsymbol S$ to a ,,lineären Systems``
+(``linear system'')
+\[
+\begin{Bmatrix}
+\alpha, & \alpha^\prime, & \alpha^{\prime\prime} \\
+\beta, & \beta^\prime, & \beta^{\prime\prime} \\
+\gamma, & \gamma^\prime, & \gamma^{\prime\prime} \\
+\end{Bmatrix} = \boldsymbol S
+\]
+which is clearly meant to represent the coefficients on the left hand side of a
+linear system of equations.
+
+Furthermore by considering the composition of  ,,der associirten Formen`` (``the associated [bilinear] forms''),
+Eisenstein derived the formula for matrix multiplication by substitution of variables
+in \S 8. II, pp. 356--362.
+
 
 \paragraph{Grassmann (1844) - Ausdehnungslehre I~\cite{Grassmann1844,Grassmann1995}}
 
@@ -71,15 +88,70 @@ set of $n$ variables is an ``analytic product''
 
 \paragraph{Cauchy (1853)~\cite{Cauchy1853}.} clefs algébriques??? influenced Grassmann 1862 for notation in the inner product???
 
-\paragraph{Cayley (1858)~\cite{Cayley1858}} - invented matrix product and matrix transpose.
-Notation for matrix:
+
+\paragraph{Cayley (1855)~\cite{Cayley1855}}
+
+Studied quadratic functions using the notation of matrices.
+
 \begin{verbatim}
-( a, b, c)
-| d, e, f|
-| g, h, i|
+(| a, h, g, ... |)(x, y, z)^2
+| h, b, f, ... |
+| g, f, c, ... |
+| vdots        |
 \end{verbatim}
 
-matvec product $(a, b, c)\!\!(d, e, f)$
+for $ax^2 + by^2 + cz^2 + 2fyz + 2gzx + 2hxy + \dots$.
+
+The matrix part he later denotes with a diamond $\Diamond$.
+
+He also derived the rule for matrix multiplication, which he described as the
+the composition of matrices.
+\begin{quote}
+Il faut faire attention, dans la composition des matrices, de combiner les \textit{lignes}
+de la matrice à gauche avec les \textit{colonnes} de la matrice à droite, pour former les
+\textit{lignes} de la matrice composée.
+- p. 187
+
+Care must be taken in the composition of matrices to combine [rows]
+of the matrix on the left with the columns of the matrix on the right to form the
+[rows] of the composite matrix.
+\end{quote}
+
+\paragraph{Cayley (1858)~\cite{Cayley1858}}
+
+Introduced the term ``transpose of a matrix''.
+
+Cayley writes the row-column product as
+
+\begin{verbatim}
+(a, b, c) tr. ( a', b', c' ) = (a, b, c)( a' ) = (a, b, c)(a', b', c')
+|       |     |            |   |       || b' |
+                                        | c' |
+\end{verbatim}
+
+\paragraph{Cayley (1858)~\cite{Cayley1858b}}
+
+Studies ``bipartite quadric functions''/``lineo-linear functions'', or what we
+call today bilinear forms.
+
+\begin{verbatim}
+( a, b, c )(x, y, z)(x-roman, y-roman, z-roman)
+|a', b', c'|
+|a'', b'', c''|
+\end{verbatim}
+
+The matrix part he later denotes with $\Omega$.
+
+and ``quadric functions''
+
+\begin{verbatim}
+(| a, h, g |)(x, y, z)^2
+| h, b, f |
+| g, f, c |
+\end{verbatim}
+
+for $ax^2 + by^2 + cz^2 + 2fyz + 2gzx + 2hxy$.
+
 
 
 \paragraph{Grassmann (1862)~\cite{Grassmann1862,Grassmann2000} - Ausdehnungslehre II.}
@@ -104,9 +176,10 @@ Also introduced the combinatorial product (Ch. 3), which we recognize today as t
 
 Developed the notion of matrix unit, which he called ``elementary relative'' in \cite[p.359]{Peirce1873}.
 
-B. Peirce (1874)~\cite{Peirce1874} explains that these units, which he called ``vids'', form the basis of a linear algebra. This paper also appears to be the earliest use of the phrase ``linear algebra'' (at least, in English).
+B. Peirce (1874)~\cite{Peirce1874} explains that these units, which he called ``vids'', form the basis of a linear algebra.
+This paper also appears to be the earliest use of the phrase ``linear algebra'' (at least, in English).
 
-In 1883~\cite{Peirce1883} C. S. recognizes the significance for the algebra of matrices, called then by Clifford ``quadrics''.
+In 1883~\cite{Peirce1883} C. S. recognizes the significance for the algebra of matrices.
 
 \paragraph{Frobenius (1878)~\cite{Frobenius1878}}
 
@@ -116,7 +189,8 @@ The product is similar to the product law of two determinants (matrices?) (p. 34
 
 \paragraph{Clifford (1878)~\cite{Clifford1878}}
 
-Vectors, a.k.a. carriers, first, ``from their analogy to a step of translation or carrying''. Denoted with small greek letters, p. 13.
+Vectors, a.k.a. carriers, first, ``from their analogy to a step of translation or carrying''.
+Denoted with small Greek letters, p. 13.
 Matrices are linear transformations between vectors. Uses Cayley's notation for matrices, p. 164.
 Notable for introducing vector and scalar products as separate.
 Vector products are $V\alpha\beta$ and scalar products are $A\alpha\$beta$, p. 95.
@@ -363,10 +437,27 @@ They are familiar with the notions of vector analysis, but mainly in 3 and 4 dim
 
 
 
-\paragraph{ Van der Waerden (1930)}
+\paragraph{Van der Waerden (1930/1)~\cite{vdWaerden1930,vdWaerden1931}}
+
+Vectors came first!
 
 Credited in \cite{Kleiner2007} as the origin of the term "Linear algebra". But see
 Peirce (1874).
+
+
+\cite[\S 10, pp. 43-44]{vdWaerden1930} has some very interesiting things to say about vectors "rows" of $n$ numbers,
+their relation to hypercomplex numbers, and struture constants relating ,,Basiselementes``:
+
+\begin{quote}
+und bilde alle möglichen Reihen (...) von n
+mit Nummern versehenen Elementen von K.
+
+
+\end{quote}
+
+\cite[\S 140, pp. 110. ff.]{vdWaerden1931} has more interesting things.
+Especially about baby matmul.
+One writes a linear form $\sum u_i \lambda_i$ usefully as a product of a row (u...) with a column (lambda...), which the vector (lambda...) represents.
 
 
 
