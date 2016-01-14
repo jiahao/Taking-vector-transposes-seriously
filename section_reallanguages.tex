@@ -1,0 +1,54 @@
+\section{Real programming languages}
+
+In this section, we cover what programming languages do.
+
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|}
+\cline{2-11} 
+\multicolumn{1}{l|}{} & \multicolumn{10}{l|}{ELEMENTARY BEHAVIORS}\tabularnewline
+\cline{2-11} 
+\multicolumn{1}{l|}{} & A{*}B & A{*}b & 1{*}a & a{*}1 & a{*}b & a{*}B & A' & a' & A/B & 1/1\tabularnewline
+\hline 
+Julia & M & V & V & V & E & M{*} & M & M & M & S\tabularnewline
+\hline 
+Lua/Torch & M & V & \textbf{E} & V & S & E & M & E & E & S\tabularnewline
+\hline 
+Mathematica & M & V & V & V & E & V & M & V & M & S\tabularnewline
+\hline 
+Matlab & M & - & - & - & - & - & M & - & M & -\tabularnewline
+\hline 
+NumPy & M & V & V & V & S & M & M & V & E & S\tabularnewline
+\hline 
+Python 3.5 & M & V & V & V & S & M & M & V & E & S\tabularnewline
+\hline 
+R & M & M & - & - & E & M{*} & M & M & M & -\tabularnewline
+\hline 
+\end{tabular}
+
+M: Matrix, V: Vector, S: Scalar, E: Error, M{*}: matrix only if second
+argument is 1xN, otherwise error, -: Concept does not exist
+
+\textbf{Bold} : Most people consider this wrong behavior
+
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\cline{2-8} 
+\multicolumn{1}{l|}{} & \multicolumn{4}{l|}{EXPRESSIONS} & \multicolumn{3}{l|}{IDENTITIES}\tabularnewline
+\cline{2-8} 
+\multicolumn{1}{l|}{} & a'{*}b & a{*}b' & x'{*}A{*}y & x'{*}A{*}x/x'{*}x & (x{*}y'){*}z = x{*}(y'{*}z) & x''=x & (A{*}x)'=(x'{*}A')\tabularnewline
+\hline 
+Julia & \textbf{V} & M & \textbf{V} & \textbf{E} & \textbf{E} & F & T\tabularnewline
+\hline 
+Lua/Torch & S & \textbf{S} & E & \textbf{E} & \textbf{E} & T & \textbf{F}\tabularnewline
+\hline 
+Mathematica & S & \textbf{S} & S & S & V & T & T\tabularnewline
+\hline 
+Matlab & M & M & M & M & M & T & T\tabularnewline
+\hline 
+NumPy & S & \textbf{S} & S & S & V & T & T\tabularnewline
+\hline 
+Python 3.5 & S & \textbf{S} & S & S & V & T & T\tabularnewline
+\hline 
+R & M & M & M & M & M & \textbf{F} & T\tabularnewline
+\hline 
+\end{tabular}
+
+T: True, F: False
