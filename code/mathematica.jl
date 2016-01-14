@@ -1,8 +1,8 @@
-include("rankstability.jl")
-info("Mathematica semantics")
 
 #Mathematica's Dot and Transpose functions
 
+@axiom scalvec Scal * Vec --> Vec
+@axiom vecscal Vec * Scal --> Vec
 @axiom matmul Mat * Mat --> Mat
 @axiom mattrans transpose(Mat) --> Mat
 @axiom matdiv Mat / Mat --> Mat
@@ -15,12 +15,14 @@ info("Mathematica semantics")
 
 x = Vec()
 y = Vec()
+z = Vec()
 A = Mat()
 
 @tryout inner(x, y)
 @tryout outer(x, y)
 @tryout bilinear(x, A, y)
 @tryout rayleigh(A, x)
+@tryout outact(x, y, z)
 @show x'', x'' == x
 @show (A*x)', x'*A', (A*x)' == (x'*A')
 

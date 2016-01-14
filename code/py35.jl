@@ -17,6 +17,9 @@ info("Python 3.5/NumPy semantics")
 #that matrix @ vector and vector @ matrix are both legal (assuming compatible
 #shapes), and both return 1d vectors; vector @ vector returns a scalar.
 
+@axiom scalvec Scal * Vec --> Vec
+@axiom vecscal Vec * Scal --> Vec
+
 @axiom matmul Mat * Mat --> Mat
 @axiom matvec Mat * Vec --> Vec
 #@axiom matdiv Mat / Mat --> Mat
@@ -35,6 +38,7 @@ A = Mat()
 @tryout outer(x, y)
 @tryout bilinear(x, A, y)
 @tryout rayleigh(A, x)
+@tryout outact(x, y, z)
 @show x'', x'' == x
 @show (A*x)', x'*A', (A*x)' == (x'*A')
 

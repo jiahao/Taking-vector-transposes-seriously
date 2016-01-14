@@ -13,6 +13,9 @@ info("NumPy semantics")
 # of downstream packages that numpy.matrix should essentially never be used,
 # because of the problems caused by having conflicting duck types for arrays.
 
+@axiom scalvec Scal * Vec --> Vec
+@axiom vecscal Vec * Scal --> Vec
+
 @axiom matmul Mat * Mat --> Mat
 @axiom mattrans transpose(Mat) --> Mat
 @axiom matvec Mat * Vec --> Vec
@@ -25,12 +28,14 @@ info("NumPy semantics")
 
 x = Vec()
 y = Vec()
+z = Vec()
 A = Mat()
 
 @tryout inner(x, y)
 @tryout outer(x, y)
 @tryout bilinear(x, A, y)
 @tryout rayleigh(A, x)
+@tryout outact(x, y, z)
 @show x'', x'' == x
 @show (A*x)', x'*A', (A*x)' == (x'*A')
 

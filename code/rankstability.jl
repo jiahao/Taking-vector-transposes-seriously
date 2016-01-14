@@ -62,7 +62,16 @@ function bilinear(x, A, y)
     end
 end
 rayleigh(A, x) = x'A*x/x'x
-
+#Action of x*y' on z
+function outact(x, y, z)
+    w = (x*y')*z
+    if w == x*(y'*z)
+         return z
+    else
+        error("Not associative")
+    end
+end
+ 
 macro tryout(expr)
     output = quote
         try

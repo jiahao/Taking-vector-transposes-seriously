@@ -7,12 +7,14 @@ info("MATLAB semantics")
 
 x = Mat()
 y = Mat()
+z = Mat()
 A = Mat()
 
 @tryout inner(x, y)
 @tryout outer(x, y)
 @tryout bilinear(x, A, y)
 @tryout rayleigh(A, x)
+@tryout outact(x, y, z)
 @show x'', x'' == x
 @show (A*x)', x'*A', (A*x)' == (x'*A')
 
