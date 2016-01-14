@@ -11,7 +11,7 @@ axiomsused = Dict()
 @axiom matdiv Mat / Mat --> Mat
 @axiom matvec Mat * Vec --> Vec
 
-@axiom vecmat Vec * Mat --> Mat
+@axiom vecmat Vec * Mat --> Mat #Only for 1xN
 @axiom vectrans transpose(Vec) --> Mat
 
 x = Vec()
