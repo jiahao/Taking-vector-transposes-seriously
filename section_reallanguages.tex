@@ -75,6 +75,7 @@ R & M & M & M & M & M & \textbf{F} & T\tabularnewline
 T: True, F: False
 
 
+
 \subsection{Eigen}
 
 Eigen is a C++ library for high performance numerical linear
@@ -151,4 +152,37 @@ assert (m1 == v2); // assertion failure
 %
 The equality comparison operator \verb|==| must be suitably defined to understand when two values with complicated and different types can test equal to each other in the three cases above that do not trigger the assertion failure. Furthermore, the result of assigning \verb|(A*x).transpose()| to  \verb|v1| produces a column vector effectively equal to \verb|A*x|,
 but the assignment to \verb|m1| produces a row matrix that is the transpose of \verb|v1|.
-A similar result arises for \verb|v2| and \verb|m2|, with the result that the equality holds only when neither side is assigned to a vector or matrix variable, or when both sides are assigned to variables of the same type. In this case, users may be confused as to why certain quantities may not be equal to each other as a result of subtle reasoning errors about the types of various expressions.
+A similar result arises for \verb|v2| and \verb|m2|, with the result that the
+equality holds only when neither side is assigned to a vector or matrix
+variable, or when both sides are assigned to variables of the same type. In
+this case, users may be confused as to why certain quantities may not be equal
+to each other as a result of subtle reasoning errors about the types of various
+expressions.
+
+
+\subsection{Julia}
+
+Julia is a dynamic for technical computing, whose base library features generous functionality for linear algebraic operations.~\cite{Bezanson2009}
+
+
+\subsection{R}
+
+R is a widely used language for statistical computing.~\cite{Rlang}.
+R's statistical features work primarily on data frames, time series and vectors.
+R also has matrices, but no true scalars.
+Its matrix multiplication operator is \verb|%*%| and its transposition operator
+is \verb|t()|.
+R's transposition operator promotes vectors to column matrices before
+transposition, producing a row matrix.
+Like Python, \verb|%*%| is also defined on two vectors to be the dot product.
+\verb|%*%| also permits a vector--matrix product, where it implicitly
+transposes the vector into a row matrix before doing an ordinary matrix
+multiplication.
+Extraneous singleton dimensions can be removed with \verb|drop()|.
+
+R's semantics of vectors and matrices are simple to reason about.
+Perhaps the only behavior that some users may find surprising is that
+transposition is not idempotent on vectors.
+Nevertheless, we've already seen precendent in the mathematical literature
+that does...
+\todo{cite}
