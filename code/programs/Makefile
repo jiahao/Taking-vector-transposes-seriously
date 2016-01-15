@@ -1,11 +1,12 @@
 
 
-DIR_EIGEN=/usr/local/Cellar/eigen/3.2.6
+DIR_EIGEN=/usr
 CXX=c++
-CXXOPTS=-std=c++11 -Wall -Wno-unused-variable
+CXXOPTS=-std=c++11 -Wall -Wno-unused-variable -Wno-deprecated-declarations
 
 all: bin/eigen3
 	bin/eigen3
+	R -f R.R > /dev/null
 
 bin/eigen3: eigen.cpp
 	$(CXX) $(CXXOPTS) -I $(DIR_EIGEN)/include/eigen3 -o eigen3 eigen.cpp
