@@ -162,7 +162,26 @@ expressions.
 
 \subsection{Julia}
 
-Julia is a dynamic for technical computing, whose base library features generous functionality for linear algebraic operations.~\cite{Bezanson2009}
+Julia is a dynamic for technical computing, whose base library features
+generous functionality for linear algebraic operations.~\cite{Bezanson2012}
+
+Julia's multiplication operator, \verb|*|, implements matrix--matrix and
+matrix--vector products, as well as scalings of vectors and matrices, on top of
+ordinary scalar multiplication.
+Julia's division \verb|x/y| is equivalent to multiplication of \verb|x| by the
+inverse of \verb|y| on the right. For non-scalar \verb|y|, the inverse is
+generalized to matrix inverses and pseudoinverses (in the least-squares sense)
+where appropriate.
+Julia's transposition operator, \verb|'|, promotes vectors to column matrices
+before transposing them. Thus we have that vector transposition is not
+idempotent, \verb|x''|$\ne$\verb|x|. 
+
+Julia's current semantics lead to some unexpected behavior. Expressions like
+\verb|a'*b| for the inner product produce a vector of length 1, which do not
+have the semantics of scalars. Other identities, like $(xy^\prime)z =
+x(y^\prime z)$, also fail to hold in code, since \verb|x*(y'z)| becomes the
+product of a vector with a 1-vector, which is not defined.
+
 
 
 \subsection{R}
