@@ -3,25 +3,25 @@
 In this section, we cover what programming languages do.
 
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|}
-\cline{2-11} 
+\cline{2-11}
 \multicolumn{1}{l|}{} & \multicolumn{10}{l|}{ELEMENTARY BEHAVIORS}\tabularnewline
-\cline{2-11} 
+\cline{2-11}
 \multicolumn{1}{l|}{} & A{*}B & A{*}b & 1{*}a & a{*}1 & a{*}b & a{*}B & A' & a' & A/B & 1/1\tabularnewline
-\hline 
+\hline
 Julia & M & V & V & V & E & M{*} & M & M & M & S\tabularnewline
-\hline 
+\hline
 Lua/Torch & M & V & \textbf{E} & V & S & E & M & E & E & S\tabularnewline
-\hline 
+\hline
 Mathematica & M & V & V & V & E & V & M & V & M & S\tabularnewline
-\hline 
+\hline
 Matlab & M & - & - & - & - & - & M & - & M & -\tabularnewline
-\hline 
+\hline
 NumPy & M & V & V & V & S & M & M & V & E & S\tabularnewline
-\hline 
+\hline
 Python 3.5 & M & V & V & V & S & M & M & V & E & S\tabularnewline
-\hline 
+\hline
 R & M & M & - & - & E & M{*} & M & M & M & -\tabularnewline
-\hline 
+\hline
 \end{tabular}
 
 M: Matrix, V: Vector, S: Scalar, E: Error, M{*}: matrix only if second
@@ -30,25 +30,69 @@ argument is 1xN, otherwise error, -: Concept does not exist
 \textbf{Bold} : Most people consider this wrong behavior
 
 \begin{tabular}{|l|l|l|l|l|l|l|l|}
-\cline{2-8} 
+\cline{2-8}
 \multicolumn{1}{l|}{} & \multicolumn{4}{l|}{EXPRESSIONS} & \multicolumn{3}{l|}{IDENTITIES}\tabularnewline
-\cline{2-8} 
+\cline{2-8}
 \multicolumn{1}{l|}{} & a'{*}b & a{*}b' & x'{*}A{*}y & x'{*}A{*}x/x'{*}x & (x{*}y'){*}z = x{*}(y'{*}z) & x''=x & (A{*}x)'=(x'{*}A')\tabularnewline
-\hline 
+\hline
 Julia & \textbf{V} & M & \textbf{V} & \textbf{E} & \textbf{E} & F & T\tabularnewline
-\hline 
+\hline
 Lua/Torch & S & \textbf{S} & E & \textbf{E} & \textbf{E} & T & \textbf{F}\tabularnewline
-\hline 
+\hline
 Mathematica & S & \textbf{S} & S & S & V & T & T\tabularnewline
-\hline 
+\hline
 Matlab & M & M & M & M & M & T & T\tabularnewline
-\hline 
+\hline
 NumPy & S & \textbf{S} & S & S & V & T & T\tabularnewline
-\hline 
+\hline
 Python 3.5 & S & \textbf{S} & S & S & V & T & T\tabularnewline
-\hline 
+\hline
 R & M & M & M & M & M & \textbf{F} & T\tabularnewline
-\hline 
+\hline
 \end{tabular}
 
 T: True, F: False
+
+
+\subsection{Eigen}
+
+Eigen is a C++ library for high performance numerical linear algebra.\cite{eigenweb}\footnote{The version of Eigen tested was v3.2.6, compiled with clang with Apple LLVM v7.0.2.}
+Eigen heavily exploits C++ expression templates to provide flexibility resulting from type polymorphism. Notably, it uses special templates (meant for internal use) to capture the result of intermediate expressions, performing what computer scientists call ``lazy evaluation''. For example, the result of the expression \verb|x.transpose()|, performing the transpose of a vector \verb|x| (of type \verb|VectorXd|) is neither a vector \verb|VectorXd| nor a matrix \verb|MatrixXd|, but rather a special type, \verb|Transpose<| \verb|VectorXd>|, that can be assigned to a new \verb|VectorXd| variable or a new \verb|MatrixXd| variable. Similar types are used to capture and build other intermediate expressions, such as \verb|ProductReturnType<MatrixXd, VectorXd>| for the matrix-vector product \verb|A*x|.
+This ingenious strategy of determining the output type only at assignment time is made possible in a static language like C++, where users are expected to specify the output type of a variable when declared.\footnote{Strictly speaking, C++ also allows for run-time polymorphism, where the output type is only determined at run time. However, the mechanisms for doing so are cumbersome and in most cases produce significant performance slowdowns.} The result is that in almost all cases, users can choose to imagine the result of most linear algebra expressions as vectors or matrices as they so choose.
+
+Nevertheless, Eigen's strategy is not perfect. The heavy use of internal classes to represent the output of computations means that both assignment and equality testing in Eigen. Oftentimes, the validity of an assignment statement can only be determined at run time, resulting in overhead due to run time checks for compatible shape and so on. Many new methods have to be introduced to overload C++'s assignment and equality testing operators. Furthermore, the assignment logic of vector transpose is ambiguous and may lead to subtle logic errors because the result of assignment may violate user expectations of the transitivity of equality. In Eigen, the result of \verb|x.transpose()| can be assigned to either a \verb|VectorXd| variable or \verb|MatrixXd| variable, i.e.\ , both of the following statements are valid:
+
+\begin{verbatim}
+
+VectorXd y = x.transpose();
+MatrixXd Y = x.transpose();
+
+\end{verbatim}
+%
+However, the shapes of \verb|y| and \verb|Y| differ: the former has $n$ rows and 1 column\footnote{Eigen defaults to column vectors and employs an implicit trailing singleton dimension rule similar to \sc{MATLAB}'s.} whereas the latter has 1 row and $n$ columns. In other words, the type of the variable being assigned to determines whether transposing a vector is the identity operation or produces a row matrix!
+
+We find that unexpected behavior may result from the logic above. For example, the identity $(Ax)^\prime = x^\prime A^\prime$ may or may not hold depending on whether the expressions on either side have been assigned to variables, and if so, which variables:
+%
+\begin{verbatim}
+
+//The type of (A*x).transpose() is
+//  Transpose<GeneralProduct<MatrixXd, VectorXd>>
+VectorXd v1 = (A*x).transpose();
+MatrixXd m1 = (A*x).transpose();
+
+//The type of x.transpose() * A.transpose() is
+//  ProductReturnType<Transpose<VectorXd>, Transpose<MatrixXd>>
+VectorXd v2 = x.transpose() * A.transpose();
+MatrixXd m2 = x.transpose() * A.transpose();
+
+assert ((A*x).transpose() == x.transpose() * A.transpose()); //true
+assert (v1 == v2); // true
+assert (m1 == m2); // true
+assert (v1 == m2); // assertion failure
+assert (m1 == v2); // assertion failure
+
+\end{verbatim}
+%
+The equality comparison operator \verb|==| must be suitably defined to understand when two values with complicated and different types can test equal to each other in the three cases above that do not trigger the assertion failure. Furthermore, the result of assigning \verb|(A*x).transpose()| to  \verb|v1| produces a column vector effectively equal to \verb|A*x|,
+but the assignment to \verb|m1| produces a row matrix that is the transpose of \verb|v1|.
+A similar result arises for \verb|v2| and \verb|m2|, with the result that the equality holds only when neither side is assigned to a vector or matrix variable, or when both sides are assigned to variables of the same type. In this case, users may be confused as to why certain quantities may not be equal to each other as a result of subtle reasoning errors about the types of various expressions.
