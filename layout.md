@@ -1,11 +1,6 @@
-section_Introduction_The_thesis_of__.tex
-Examples_of_linear_algebraic_expressions__.tex
-4774old.tex
-section_What_users_want_The__.tex
-subsection_The_outer_product_The__.tex
-subsection_The_contributions_of_Grassmann__.tex
-transpose.tex
-transpose_permutedims.tex
-section_User_psychology_Programming_languages__.tex
-section_Linear_algebra_can_be__.tex
+section_introduction.tex
+section_psychology.tex
+section_indexing.tex
+section_history.tex
 section_reallanguages.tex
+section_closing.tex

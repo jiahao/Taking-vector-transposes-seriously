@@ -1,28 +1,82 @@
-\section{User psychology}
+\section{Summary of historical development}
 
-Programming languages designed for scientific computing have many users which are familiar with linear algebraic constructs expressible using various products and quotients involving matrix and vector quantities. Some of these quantities include:
+The expectations of users today, and the conflict resulting in the question
+of what the vector transpose does, can be traced back to the convoluted history
+of present day numerical linear algebra, and the uneasy coexistence of two
+incompatible schools of thought.
 
-\begin{itemize}
-  \item Inner products, $u^\prime v$
-  \item Outer products, $u v^\prime$
-  \item Bilinear forms, $u^\prime A v$
-  \item Quadratic/Hermitian forms, $v^\prime A v$
-\end{itemize}
+Let's ask which came first - the vector or the matrix? The answer depends on
+which school you belong to. Many modern textbooks \todo{check Strang} introduce
+vectors first as ordered sets or $n$-tuples with the algebraic structure of
+vector spaces, with matrices later as describing linear transformations between
+vectors.
+However, in older textbooks, matrices came first, usually as an abstraction of
+linear systems of equations. Vectors, if mentioned at all, are described as
+derived in terms of rows and columns of matrices. In this school, it is common
+to think of ``row/column vector'' as synonymous with ``row/column matrix''.
 
-The notation for these quantities were systematized by Householder \cite{Householder1953,Householder1955}, who used capital Roman letters for matrices, small Roman letters for (column) vectors, and small Greek letters for scalars. Importantly, Householder also uses the vector transpose notation $u^\prime$ to express row vectors, which are then used to construct the above products and forms. \cite{Householder1955} uses $u^T = (u_1, \cdots, u_n)^T$ to express row vectors as tuples, a construct which we shall see later as having ample precedent. \cite{Householder1955} writes the inner product as $u^* v$, noting that $*$ ``denotes the conjugate transpose''. \cite[Sec. 4.01]{Householder1953} introduces the Hermitian form . \cite[Sec. 2.04]{Householder1953} introduces the row vector $u^T$ corresponding to the column vector $u$. Householder also acknowledges in \cite[Sec. 2.04]{Householder1953} the analogy between a numerical vector (as a column of a matrix) and a geometric vector in the sense of Gibbs. He writes the vector transpose as if it follows immediately from the matrix transpose:
+In the ``vectors first'' school, it makes sense to consider vectors as ``flat'',
+lacking any intrinsic characteristics of row or columns in their shapes.
+In the ``matrices first'' school, it makes sense that vectors must have intrinsic
+``rowness'' or ```columness''.
 
-If each column of a matrix $M$ is written as a row, the order remaining the same, the resulting matrix is known as the transpose of the original and is designated $M^T$. In particular, if $x$ is the column vector of the $\xi_i$, $x^T$ is the row vector of the $\xi_i$.
-
-The outer product shows up in \cite[Sec. 2.24]{Householder1953}, although Householder does not give the quantity $u v^T$ a special name \footnote{while \cite[Sec. 2.03]{Householder1953} introduces ``outer products'' $[u v]$ , these quantities are known today as bivectors and are conventionally denoted $u \wedge v$.}, and the discussion in context clearly implies that Householder considers vector-scalar-vector products $u \sigma v^T$ special cases of matrix products $U S V^T$.
-
-Interestingly, \cite{Householder1953} does not use the terms ``bilinear form'', ``quadratic form'', or ``Hermitian form''. He uses ``scalar product''. \cite{Householder1955} clearly spells out his notational convention. (\cite{Householder1953} has a missing page which might also spell it out, but it's not clear.)
+Perhaps forgotten in the history of linear algebra is the role of vector analysis
+in the development of the ``vectors first'' school. From quaternions we developed
+the modern notions of vectors in three-dimensional space (and later, four-dimensional
+space when general relativity was developed). Separately, we also saw massive
+interest amongst mathematicians on algebras beyond the reals and complexes,
+leading to the development of modern (abstract) algebra. The notion of vectors
+in $n$-dimensional space came much later, when the vector space structure of
+hypercomplex numbers was better understood.
 
 
 
 \section{A timeline of the development of key ideas}
 
-A rough sketch.
-Several noteworthy secondary sources:~\cite{Parshall1985,Kleiner2007,Higham2009}
+In this section we examine the historical development of linear algebra in
+detail, tracing how the concepts of vectors, matrix multiplication and
+matrix transposition were introduced and developed, leading to the modern day
+presentation of matrices and vectors, their implementation in contemporary
+programming languages, and the modern notion of types in programming language
+theory.
+
+A full development of the history of linear algebra and programming languages is
+far beyond the scope of this paper; instead, we point interested readers to
+noteworthy secondary sources~\cite{Parshall1985,Kleiner2007,Higham2009}.
+
+
+
+\subsection{The outer product}
+
+\todo{Put this into timeline again.}
+
+In contrast with the quadratic and bilinear forms, the outer product evolved separately into its modern form. The outer product $u v^\prime$ is closely related to Gibbs's notion of dyad, espoused in his lectures on vector analysis \cite{Gibbs1881,Wilson1901}.
+
+The outer product is a misfit in the original list given in the introduction --- it is the only quantity which users expect to be a matrix, rather than a scalar.
+
+First we need to address the fact that the outer product has two meanings in linear algebra. One sense is synonymous with the exterior product or wedge product, and was the original ``\textit{äußeres Produkt}'' of Grassmann's \textit{Ausdehnungslehre}.~\cite{Grassmann1844,Grassmann1862,Grassmann1995,Grassmann2000} The other sense is the tensor product of two vectors, which first appeared in Einstein and Grossmann's 1913 paper introducing general relativity,~\cite{Einstein1913} where they write
+
+Die de gewöhnlichen Vektoranalsysis entnommenen Bezeichnungen ,,äußeres und inneres Produkt`` rechtfertigen sich, weil jene Operationen sich letzten Endes als besondere Fälle der hier betrachteten ergeben. The designations "inner and outer product", which are taken from ordinary vector analysis, are justified because, when all is said and done, those operations prove to be special cases of the operations considered here.~\cite[T. II, p. 26]{Einstein1913,Einstein1996}
+
+
+\textbf{TODO Did Jordan, 1927 in the quantum mechanics papers do this too?}
+
+The term ``outer product'' in this sense was introduced into the English literature in books about general relativity, such as in...
+
+The term ``outer product'' appears to have been rediscovered by Ken Iverson in his seminal publications about APL. In ``\textit{A Programming Language}''~\cite{Iverson1962book},
+
+We should note that the ``outer product'' in the sense of tensor product has existed in many different forms throughout the mathematical literature, and has been called many different names and has many different notations. The oldest mention we could find of this concept is Grassmann's indeterminate product.
+
+...
+
+Grossmann cited Ricci and Levi-Civita's paper on tensor analysis,~\cite{Ricci1900} where the multiplication of two ``systèmes covariants (covariant systems)'' produced what was simply called a ``produit (product)''~\cite[p. 133]{Ricci1900} and is annotated as ``(tensor) product'' in a translation by Hermann.~\cite[p. 28]{Hermann1975}.
+
+Apparently independently, Gibbs's dyads...
+
+
+The first modern expression of the outer product $u v^T$ as the product of a vector and another transposed vector appears to be in Bodewig 1956\cite{Bodewig1956}, wherein it was called the simple product. \textbf{TODO Check first edition; it's in the second!}
+
+
 
 \paragraph{Möbius (1827), Calcolo geometrico}
 
@@ -50,6 +104,52 @@ in \S 8. II, pp. 356--362.
 
 
 \paragraph{Grassmann (1844) - Ausdehnungslehre I~\cite{Grassmann1844,Grassmann1995}}
+
+The contribution of Grassmann to the user psychology of linear algebra are not well understood, even today. In this section, we survey the contributions of Grassmann to our terminology.
+
+It's well known that Grassmann introduced the notions of inner and outer products; less known perhaps is the history of the term ``outer product''.
+
+TODO put text about the two kinds of outer product here
+
+
+Grassmann's \textit{Ausdehnungslehre} of 1862\cite[Ch. 2]{Grassmann1862} introduces describes general structures to form products of two or more vectors. In modern language, if two vectors are expressed in some basis
+
+\begin{align}
+u & = \sum_i c_i e_i \\
+v & = \sum_i d_i e_i \\
+\end{align}
+
+then any vector product operation $\circ$ is fully defined if the result of the operation $\circ$ on the basis vectors $e_i$ is known, since
+
+\[
+u \circ v = \sum_{ij} c_i d_i (e_i \circ e_j) = \sum_{ij} c_i d_i G_{ij}
+\]
+
+where we introduce formally $G_{ij}$, the Gramian of the vector space with basis ${e_i}$ and inner product $\circ$.
+
+Grassmann defined the inner product to be the product whose Gramian is the identity, and the outer product by placing new basis vectors in each uniquely defined entry of an antisymmetric $G$. Interestingly, Grassmann does not give the general case a name, instead referring to it informally in the text defining his notation:
+
+,,Ein Produkt, in welchern die Faktoren $a, b, \cdots$ irgend wie enthalten find, werde ich[...] mit $P_{a,b,...}$ bezeichnen`` \cite[p. 24, \S 43]{Grassmann1862}
+
+``A product in which the factors a, b, ... are included in any way I will[...] denote by $P_{a,b,...}$''~\cite[p. 22, \S 43]{Grassmann2000}
+
+Gibbs, however, recognized the value of the general case, bequeathing it the name ``indeterminate product''.~\footnote{Some of the English literature incorrectly attribute the name to Grassmann; however, it is quite clear from \textit{Multiple Algebra} that the name is his invention. The closest phrase used by Grassmann is ,,ein beliebiges Produkt $P_{a_1, a_2, ..., a_n}$`` (``an arbitrary product''~\cite[p. 196, \S 353]{Grassmann2000}), which is not defined in a formal, technical sense.} If we interpret this as using an unsymmetric Gramian $G$ and placing a new unique basis vector in each entry of $G$, then we have the basic ingredients of a tensor product.
+
+Grassmann's other contribution to this topic is the concept of ,,offne Produkt`` or ``open product''~\footnote{Somewhat confusingly, Grassmann's 1862 book defines open products, or ``product[s] with n \{interchangeable\} openings''~\cite[\S\S 353, p. 196]{Grassmann2000}, in a way which we would recognize today as symmetric tensors of rank $n$.}, which he writes in Ausdehnungslehre 1844, Sec 172, p 267 (English pp 271-2) with the notation $[A() . B]$, acting on a vector $P$ by
+
+\[
+[A() . B] P = AP . B,
+\]
+
+or in modern notation,
+
+\[
+(b a^T) p = (a\cdot p) b,
+\]
+
+transcribing vectors into lower case letters in line with Householder's convention. In other words, Grassmann's open product is what we would call today the outer product, where ``open'' refers to the presence of the empty parenthesis denoting an ``opening''. Gibbs recognized the open product as a matrix in Multiple Algebra, Collected Works vol 2, p 94, but it is specifically a rank 1 matrix. (\textbf{TODO} Possibly the notion of rank did not exist then...?)
+
+In Gibbs's lecture notes of 1884, Sec. 107, p. 53 of Collected Works v2, he names the result of the indeterminate product of two vectors (in three dimensions) a dyad, and the linear combination of three dyads a dyadic, or what we would call today a 3x3 matrix. c.f. published version in Wilson1901.
 
 Vectors were called ``extensive magnitudes''. Relative vectors were called ``displacements'' (,,Strecke``) (\S 14) and were distinguished from absolute vectors, being coordinates of points.
 
@@ -710,6 +810,41 @@ No mention of forms, inner product or outer product.
 
 TODO Original first edition requested. (1931)
 
+
+
+\paragraph{Gantmacher (1960)~\cite{Gantmacher1960}}
+
+\cite[p. 280, Definition 10]{Gantmacher1960} defines the transpose to have the following properties:
+
+For a linear operator $A$ over $\mathbb R^n$,
+
+the transpose $A^T$ is the operator such that for any two vectors $x, y \in \mathbb R^n$,
+
+\[
+\left\langle Ax, y \right\rangle = \left\langle x, A^T y \right\rangle
+\]
+
+and has the properties
+
+\begin{align}
+(A^T)^T & = A \\
+(A + B)^T & = A^T + B^T \\
+(\alpha A)^T & = \alpha A^T \textrm{ for all real numbers } \alpha \\
+(A B)^T & = B^T A^T
+\end{align}
+
+Analogous definitions and properties for the $A^*$, the adjoint of $A$ (for operators over unitary space $\mathbb C^n$), appear on p. 266.
+
+Gantmacher never uses the terms ``row vector'' or ``column vector'', but defines row and column matrices as matrices having only one row or column respectively. Vectors are defined only as elements of a vector space \cite[p. 51]{Gantmacher1960}, having the usual axiomatic properties of vector spaces over a field $\mathbb F$ and addition and multiplication. He then defines a column as a $n$-tuple of numbers (p. 51, Example 2), $\mathbb F^n$, and shows that operations defined as ``operations on column matrices'' fulfill the axioms of a vector space.
+
+Gantmacher also distinguishes \cite[pp. 54-56]{Gantmacher1960} between the linear operator $A$ and its matrix representation $A$, saying that the $k$th column of the matrix ``consists of the coordinates of the vector $Ae_k$''.
+
+``If in an $n$-dimensional space a basis $\mathbf e_1, \mathbf e_2, \dots, \mathbf e_n$ has been chosen, then to every vector $\mathbf x$ there corresponds uniquely the column $x = (x_1, x_2, \dots, \mathbf x_n)$ where $x_1, x_2, \dots, \mathbf x_n$ are the coordinates of $\mathbf x$ in the given basis. Thus, the choosing of a basis establishes a one-to-one correspondence between the vectors of an arbitrary $n$-dimensional vector space $\mathbf R$ and the vectors of the $n$-dimensional number space $\mathbb F^n$... This means that to within isomorphism there exists only one $n$-dimensional vector space of a given number field.''
+
+The fuss over the abstractions of vector space may seem fussy, but in fact it the definition of matrix multiplication arises naturally from the composition of linear operators, and is correct independent of basis. The notion of basis-independent properties is what is often neglected in computer representations, as is the notion of ``up to isomorphism'' as described by Gantmacher.
+
+
+
 \paragraph{Iverson (1962)~\cite{Iverson1962}}
 
 Possibly noteworthy as the first publication of a computer program for numerical linear algebra using vectorized operations, as implemented in APL.
@@ -748,7 +883,6 @@ They present the vector transpose on p. 2.
 \end{quote}
 
 Although they cite \cite{Faddeev1959} for the introductory material, \cite{Faddeev1959} itself is firmly rooted in the ``matrices only'' tradition, with column vectors treated as synonymous with column matrices.
-
 
 
 
@@ -811,7 +945,7 @@ data attributes of the elements of the array
 --- \cite[\S 2.3.1, pp. 2-8--9]{Lucas1968}
 \end{quote}
 
-Secondary reference – Knuth, 
+Secondary reference – Knuth,
 \url{http://bitsavers.informatik.uni-stuttgart.de/pdf/stanford/cs_techReports/STAN-CS-76-562_EarlyDevelPgmgLang_Aug76.pdf}
 '
 Plankalkul – Vektoren
@@ -856,46 +990,65 @@ The B line of Manchester University
 \url{https://archive.org/stream/bitsavers_trwGrabbeRokofAutomationComputationandControlVol11_37731457/Grabbe_Ramo_Wooldridge_Handbook_of_Automation_Computation_and_Control_Vol_1_1958#page/n259/mode/2up/search/vector}
 
 
+\paragraph{Apostol (1969)~\cite{Apostol1969}}
 
+By the time Apostol's well-known textbook on calculus was published, we see:
 
-\section{Classification of the four main schools of vectors and matrices}
+\cite[p. 91]{Apostol1969} defines the matrix transpose elementwise, which is perhaps the more familiar form
 
-\begin{tabular}{l}
-Mostly matrices \\
-\hline
-Cullis (1913-28) \\
-\end{tabular}
+The transpose of an $m \times n$ matrix $A = \left( a_{ij} \right)^{m,n}_{i,j=1}$ is the $n \times m$ matrix $A^t$ whose $i, j$ entry is $a_{ji}$.
 
-\begin{tabular}{l}
-Mostly vectors \\
-\hline
-Grassmann (1842-1866) \\
-\end{tabular}
+The adjoint shows up on \cite[p. 122]{Apostol1969}
 
-\begin{tabular}{l}
-Matrices are primary \\
-\hline
-Macduffee (1933) \\
-Fadeev and Faddeeva (1959) \\
-\end{tabular}
+Apostol uses ``column matrix'' and ``column vector'' synonymously: \cite[p. 592]{Apostol1967} conflates the notions of tuple, array, vector and matrix (!):
 
+We shall display the $m$-tuple $(t_{1k}, \dots, t_{mk})$ vertically... [t]his array is called a \textit{column vector} or a \textit{column matrix}.
 
-\begin{tabular}{l}
-Vectors are primary \\
-\hline
-\end{tabular}
+If we interchange the rows and columns of a rectangular matrix $A$, the new matrix so obtained is called the \textit{transpose} of $A$ and is denoted by $A^t$. \cite[p. 615, Exercise 7]{Apostol1967}.
 
-\subsection{Other quotes Alan likes}
+(Another axiom: $(A^t)^{-1} = (A^{-1})^t$)
+
+\paragraph{Array theory} The APL literature contains a comprehensive discussion
+of multidimensional array indexing semantics~\cite{Brown1982}, which were
+absent in the classical APL of \cite{Iverson1962}. \cite{Ruehr1982,Gerth1988}
+surveyed the development of array semantics in APL.
+
+What we refer to as APL style indexing was first written down in the APL/360
+manual~\cite{Falkoff1968}, albeit only for rank 2 only, where indexing by a
+matrix returned a matrix. \cite{Haegi1976} noted an inconsistency . The general
+case has been termed ``scatter-point indexing'' or ``choose indexing''
+\cite{Brown1972,Ruehr1982}, and was perhaps most clearly described
+in~\cite{More1979}. \cite{Gull1979} emphasized the importance of preserving
+the rank of the index set in the rank of the output for multidimensional
+arrays.
+
+\cite{More1973} built a theory of multidimensional arrays using recursive
+nesting of one-dimensional arrays, formalized upon axiomatic set theory.
+\cite{Ghandour1973} emphasized the ordering of elements as a defining
+characteristic of arrays. \cite{Gerth1988} emphasized indexing as a function on
+arrays from index sets to value sets. We do not consider functional aspects of
+indexing in this paper.
+
+The APL literature makes some mention of linear algebra semantics, but does not
+consider the interplay with array indexing semantics.
+
+\begin{enumerate}
+\item \cite{More1973} mentions the inner product returning a scalar as an
+	important rule for guiding array semantics.
+
+\item \cite{Haegi1976} bemoans the conflation of scalars and $(1,)$-arrays in
+	classical APL.
+
+\item \cite[p. 153]{More1973} also suggests the possibility of more complicated
+	multidimensional array semantics:
 
 \begin{quote}
-``In linear algebra, better theorems and more insight emerge if complex numbers are investigated along with real numbers.''-\cite[p. 1]{Axler2015}
+Let $V$ be an $n$-dimensional vector space over a field. Disregarding
+considerations of contravariance and covariance, a tensor of valence $q$ on $V$
+is a multilinear mapping of the Cartesian product of the list $V V \dots V$ of
+length $q$ into a vector space. If $V$ has a base, then a tensor of valence $q$
+on $V$ can be represented by a \textit{component tensor}, which is an array on
+$q$ axes, each of length $n$.
 \end{quote}
 
-\subsection{More complicated expressions}
-
-Examples of more complicated expressions
-
-BFGS Update Step
-
-Alan's example with least squares ? MANOVA/Jacobi distribution formulas?
-
+\end{enumerate}

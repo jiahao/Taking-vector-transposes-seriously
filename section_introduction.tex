@@ -1,0 +1,102 @@
+\section{Introduction}
+
+The thesis of this paper is as follows:
+
+Users want to write, using compositions of the transpose and product operators, linear algebra expressions that involve vectors and matrices, and the results make sense, i.e. the results of \texttt{u'*v} behaves like a scalar.Examples of linear algebraic expressions users expect to write include:
+
+\begin{description}
+
+\item{Inner product} $u^T v$, a scalar,
+\item{Outer product} $u v^T$, a matrix,
+\item{Quadratic form} $u^T A u$, a scalar,
+\item{Bilinear form} $u^T A v$, a scalar,
+
+\end{description}
+
+The description of these quantities employ Householder notation~\cite{Householder1953,Householder1955}, a convention that is familiar to most, if not all, practitioners of numerical linear algebra today.
+
+
+
+\subsection{Introduction (v1)}
+
+Humans, to a fault, are so good at special casing abstractions
+by context that it would be easy to conclude that a discussion
+of how linear algebra fits into computer languages would hardly
+seem necessary.  Decades after APL made multidimensional
+arrays first class objects, and MATLAB made matrix laboratory
+syntax popular,  we recently  reached an inescapable conclusion,
+one we preferred not to believe, that
+vectors, in the sense of computer languages,
+and linear algebra vectors have serious coexistence issues.
+
+
+
+To set the stage, in nearly every computer language (other than MATLAB (!!) )
+a ``vector"  is a one dimensional container.  In concrete
+linear algebra there are column vectors and row vectors.
+In  both concrete and abstract linear algebra, vectors are quantities that are subject
+to addition, multiplication by scalars, linear transformations, and
+play a role in scalar and outer products.
+As we shall see, the  seemingly innocuous idea of transposing a vector turns out to be
+a highly contentious subject.
+
+
+Consider the following familiar  statements  \begin{itemize}
+\item A matrix times a vector is a vector
+\item Matrix Multiplication of $A$ and $B$ is defined by taking the scalar product
+of a row of $A$ with a column of $B$.
+\item  The scalar product is defined on a pair of vectors.
+The scalar product of  $v$ with itself is a non-negative number known as
+$\|v\|^2$.
+\end{itemize}
+
+and consider common  notations in math or software:
+\begin{itemize}
+\item  \verb+A[i,:]*B[:,j]+ or \verb+dot(A[i,:],B[:,j]) +
+\item   $v^T\!v=(v,v)=$ \verb+v'*v+=\verb+dot(v,v)+
+\end{itemize}
+
+(more coming)
+
+
+
+\subsection{Introduction (v0)}
+
+Matrices and vectors are fundamental concepts for both computer science
+~\cite{Knuth1967,Pratt2001} and computational
+science~\cite{Strang2003,Trefethen1997}. Nevertheless, the terms ``vector'' and
+``matrix'' mean different things in the contexts of data structures and linear
+algebra. As data structures, they are simply arrays, whereas as linear
+algebraic objects, vectors are elements of a vector space and matrices are linear transformations.
+When we represent linear algebra vectors and linear algebra transformation in a basis,
+we obtain the familiar containers we know simply as vectors and matrices.
+
+
+
+Computer science focuses primarily on the homogeneous container semantics of
+vectors and matrices. Oftentimes they are considered synonymous with arrays of
+rank 1 and 2 respectively. The seminal work of \cite{Iliffe1961} says
+%
+\begin{quote}
+``Depending on the organization of the array it may
+be treated as a \textit{set}, a \textit{vector}, or a \textit{matrix}.''
+\end{quote}
+%
+The classic \cite{Knuth1967} focuses only on indexing semantics; the index
+entry for ``two-dimensional array'' cross-references the entry for ``matrix''.
+Even today, the conflation persists. A modern textbook on programming language
+design writes~\cite[p. 215]{Pratt2001}:
+%
+\begin{quote}
+A vector is a one-dimensional array; a matrix composed of rows and columns of
+components is a two-dimensional array[.]
+\end{quote}
+
+%PZ p 217 also has a nice description of linear indexing semantics adopted from
+%Fortran. Slicing came from PL/I.
+
+In contrast, vectors and matrices in linear algebra are defined by their
+algebraic properties, such as inner products and matrix-vector products.
+
+The aim of this paper is to identify if and when the semantics of array
+indexing and linear algebra may conflict.

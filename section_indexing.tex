@@ -1,95 +1,6 @@
-\section{Old Introduction (Proposed) }
+\section{Axiomatic behavior}
 
-Humans, to a fault, are so good at special casing abstractions
-by context that it would be easy to conclude that a discussion
-of how linear algebra fits into computer languages would hardly
-seem necessary.  Decades after APL made multidimensional
-arrays first class objects, and MATLAB made matrix laboratory
-syntax popular,  we recently  reached an inescapable conclusion,
-one we preferred not to believe, that
-vectors, in the sense of computer languages,
-and linear algebra vectors have serious coexistence issues.
-
-
-
-To set the stage, in nearly every computer language (other than MATLAB (!!) )
-a ``vector"  is a one dimensional container.  In concrete
-linear algebra there are column vectors and row vectors.
-In  both concrete and abstract linear algebra, vectors are quantities that are subject
-to addition, multiplication by scalars, linear transformations, and
-play a role in scalar and outer products.
-As we shall see, the  seemingly innocuous idea of transposing a vector turns out to be
-a highly contentious subject.
-
-
-Consider the following familiar  statements  \begin{itemize}
-\item A matrix times a vector is a vector
-\item Matrix Multiplication of $A$ and $B$ is defined by taking the scalar product
-of a row of $A$ with a column of $B$.
-\item  The scalar product is defined on a pair of vectors.
-The scalar product of  $v$ with itself is a non-negative number known as
-$\|v\|^2$.
-\end{itemize}
-
-and consider common  notations in math or software:
-\begin{itemize}
-\item  \verb+A[i,:]*B[:,j]+ or \verb+dot(A[i,:],B[:,j]) +
-\item   $v^T\!v=(v,v)=$ \verb+v'*v+=\verb+dot(v,v)+
-\end{itemize}
-
-(more coming)
-
-
-
-
-
-
-\section{Introduction (original)}
-
-
-
-Matrices and vectors are fundamental concepts for both computer science
-~\cite{Knuth1967,Pratt2001} and computational
-science~\cite{Strang2003,Trefethen1997}. Nevertheless, the terms ``vector'' and
-``matrix'' mean different things in the contexts of data structures and linear
-algebra. As data structures, they are simply arrays, whereas as linear
-algebraic objects, vectors are elements of a vector space and matrices are linear transformations.
-When we represent linear algebra vectors and linear algebra transformation in a basis,
-we obtain the familiar containers we know simply as vectors and matrices.
-
-
-
-Computer science focuses primarily on the homogeneous container semantics of
-vectors and matrices. Oftentimes they are considered synonymous with arrays of
-rank 1 and 2 respectively. The seminal work of \cite{Iliffe1961} says
-%
-\begin{quote}
-``Depending on the organization of the array it may
-be treated as a \textit{set}, a \textit{vector}, or a \textit{matrix}.''
-\end{quote}
-%
-The classic \cite{Knuth1967} focuses only on indexing semantics; the index
-entry for ``two-dimensional array'' cross-references the entry for ``matrix''.
-Even today, the conflation persists. A modern textbook on programming language
-design writes~\cite[p. 215]{Pratt2001}:
-%
-\begin{quote}
-A vector is a one-dimensional array; a matrix composed of rows and columns of
-components is a two-dimensional array[.]
-\end{quote}
-
-%PZ p 217 also has a nice description of linear indexing semantics adopted from
-%Fortran. Slicing came from PL/I.
-
-In contrast, vectors and matrices in linear algebra are defined by their
-algebraic properties, such as inner products and matrix-vector products.
-
-The aim of this paper is to identify if and when the semantics of array
-indexing and linear algebra may conflict.
-
-
-
-\section{Vector indexing and inner products}
+\subsection{Vector indexing and inner products}
 
 \paragraph{Indexing is an inner product operation}
 Indexing is a key aspect of array semantics. For array data structures, the
@@ -258,7 +169,7 @@ correct inner products \eqref{eq:w'v}.
 
 
 
-\section{Outer products}
+\subsection{Outer products}
 
 Inner products are not the only kind of vector-vector product in linear
 algebra. There is also the outer product $vu'$, which for a $(n,)$-vector $v$
@@ -287,7 +198,7 @@ by a different type.
 
 
 
-\section{Bilinear forms and the trace operation}
+\subsection{Bilinear forms and the trace operation}
 
 In this section we consider bilinear forms, which are vector-matrix-vector
 products of the form $v'Aw$ for an $n$-vector $v$, $n\times m$ matrix $A$, and
@@ -322,7 +233,7 @@ Thus the only minimal sets of semantics that obey this identity are
 %TODO say that for the special case of A=I then you can satisfy (5) and be happy.
 
 
-\section{Invalid operations}
+\subsection{Invalid operations}
 
 Equally important to the story of capturing algebraic semantics is the story of
 capturing \textit{invalid} semantics. Examples of invalid products are
@@ -417,7 +328,7 @@ the indexing semantics and algebraic semantics are fully compatible.
 
 
 
-\section{Matrix slices and column vectors}
+\subsection{Matrix slices and column vectors}
 
 Matrices have a natural representation in 2-arrays:
 
@@ -442,7 +353,7 @@ An $m \times n$ matrix $A$ with $m$ rows and $n$ columns can be
 %which extracts the first $p$ rows and first $q$ columns of a matrix $A$ into a
 %new matrix $B$.
 
-\section{Generalizations to higher rank}
+\subsection{Generalizations to higher rank}
 
 \ref{rule:col1} is a special case of the indexing rule where the rank of the
 result is the sum of the ranks of the indexes. This indexing rule is used by
@@ -464,7 +375,7 @@ inconsistent.
 
 
 
-\section{Data structures for sparse matrices}
+\subsection{Data structures for sparse matrices}
 
 This discussion may seem a little silly, but one should recognize
 that the situation for sparse matrices is a confusing hodgepodge of
@@ -474,7 +385,7 @@ These data structures are analogous to representations of $\left(m,n\right)$-tri
 In contrast, the so-called coordinate or IJV format naturally generalizes
 to any number of dimensions.
 
-\section{Implementations in current languages}
+\subsection{Implementations in current languages}
 
 
 ...
@@ -504,54 +415,8 @@ the semantics of A1.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section{Related work}\label{sec:related}
 
-\paragraph{Array theory} The APL literature contains a comprehensive discussion
-of multidimensional array indexing semantics~\cite{Brown1982}, which were
-absent in the classical APL of \cite{Iverson1962}. \cite{Ruehr1982,Gerth1988}
-surveyed the development of array semantics in APL.
-
-What we refer to as APL style indexing was first written down in the APL/360
-manual~\cite{Falkoff1968}, albeit only for rank 2 only, where indexing by a
-matrix returned a matrix. \cite{Haegi1976} noted an inconsistency . The general
-case has been termed ``scatter-point indexing'' or ``choose indexing''
-\cite{Brown1972,Ruehr1982}, and was perhaps most clearly described
-in~\cite{More1979}. \cite{Gull1979} emphasized the importance of preserving
-the rank of the index set in the rank of the output for multidimensional
-arrays.
-
-\cite{More1973} built a theory of multidimensional arrays using recursive
-nesting of one-dimensional arrays, formalized upon axiomatic set theory.
-\cite{Ghandour1973} emphasized the ordering of elements as a defining
-characteristic of arrays. \cite{Gerth1988} emphasized indexing as a function on
-arrays from index sets to value sets. We do not consider functional aspects of
-indexing in this paper.
-
-The APL literature makes some mention of linear algebra semantics, but does not
-consider the interplay with array indexing semantics.
-
-\begin{enumerate}
-\item \cite{More1973} mentions the inner product returning a scalar as an
-	important rule for guiding array semantics.
-
-\item \cite{Haegi1976} bemoans the conflation of scalars and $(1,)$-arrays in
-	classical APL.
-
-\item \cite[p. 153]{More1973} also suggests the possibility of more complicated
-	multidimensional array semantics:
-
-\begin{quote}
-Let $V$ be an $n$-dimensional vector space over a field. Disregarding
-considerations of contravariance and covariance, a tensor of valence $q$ on $V$
-is a multilinear mapping of the Cartesian product of the list $V V \dots V$ of
-length $q$ into a vector space. If $V$ has a base, then a tensor of valence $q$
-on $V$ can be represented by a \textit{component tensor}, which is an array on
-$q$ axes, each of length $n$.
-\end{quote}
-
-\end{enumerate}
-
-\section{Summary}
+\subsection{Summary}
 
 The discussion of column and row indexing rules reveals a fundamental tension
 between arrays and matrices which we believe have not been given due
