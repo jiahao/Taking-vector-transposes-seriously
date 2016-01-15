@@ -3,6 +3,9 @@ MAIN=main
 pdf: include.tex
 	latexmk -pdf $(MAIN)
 
+all: pdf
+	make -C code/programs
+
 include.tex: layout.md
 	cut -f1 -d. layout.md | sed 's/^/\\input\{/' | sed 's/$$/\}/' > include.tex
 
