@@ -602,14 +602,93 @@ One writes a linear form $\sum u_i \lambda_i$ usefully as a product of a row (u.
 
 
 
-\paragraph{Weyl (1931)~\cite{Weyl1931}}
+\paragraph{Weyl (1928)~\cite{Weyl1928,Weyl1931}}
+
+The book begins with a chapter on $n$-dimensional vector spaces.
+Vectors come first.
 
 Introduces a vector $\mathfrak x$ as ``a set of $n$ ordered numbers $(x_1, x_2 \cdots, x_n)$.
 
-The ``inner product... can be written in matrix notation as''
-$\xi^*x$ or $x^*\xi$.
+\begin{quote}
+,,So beginne ich mit der Erklärung, daß ein \textit{Vektor} $\mathfrak x$ des $n$-dimensionalen linearen Raumes
+$\mathfrak R = \mathfrak R_n$
+ein Satz von $n$ in bestimmter Reihenfolge gegebenen Zahlen $(x_1, x_2, \dots, x_n)$
+ist. Die Vektorrechnung erscheint als ein Rechnen mit solchen mehrgliedrigen
+Zahlreigen.`` - \cite[p. 4]{Weyl1928}
 
-A very curious thing: "outer or $\times$ m[ultiplication] of spaces, vectors, operators" shows up in the index of the English translation, but the word ``outer'' is absent on the cross-referenced pages both in the English and German editions. The original German editions don't have an entry with ``outer'' at all. So we must conclude that this was an invention of the English translator, who is himself a notable American physicist.
+``I begins with the explanation that a \textit{vector} $\mathfrak x$ in the $n$-dimensional
+linear space $\mathfrak R = \mathfrak R_n$ is a set of ordered numbers $(x_1, x_2, \cdots, x_n)$;
+vector analysis is the calculus of such ordered sets.`` - \cite[p. 1]{Weyl1931}
+\end{quote}
+
+Matrices are introduced in the next section in the context of ,,Lineare Abbildungen``
+(``linear maps'').
+
+Weyl explains that a $p \times n$ matrix $A$ is a mapping from a the original
+$n$-dimensional vector space $\mathfrak R$ to another $p$-dimensional vector space
+$\mathfrak S$. However, he explains that to compute the action of $A$ on $x$, one
+must first place the entries of $x$ and $y$ into column matrices, then use the
+rules of matrix multiplication to compute the product:
+
+\begin{quote}
+,,Der Matrizenkalkül stellt uns auch für die Abbildungsformeln wie [die Gleichungen]
+ eine abgekürzte Schreibweise zur Verfügung. Man verstehe nämlich unter x die Matrix, welche aus der einen von den Vektorkomponenten $x_1, x_2, \dots, x_m$ gebildeten Spalte besteht; desgleichen ordne man die Zahlen $y_k$ in eine Spalte an; $A = \Vert a_{ki} \Vert$. Dann lassen sich nach der Komositionsregel [von Matrizen] die Gleichungen [...] zusammenfassen zu $y = Ax$``''``. - \cite[p. 10]{Weyl1928}
+
+``The matrix calculus allows us to express the formul\ae for
+a linear correspondence [...] in an abbreviated form.
+We do this by denoting by $x$ that matrix whose only column consists of the
+vector components $x_1, x_2, \cdots, x_m$; similar
+for $y$. In accordance with the rule [...] for the composition of
+matrices, equations [...] can be written $y = Ax$.'' - \cite[p. 8]{Weyl1931}
+\end{quote}
+
+Weyl writes $y = A x$ for the matrix-vector product, producing another vector.
+Notably, German Gothic letters are not used. [\S 2, pp. 9-10]
+
+\S p. 13 introduces the concept of ,,duale Vektorraum'' (``dual vector space'').
+Weyl introduces ,,die \textit{duale} oder \textit{transponierte} $A^*$
+(``the \textit{dual} or \textit{transposed} matrix $A^*$'')
+as synonymous.
+p. 14: Weyl writes for $x^\prime = A x$, the corresponding transformation $x^* = x^{\prime *} A^*$
+in the dual spaces.
+Thus Weyl introduces the concept of duality without dual vectors, but rather noting
+that the entire matrix equation $x^\prime = A x$ can be transposed to yield the
+dual mapping. Weyl does not mention explicitly that $x^*$ is now a row matrix, but it is
+implicit in his description.~\footnote{There is also the possible confounding
+factor of German--English translation, as ,,Reihe`` means both ``set'' and ``row''
+in vernacular usage. The modern mathematical usage of ,,Reihe`` means ``series''.}
+
+On p. 14 he writes
+\begin{quote}
+,,Wir haben ein für allemal verabredet, die Reihe der Komponenten $x_1, x_2, \cdots, x_n$
+eines Vektors als eine Spalte aufzufasseb. Dann läßt sich das Produkt der beiden
+Vektoren $\mathfrak x$ in $\mathfrak R$ und $\mathfrak x$ in $\mathsf P$
+im Matrizenkalkül als $\xi^* x$ oder $x^* \xi$ schreiben.`` - \cite[p. 14]{Weyl1928}
+
+``We have agreed once and for all to consider the set
+$x_1, x_2, \cdots, x_n$ of components of a vector $\mathfrak x$ as a column; the
+inner product of the vector $\mathfrak x$ in $\mathfrak R$ with the vector $\mathfrak x$
+in $\mathsf P$ can therefore be written in matrix notation as $\xi^* x$ or $x^* \xi$.''
+- \cite[p. 14]{Weyl1931}
+\end{quote}
+
+\S 4 introduces the ,,skalares Produkt`` (``scalar product''):
+\begin{quote}
+,,[Die] \textit{skalares Produkt} $(\mathfrak x \mathfrak y)$ zweir Vektoren
+$\mathfrak x$ und $\mathfrak y$ [...] die zugehörige bilineare Bildung
+$(\mathfrak x \mathfrak y) = \overline x_1 y_1 + \overline x_2 y_2 + \cdots + \overline x_n y_n $.``
+- \cite[p. 15]{Weyl1928}
+
+``[T]he corresponding bilinear form
+$(\mathfrak x \mathfrak y) = \overline x_1 y_1 + \overline x_2 y_2 + \cdots + \overline x_n y_n $
+[will be taken] as the \textit{scalar product} $(\mathfrak x \mathfrak y)$ of the two vectors
+$\mathfrak x$ und $\mathfrak y$'' - cite[p. 16]{Weyl1932}
+\end{quote}
+
+\S 5, p. 20 - he writes $\alpha \cdot \mathfrak x$ for the scalar--vector product
+that is the right hand side of the eigenvalue problem. The English edition omits the dot.
+
+A very curious thing: "outer or $\times$ m[ultiplication] of spaces, vectors, operators" shows up in the index of the English translation~\cite{Weyl1931}, but the word ``outer'' is absent on the cross-referenced pages both in the English and German editions. The original German editions don't have an entry with ``outer'' at all. So we must conclude that this was an invention of the English translator, who is himself a notable American physicist.
 
 
 \paragraph{Turnbull and Aitken (1932)}
@@ -910,6 +989,65 @@ We can then regard the R-value of a vector as something [that] gives access (or 
 \end{quote}
 We recognize herein the modern description of the array data type being defined by
 two parameters: the number of dimensions and the type of elements.
+
+Does Stachey assume integer indexes?
+
+
+\paragraph{Wirth (1973)~\cite{Wirth1973}}
+
+The book ``Structured Programming'' is possibly the first major textbook on theoretical computer science, as it introduces the study of data structures and algorithms as a discipline separate from mathematics.
+
+Wirth uses a pseudocode notation inspired by ALGOL 60. He also credits Rutishauser
+in the preface as ``the originator of the idea of programming languages''.
+
+This book is notable for Ch. 11, about the array data structure, and Ch. 8, on data types and types.
+
+Types: Wirth introduces p. 44 that ``The introduction of a new variable, in particular,
+should be accompoaniend by the specificication of
+its range of possible values.'' Wirth states that doing so is necessary to understand
+how an algorithm works and its correctnes, and further allows reasoning about memory requirements
+of efficient represnetaitions.
+Wirth defines ``type'' informally as ``[t]he set of valeus that a variable may assume''. p 45
+p45 also introdyces the concept of ``scalar value'' as a value which is ``unstructured (i.e., not decomposable into components.''
+
+
+Wirth defines the array data structure as `` a collection of \textit{component variables of the same type}'' ~ Ch. 11, p. 80, being one of his primary examples of a structured type. As distinct from a file, ``Each single component of an array is explicitly denotable and directly accessible''.\footnote{Wirth also says that the number of
+components of an array is fixed once initialized, which is something we don't
+consider to be an essential characteristic of arrays anymore in the context of
+mutable lists.}
+
+Wirth says that an array type must specift rhe componen type and the index type,
+generalizing Strachey's definition to introduce possibly non-integer indexes.
+
+p 83 - gives as an example a program to compute the scalar product.
+Wirth does not refer to the arrays as vectors, but simply lists the elements of
+both vectors, each with a single subscript.
+
+p 87 - ``Components of arrays need not be scalars---they themselves may be strucutred.
+If they are again arrays, then the orrignal array $A$ is called \textit{multi-dimensional}.
+If the components of the componet arrays are scalars, then
+$A$ is called a \textit{matrix}.'' Wirth clearly defines arrays recursively.
+
+\paragraph{Becker, Chambers and Wilks (1988)~\cite{Becker1988}}
+
+The definitive book introducing the statistical programming language S in its
+modern form, which was adapted by its open source implementation, R.
+
+Notable for saying on Ch. 5, p. 128
+
+\begin{quote}
+If the matrices resulting from subscripting end up with one row or one
+column, there is a chocie to make. S can retain the matrix properties or it can
+drop one dimension to rpoduce a vector. By default, S drops these redundant,
+or ``dead,'' dimensions. [...]
+In most cases of interactive computing, that is the right choice since it tends to
+reuduce complexity---why have a 1-column matrix when a vector will do.
+\end{quote}
+
+which is not mentioned in the 1984 book.
+\todo{Are dropping dimensions mentioned in ``Extending the S System'', 1985?}
+
+\todo{EISPACK is based on Wilkinson and Reinsch, Handbook for Automatic Computation, Vol 2, Linear ALgebra, Pt 2}
 
 \cite{Landin1965}:
 \begin{quote}
