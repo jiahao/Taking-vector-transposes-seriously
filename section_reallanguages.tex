@@ -76,7 +76,7 @@ T: True, F: False
 
 
 
-\subsection{Eigen}
+\subsection{C++/Eigen}
 
 Eigen is a C++ library for high performance numerical linear
 algebra.\cite{eigenweb}\footnote{The version of Eigen tested was v3.2.6,
@@ -182,6 +182,39 @@ have the semantics of scalars. Other identities, like $(xy^\prime)z =
 x(y^\prime z)$, also fail to hold in code, since \verb|x*(y'z)| becomes the
 product of a vector with a 1-vector, which is not defined.
 
+
+\subsection{Lua/Torch}
+
+Torch is a Lua package for machine learning applications.~\cite{Torch}
+Although not designed for linear algebra per se, Torch uses numerical linear
+algebra routines heavily under the hood for fast computations.
+
+The key data structure of Torch is its \verb|Tensor| class, which implements
+the semantics of multidimensional arrays. Unlike the other languages considered
+here, Torch only defines transposition on matrices (tensors with two
+dimensions). As a result, most of the analysis about expressions and identities
+using vector transposes cannot be applied, as any expression involving a vector
+transpose produces an error.
+Instead, Torch requires the \verb|dot| method to write expressions such as the inner product,
+\verb|x:dot(y)|. \verb|x:dot(y)| can be thought of as the composition of
+\begin{enumerate}
+
+\item
+Reshaping the vector \verb|x| to a row matrix \verb|X|,
+
+\item
+Computing the matrix--vector product \verb|z = X*y|,
+
+\item
+Reshaping the 1-vector \verb|z| to a scalar.
+
+\end{enumerate}
+
+Another quirk of Torch is that binary expressions of a scalar and a tensor must
+have the tensor operand come first, due to limitations of the underlying Lua
+language, which does not allow packages to define new methods on built-in
+types such as floating-point numbers. Thus care must be taken to write
+scalar--matrix products in matrix--scalar order.
 
 
 \subsection{R}
