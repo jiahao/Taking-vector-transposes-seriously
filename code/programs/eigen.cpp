@@ -78,6 +78,8 @@ int main()
     assert (x.rows() == n); //row major
     assert (x.cols() == 1); //Note implicit singleton dimension rule
 
+    VectorXd v1 = make_vector(1);
+
     double alpha = 1.0;
     double beta = 1.0;
 
@@ -201,18 +203,49 @@ int main()
     VectorXd matscalcol = colmat*alpha;
 
     //vecmat
+
+    //You can't in the general case
     //cout << x*A << endl;
     //Result: run time assertion failure
     // Assertion failed: a_lhs.cols() == a_rhs.rows(), function ProductBase
     // invalid matrix product
     // if you wanted a coeff-wise or a dot product use the respective explicit functions
 
+    //You can if the matrix is a row matrix
+    MatrixXd vecrowmat = x*rowmat;
+    assert (vecrowmat.rows() == n);
+    assert (vecrowmat.cols() == n);
+
+
     //vecvec
+
+    //You can't in the general case
     //cout << x*x << endl;
     //Result: run time assertion failure
     // Assertion failed: a_lhs.cols() == a_rhs.rows(), function ProductBase
     // invalid matrix product
     // if you wanted a coeff-wise or a dot product use the respective explicit functions
+
+    //You can if the right vector is of length 1
+
+    //cout << v1*x << endl;
+    //Result: run time assertion failure
+    // Assertion failed: a_lhs.cols() == a_rhs.rows(), function ProductBase
+    // invalid matrix product
+    // if you wanted a coeff-wise or a dot product use the respective explicit functions
+
+    VectorXd vecv1 = x*v1;
+    assert (vecv1.rows() == n);
+    assert (vecv1.cols() == 1);
+    MatrixXd vecv1asmat = x*v1;
+    assert (vecv1asmat.rows() == n);
+    assert (vecv1asmat.cols() == 1);
+    assert (vecv1 == vecv1asmat);
+
+    //double v1v1 = v1*v1;
+    //Result: compile-time error
+    //no viable conversion from 'const typename ProductReturnType<Matrix<double, -1, 1, 0, -1, 1>, Matrix<double, -1, 1, 0, -1, 1> >::Type'
+    //(aka 'const GeneralProduct<Eigen::Matrix<double, -1, 1, 0, -1, 1>, Eigen::Matrix<double, -1, 1, 0, -1, 1>, 2>') to 'double'
 
     //vecscal
     //The result is a special type
@@ -375,7 +408,6 @@ int main()
     //Result: run-time assertion failure
     //Assertion failed: (rows() == other.rows() && cols() == other.cols()), function lazyAssign
 
-    VectorXd v1 = make_vector(1);
     //double foo = v1.transpose();
     //Result: compile-time error
     // no viable conversion from 'Eigen::Transpose<Matrix<double, -1, 1, 0, -1, 1> >' to 'double'

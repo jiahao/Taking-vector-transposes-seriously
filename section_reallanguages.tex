@@ -2,6 +2,27 @@
 
 In this section, we cover what programming languages do.
 
+\subsection{Methodology}
+
+We considered a variety of real world programming languages (with suitable libraries).
+For each system, we considered the following questions:
+
+\begin{enumerate}
+
+\item
+Does this programming language allow users to provide distinct types for scalar, vector and matrix variables?
+
+\item
+Are the multiplication, division and transposition operators defined for all possible types of variables?
+
+\item
+Can we use these multiplication, division and transposition operators to construct expressions that conform to the standard way of spelling them in numerical linear algebra and have the expected output? (For example, does \verb|x'*y| compute the inner product of \verb|x| and \verb|y|, producing a scalar?)
+
+\item
+Are standard identities in numerical linear algebra expressible in code form?
+
+\end{enumerate}
+
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|}
 \cline{2-11}
 \multicolumn{1}{l|}{} & \multicolumn{10}{l|}{ELEMENTARY BEHAVIORS}\tabularnewline
@@ -57,7 +78,7 @@ T: True, F: False
 \subsection{Eigen}
 
 Eigen is a C++ library for high performance numerical linear algebra.\cite{eigenweb}\footnote{The version of Eigen tested was v3.2.6, compiled with clang with Apple LLVM v7.0.2.
-Eigen supports vectors and matrices of fixed sizes (known at compile time) and dynamic sizes (known only at run time). Here, we consider only the dynamic classes \verb|VectorXd| and \verb|MatrixXd|, as they have the most intricate semantics.}
+Eigen supports vectors and matrices of fixed sizes (known at compile time) and dynamic sizes (known only at run time). Here, we consigider only the dynamic classes \verb|VectorXd| and \verb|MatrixXd|, as they have the most intricate semantics.}
 Eigen heavily exploits C++ expression templates to provide flexibility resulting from type polymorphism. Notably, it uses special templates (meant for internal use) to capture the result of intermediate expressions, performing what computer scientists call ``lazy evaluation''. For example, the result of the expression \verb|x.transpose()|, performing the transpose of a vector \verb|x| (of type \verb|VectorXd|) is neither a vector \verb|VectorXd| nor a matrix \verb|MatrixXd|, but rather a special type, \verb|Transpose<| \verb|VectorXd>|, that can be assigned to a new \verb|VectorXd| variable or a new \verb|MatrixXd| variable. Similar types are used to capture and build other intermediate expressions, such as \verb|ProductReturnType<MatrixXd, VectorXd>| for the matrix-vector product \verb|A*x|.
 This ingenious strategy of determining the output type only at assignment time is made possible in a static language like C++, where users are expected to specify the output type of a variable when declared.\footnote{Strictly speaking, C++ also allows for run-time polymorphism, where the output type is only determined at run time. However, the mechanisms for doing so are cumbersome and in most cases produce significant performance slowdowns.} The result is that in almost all cases, users can choose to imagine the result of most linear algebra expressions as vectors or matrices as they so choose.
 
