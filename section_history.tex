@@ -879,6 +879,43 @@ The convention for matrix variables written in capital Roman letters, vectors in
 There is also the superscript $T$ for transpose, with expressions like $x^T y$ and $1 - x y^T$.
 Although Householder never uses the term ``outer product'', we see expressions like $D - u v^T$ in the book, so we see diagonal plus rank one terms everywhere. He does not present $u v^T$ as an expression deserving of its own identity.
 
+The book begins with vectors first. Even further, Householder starts with vectors
+as abstract elements of a vector space, expanding them in a basis $\mathbf e_k$
+spanning the space (although he does not use these terms) as $\mathbf x = \sum_k \xi_k \mathbf e_k$
+and then calls the $n$-tuple of coefficients $\xi_i$ a ` ``numerical vector''
+$x$'. But then he proceeds to arrange these coefficients in a column and also
+call that ``a (numerical) vector'' (without quotation marks).
+Householder's convention here is to distinguish  ``geometrical vectors''
+like $\mathbf x$ from ``numerical vectors'' like $x$. In modern terms, we might
+say that the former are the abstract, coordinate-free represenation, and the
+latter are the concrete coordinates for a particular choice of basis.
+Householder's thinking clearly reflects that he thinks of numerical vectors in the
+``matrix first'' school while geometrical vectors belong to the ``vectors first''
+school. So even here we see an incomplete fusion of the two schools of thought.
+
+On p. 20 Householder does something strange. He writes down a quantity (2.01.13), p. 20:
+\[
+\mathbf e = \begin{pmatrix}\mathbf e_1 & \mathbf e_2 & \cdots & \mathbf e_n\end{pmatrix}
+\]
+as describes it ``formally as though it were a (numerical) row vector''.
+Householder does not say that $\mathbf e$ is a matrix.
+
+p. 22 - Householder uses ``outer product'' in Grassmann's sense, written as $[\mathbf a, \mathbf b]$.
+
+On p. 26 Householder defines the matrix transpose $M^{\mathsf T}$, and immediately
+after that writes ``In particular, if $x$ is the column vector of the $\xi_i$,
+$x^{\mathsf T} is the row vector of the $\xi_i$.'' Clearly he means that the
+transpose of a vector is a special case of the matrix transpose.
+
+He also writes, curiously, a metric matrix $G = (\gamma_{ij}) = \mathbf e^{\mathsf T} \mathbf e$,
+where $\gamma_{ij} = \mathbf e_i \mathbf e_j$ and $\mathbf e$ is the formal row vector of column vectors.
+
+p. 36 - in the discussion of the eigenvalue problem, Householder introduces a
+transposed (numerical) vector for the first time, in the expression $g^{\mathsf T}Tf$
+ in (2.06.23).
+
+ \todo{Householder's bibliography: Bodewig 1947/8, Frzer, Duncan and Collar 1946 for computation}
+
 
 
 \paragraph{Bodewig (1956/9)~\cite{Bodewig1956}}
