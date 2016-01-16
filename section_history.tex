@@ -74,9 +74,6 @@ Grossmann cited Ricci and Levi-Civita's paper on tensor analysis,~\cite{Ricci190
 Apparently independently, Gibbs's dyads...
 
 
-The first modern expression of the outer product $u v^T$ as the product of a vector and another transposed vector appears to be in Bodewig 1956\cite{Bodewig1956}, wherein it was called the simple product. \todo{Check first edition; it's in the second!}
-
-
 
 \paragraph{Möbius (1827), Calcolo geometrico}
 
@@ -883,9 +880,44 @@ There is also the superscript $T$ for transpose, with expressions like $x^T y$ a
 Although Householder never uses the term ``outer product'', we see expressions like $D - u v^T$ in the book, so we see diagonal plus rank one terms everywhere. He does not present $u v^T$ as an expression deserving of its own identity.
 
 
+
+\paragraph{Bodewig (1956/9)~\cite{Bodewig1956}}
+
+Vectors come first:
+
+\begin{quote}
+A vector $\mathbf v$ of order $n$ is an ordered set of $n$ numbers (so-called
+components) $v_1, v_2, \dots, v_n#, whose succession is significant. All $v_i$'s are here
+assumed to be \textit{real}, in general.
+
+The numbers may be arranged vertically, i.e.\ in the form of a so-called
+column, in which case they are called a column vector or briefly a
+column and are denoted by $\mathbf v$. If the numbers are arranged horizontally,
+i.e.\ in the form of a row, they are then called a row vector or briefly a
+row and are denoted by $\mathbf v^\prime$.
+
+The product $\mathbf v^\prime \mathbf w$ of a row $\mathbf v%\prime$ and a column
+$\mathbf w$ (of the same order $n$) is[...] called the scalar product of the two. It is a number.
+
+- 2/e (1959), p. 1
+\end{quote}
+
+Matrices come in chapter 2, as does the outer product $\mathbf v \mathbf w^\prime$
+on p. 10 (2/e), called a ``simple product''.
+
+This book is also notable for its preface, explaining the author's preference a
+systematic calculus of multiplication using basis vectors $\mathbf e_k$ to denote
+operations like extracting the $k$th row of $\mathbf A$ as the product $\mathbf e_k A$.
+
+...
+
+
+
 \paragraph{Faddeev and Faddeeva - \cite{Faddeev1959}}
 
 Matrices first.
+
+
 
 \paragraph{Schreier and Sperner (1959)~\cite{Schreier1959}}
 
@@ -1028,6 +1060,42 @@ If they are again arrays, then the orrignal array $A$ is called \textit{multi-di
 If the components of the componet arrays are scalars, then
 $A$ is called a \textit{matrix}.'' Wirth clearly defines arrays recursively.
 
+
+
+\paragraph{Golub and Van Loan (1983)~\cite{Golub1983}}
+
+By the time the first edition of \textit{Matrix Computations} was published,
+the notions and notations of numerical linear algebra had been firmed up in the
+form familiar to all in the field. Householder notation (capital Roman letters
+for matrices, small Roman letters for vectors and subscripted components of matrices and vectors,
+and small Greek letters for scalars, superscripted $^T$ for transpose) was widely
+if not exclusively, adhered to.
+
+Notably, matrices are introduced first in the book.
+Vectors are introduced on the second page as follows:
+%
+\begin{quote}
+$\mathbb R^m$ denotes $\mathbb R^{m\times1}$, and for these column vectors we customarily use
+lowercase letters and denote individual components with single subscripts.
+- \cite[p. 2]{Golub1983}
+\end{quote}
+%
+so clearly they still adhere to the ``matrices first'' school, thinking of both
+inner and outer products as special cases of matrix--matrix products.
+
+\todo{what do the second and third editions say?}
+
+By the fourth edition of the book they still adhere to this school of though,
+with the additional clairification
+%
+\begin{quote}
+Notice that we are identifying $\mathbb R^n$ with $\mathbb R^{m\times1}$ and so the members of $\mathbb R^n$ are
+\textit{column} vectors. On the other hand, the elements of $\mathbb R^{1\times n}$ are \textit{row} vectors[...]
+- \cite[p. 3]{Golub2013}
+\end{quote}
+%
+
+
 \paragraph{Becker, Chambers and Wilks (1988)~\cite{Becker1988}}
 
 The definitive book introducing the statistical programming language S in its
@@ -1046,6 +1114,11 @@ reuduce complexity---why have a 1-column matrix when a vector will do.
 
 which is not mentioned in the 1984 book.
 \todo{Are dropping dimensions mentioned in ``Extending the S System'', 1985?}
+
+
+
+
+
 
 \todo{EISPACK is based on Wilkinson and Reinsch, Handbook for Automatic Computation, Vol 2, Linear ALgebra, Pt 2}
 
