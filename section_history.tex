@@ -883,7 +883,9 @@ Although Householder never uses the term ``outer product'', we see expressions l
 
 \paragraph{Bodewig (1956/9)~\cite{Bodewig1956}}
 
-Vectors come first:
+Vectors come first, but $n$-tuples don't actually play a part in the exposition.
+Instead, they are glossed over immediately in favor of column vectors from the
+``matrices first'' school:
 
 \begin{quote}
 A vector $\mathbf v$ of order $n$ is an ordered set of $n$ numbers (so-called
@@ -908,8 +910,31 @@ on p. 10 (2/e), called a ``simple product''.
 This book is also notable for its preface, explaining the author's preference a
 systematic calculus of multiplication using basis vectors $\mathbf e_k$ to denote
 operations like extracting the $k$th row of $\mathbf A$ as the product $\mathbf e_k A$.
+p. 5 introduces basis vectors, $\mathbf e_k$, which he calls ``unity vectors',
+and on p. 10 the vector of all ones, $\mathbf e$. With these vectors he points
+out that you can write ``sum column'' and ``sum row'' vectors of $\mathbf M$. The
+former he writes as:
+\[
+\mathbf{Me} = \mathbf M_{.1} + \mathbf M_{.2} + \dots + \mathbf M_{.n},
+\]
+being the column vector containg the sum over all the columns, and similarly for
+the ``sum row'' vector $\mathbf{e^\prime M}$. In modern slicing notation we might
+write \verb|M[:,1]| or even $M_{:,1}$ for $\mathbf M_{.1}$.
 
-...
+On p. 13 Bodewig states that $\mathbf e^\prime_i \mathbf A = \mathbf A_{i.}$
+extracts the $i$th row of $\mathbf A$, and $\mathbf A \mathbf e_k = \mathbf A_{.k}$
+extracts the $k$th column of $\mathbf A$, and furthermore that
+$\mathbf e^\prime_i \mathbf A \mathbf e_k = a_{ij}$.
+
+On p. 14 Bodewig points out that unit matrices $\mathbf E_{ik}$, which previously
+appeared in abstract algebraic treatments, can be expressed ``as simple products
+of two unit vectors'', i.e.\ $\mathbf E_{ik} = e^\prime_i e_k$.
+
+Bodewig is very proud of his notation, saying on p. 13 that
+``[o]nly by using the formulae [above] will the calculation with matrices become a calculus.''
+
+Bodewig presents bilinear and quadratic forms as $\mathbf{x^\prime A y}$ and
+$\mathbf{x^\prime A x}$ respectively in chapter 5, p. 47.
 
 
 
