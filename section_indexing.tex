@@ -414,6 +414,189 @@ the semantics of A1.
 %END CRUFT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Matt Bauman's thoughts}
+
+There are a number of paths towards a consistent set of semantics that link
+array container behaviors with linear algebra. The most visible aspects of
+these behaviors are indexing and the vector transpose.
+
+
+There are three choices for what `v'` does when `v` is a vector with shape `(n,)`:
+
+A1. Do nothing (`v'==v`) or error right away
+A2. Return a `(1,n)` matrix
+A3. Return a special `n`-element type that acts like a one-dimensional row vector (the covector)
+
+
+There are also three choices for indexing behaviors in terms of dropping
+scalars (e.g., given `A=rand(2,3,4)`, what does `A[2,:,1]` return?):
+
+B1. Drop all scalar dimensions. `A[2,:,1]` is a `3`-element 1-dimensional thing
+B2. Drop trailing scalar dimensions. `A[2,:,1]` is a matrix with shape `(1,3)`
+B3. Never drop any scalar dimensions. `A[2,:,1]` is an array with shape `(1,3,1)`
+
+APL chooses A1 and B1. The transpose operator `⍉` is defined as a permutedims,
+reversing the order of all dimensions; as such, it has no effect on scalars or
+vectors. This means that the inner product isn't defined in terms of
+transposes... instead it's typically formulated in terms of a map-reduce style
+operation along the last and first axes (`+.×`), which is also the definition
+of matrix multiplication [microapl doc; notice how they define this in terms of
+indexed slices][1]. Similarly, the outer product (`∘.×`) is map-style operation
+defined in terms of elements in arrays [microapl doc][2], with the result being
+an array whose shape is the shape of the left argument followed by the shape of
+the right argument. More generally, reshaping (`ρ`) seems to be a fairly common
+operation, but I've never used APL myself so corrections are welcome. Taken
+together, this forms a relatively consistent universe, based upon container
+semantics. Additionally, there is a separate conjugation operator (I believe
+it's simply `+`), that must manually be applied to obtain the conjugate
+transpose (`+⍉`), so complex dot products are tricky -- you must remember to
+manually conjugate the left-hand argument.
+
+Matlab chooses A2 (well, in a way...) and B2. Matlab makes this universe
+consistent by making *everything* a matrix. "Scalars" are simply `(1,1)`
+matrices. "Vectors" are `(1,n)` or `(n,1)` matrices [Mathworks doc: Empty
+Matrices, Scalars, and Vectors][3]. In general, there is an equivalence class
+between any structure that has the same number of trailing ones. As such, there
+really is no such thing as a vector with shape `(n,)`, so they don't really
+follow rule A2 -- they don't need to worry about it at all. What this means,
+though, is that there are special cases for matrices with a singleton dimension
+that don't exist in classical linear algebra. For example, the product between
+a `(m,n)` matrix (with nonzero `m` and `n`) with a `(1,1)` matrix should be
+undefined. But in Matlab that's a scalar multiplication. Since leading
+dimensions are preserved, the row slice `A(1,:)` is still a row. Thus matrix
+multiplication can be expressed as the inner product of slices. And "vector"
+outer products `vv'` are really just matrix multiplications. Interestingly,
+Matlab tries *very* hard to preserve the orientation of vectors, at the expense
+of another special case in its indexing rules. This means that a row-vector
+obtained by the slicing operation `A(1,:)` will remain a row-vector, even after
+indexing it with a column vector. The only exception is that indexing with the
+`:` operator will indeed return a column vector. Similarly, column vectors are
+preserved in the operation `v(1:end)`, even though the range `1:end` is a row
+vector. I find it fascinating that the special case for row vectors is a direct
+consequence of supporting *linear indexing*, which would otherwise effectively
+allow you to drop the leading unity dimensions. Without support for linear
+indexing, this is an illegal operation.
+
+So that brings us to Julia. We currently use A2 and B2, but we haven't added
+all the special cases that Matlab uses in order to make this work as
+consistently as it does in Matlab: `5 ≠ [5] ≠ [5]''`. This means that there are
+valid mathematical statements that don't quite work in Julia, even though they
+are unambiguous in mathematical literature and work in Matlab. For example,
+`v * v' * w` is not associative with `v` and `w` vectors of the same length.
+Scaling matrices by the dot product (or inverse dot product) of a vector only
+works when you spell the dot product as `dot` and not `v'v`. We allow
+multiplication between `(n,) × (1,m)` (implicitly treating the vector as a
+`(n,1)` matrix), but the result of `(m,n) × (n,)` is `(m,)` (the vector dropped
+a dimension!). We'd like to fix these issues.
+
+One proposed solution is a special 1-dimensional covector type that acts like a
+transposed vector. Whereas vectors would only allow being multiplied by a
+matrix from the left (and drop a dimension), covectors would only allow
+multiplication with a matrix on the right. `(m,n) × (n,)` is an `(m,)` vector,
+but `(,m) × (m,n)` is a `(,n)` covector (please pardon the abuse of tuple
+notation as a way to express the row-ness of the covector). The inner product
+`v'v` is `(,n) × (n,)`, and returns a scalar, whereas `v v'` is `(n,) × (,n)`
+and returns an `(n,n)` matrix. Adding an extra type here does add complexity,
+but I think it could be presented in a way that most users could grasp fairly
+easily without delving into dual spaces and down-up matrices, etc (but maybe
+I'm naive).
+
+At the same time, we'd really like to change our indexing behaviors. APL-style
+indexing is a more expressive superset of our current behavior. You can
+manually retain indices by using a 1-element UnitRange. And I'd really like to
+add the capability to add dimensions by indexing by higher rank indices [see footnote]. Plus,
+"the rank of the result is the sum of the rank of the indices" is catchy and
+simple.
+
+The tricky part about APL indexing is that it loses the orientation of row
+vectors, and so we can no longer define complex matrix multiplication in terms
+of slices directly:
+
+* `A[1,:] * B[:,1]` is an illegal `(n,) × (n,)` operation.
+
+* `dot(A[1,:], B[:,1])` and `A[1,:]' * B[:,1]` erroneously conjugate the row.
+
+In general, working with complex row slices becomes dicey. When do you
+conjugate? Or (c)transpose? A solution here would be to explicitly request that
+the shapes of the slices be maintained in two dimensions: `A[1:1,:] * B[:,1:1]`
+if you want to use it as a linear algebra construct.
+
+We could have row slices return covectors, but that doesn't generalize well to
+ND arrays (what's `A[1,1,:]`? is `A[1,:,:]` a down-up matrix?). While
+reductions currently behave differently from indexing (they act like rule B3,
+retaining the rank of the source array), we could take this opportunity to make
+them drop the reduction dimension, too. This would be type stable, but only if
+reductions over rows don't return covectors. Even if we don't change the
+behavior of reductions, I believe that this is more evidence that row slices
+should return normal vectors.
+
+So, if slices of matrices will always result in vectors, I think that making
+vector transpose an error would be a tough sell... simply because we would be
+giving back returning vectors all the time with slices! An interesting
+middle-ground solution might be to only support the non-complex container
+transpose `.'` on vectors, since the need to conjugate is ambiguous and depends
+upon the context. It would return a special `RowVector` type that behaves like
+the covector above but without conjugation. I don't particularly like this,
+however, since it awkwardly straddles the two worlds of dual space linear
+algebra (like covectors, but without support for conjugation) and containers
+(but it's still just one dimension).
+
+\subsection{Review of options based upon the indexing choice}
+
+In short, I believe that dropping singleton dimensions (option B1) is
+inherently a "container" operation that is not directly compatible with linear
+algebra. Even if we also introduce covectors, I cannot see a way to generalize
+slicing behaviors that would rectify this. Folks who want to use Julia's arrays
+as linear algebra objects simply must be aware of the discrepancy between
+containers and linear algebra.
+
+I do not think that only dropping the trailing scalar dimensions matches well
+with Julia's type system. As long as dimensionality is a part of the array's
+type, Julia will never be able to go "full Matlab" and treat one-element
+matrices as scalars in a type-stable manner. As such, we'll never be able to
+make this semantic fully consistent.
+
+Always retaining the dimensionality of the source array (option B3) is an
+interesting possibility that hasn't been well explored in other systems (as far
+as I'm aware). Just as wrapping scalars in a one-element vector or UnitRange
+allows option B1 to retain dimensions on a per-axis basis, we could introduce a
+new type that explicitly drops dimensions. This still leaves something to be
+desired, however, since it requires a new `DropDimension` type that is hard to
+explain. It wouldn't be considered a scalar nor an array, but rather a
+"special" type that has its own special-cased semantics. That said, this option
+has the strong advantage that it preserves slices of matrices as one-row or
+one-column matrices. This means that no slices ever become vectors. If we wish
+to make the vector transpose an error, I think that this would be the correct
+default. Unfortunately, I think that in general use this will be very awkward.
+
+\subsection{Conclusion}
+
+My preference here is to drop all scalar dimensions, and introduce a covector
+type so we are able to holistically define a linear algebra with vectors and
+covectors.
+
+
+
+[1]: \url{http://microapl.com/apl_help/ch_020_020_880.htm}
+[2]: \url{http://microapl.com/apl_help/ch_020_020_890.htm}
+[3]: \url{http://www.mathworks.com/help/matlab/math/empty-matrices-scalars-and-vectors.html}
+[4]: \url{http://www.mathworks.com/help/matlab/math/matrix-indexing.html#f1-85553}
+
+Footnote: There are two reasons why I like supporting multidimensional
+indices. First, it's a generalization of the currently supported 1-index
+behavior, which is also shared with Matlab. Secondly, it's a very powerful and
+efficient way to express a common operation in processing biosignals: repeated
+windowing. For example, neuron spike detection is done by identifying threshold
+crossings in a recording of the extracellular potential, and then the spike
+waveform is extracted by retrieving a small subset of indices about the
+threshold crossing. This can be expressed with `data[(-10:20) .+ idxs']`, where
+`data` is the evenly sampled vector of the extracellular potential and `idxs`
+are the vector of the threshold crossings. This is possible today, but only
+with single vectors of data; generally my data are multichannel and I would
+like to operate along all channels at once or select a subset. See
+[AxisArrays.jl](https://github.com/mbauman/AxisArrays.jl) for an example where
+combining this behavior with axis information makes for very expressive code.
+
 
 
 \subsection{Summary}
