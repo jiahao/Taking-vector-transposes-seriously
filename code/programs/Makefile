@@ -1,10 +1,14 @@
-DIR_EIGEN=/usr
+DIR_EIGEN=/usr/local/Cellar/eigen/3.2.6/
 CXX=c++
 CXXOPTS=-std=c++11 -Wall -Wno-unused-variable -Wno-deprecated-declarations
+MATLAB=octave
 TORCH=$(HOME)/torch/install/bin/th
 
-all: bin/eigen3 r julia torch
+all: bin/eigen3 matlab r julia torch
 	bin/eigen3
+
+matlab: matlab.m
+	$(MATLAB) matlab.m
 
 r: R.R
 	R -f R.R > /dev/null
