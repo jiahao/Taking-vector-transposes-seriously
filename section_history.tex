@@ -1020,6 +1020,12 @@ $A = [a]^m_1 = \{a_1, a_2, \dots, a_m \}$ is a column matrix. (Also appears vert
 
 
 
+\paragraph{Manchester (1948)}
+
+The Manchester Mk I had the concept of a B-line, a memory offset register, Ref 28?
+
+
+
 \paragraph{Ritt (1950)~\cite{Ritt1950}}
 
 First use of the term ``structure constant'' ?
@@ -1176,6 +1182,21 @@ No mention of forms, inner product or outer product.
 \todo{Original first edition requested. (1931)}
 
 
+\paragraph{SODA (1959}
+
+I also found a 1959 paper about the English Electric DEUCE which
+was first produced in 1955. This paper describes a programming
+language called SODA, which has the concept of an array (see Figure
+1). Notably, the paper devotes a paragraph to explaining what an array
+is, which in modern language is a collection of data stored
+contiguously on a memory drum. This does not predate the 1954 and 1958
+dates for FORTRAN and ALGOL, but so far it is the earliest date for a
+paper that explains what an array is that I can find:
+
+\url{http://research.microsoft.com/en-us/um/people/gbell/CGB%20Files/Translation%20Routine%20for%20the%20Deuce%20Computer%20July%201959%20c.pdf}
+
+
+
 
 \paragraph{Gantmacher (1960)~\cite{Gantmacher1960}}
 
@@ -1207,6 +1228,28 @@ Gantmacher also distinguishes \cite[pp. 54-56]{Gantmacher1960} between the linea
 ``If in an $n$-dimensional space a basis $\mathbf e_1, \mathbf e_2, \dots, \mathbf e_n$ has been chosen, then to every vector $\mathbf x$ there corresponds uniquely the column $x = (x_1, x_2, \dots, \mathbf x_n)$ where $x_1, x_2, \dots, \mathbf x_n$ are the coordinates of $\mathbf x$ in the given basis. Thus, the choosing of a basis establishes a one-to-one correspondence between the vectors of an arbitrary $n$-dimensional vector space $\mathbf R$ and the vectors of the $n$-dimensional number space $\mathbb F^n$... This means that to within isomorphism there exists only one $n$-dimensional vector space of a given number field.''
 
 The fuss over the abstractions of vector space may seem fussy, but in fact it the definition of matrix multiplication arises naturally from the composition of linear operators, and is correct independent of basis. The notion of basis-independent properties is what is often neglected in computer representations, as is the notion of ``up to isomorphism'' as described by Gantmacher.
+
+
+
+\paragraph{Hockney (1961)}
+
+A 1961 paper by Hockney in the ALGOL Bulletin
+
+http://archive.computerhistory.org/resources/text/algol/algol_bulletin/AS12/AS12.HTM
+
+describes the modern concept of the array data structure as describing
+both elements and shape. Para. 3.7:
+
+“This concept of <array type> requires that an array carries with it a
+statement of its dimensions and the dimensions of any of its elements
+that may themselves be arrays... One should think of an array as the
+totality of the elements of the array together with all the bound pair
+lists describing the dimensions of the array."
+
+The term ``array'' appears to have evolved from its vernacular usage in ``array of cobscripted variables''
+
+Has the first description of a multidimensional array as parametric on indexing quantities and the element type.
+
 
 
 
