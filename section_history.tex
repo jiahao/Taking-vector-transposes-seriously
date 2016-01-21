@@ -65,7 +65,7 @@ See:
 \begin{quote}
 In 1888, Italian mathematician Giuseppe Peano formalized the first modern definition of
 vector spaces and linear transformations. Peano's formal definition of vector spaces did not gain
-much attention or popularity until 1918 when Weyl "essentially repeated Peano's axioms" in his 
+much attention or popularity until 1918 when Weyl "essentially repeated Peano's axioms" in his
 book Space-Time-Matter, and articulated an important relationship between a “systems view”
 and a “vector spaces and transformations view” of linear algebra. "Weyl then brings the subject
 of linear algebra full circle, pointing out that by considering the coefficients of the unknowns in a
@@ -129,7 +129,7 @@ May have introduced the scalar product
 \paragraph{Cauchy (1829}
 
 Possibly the first paper to couch eigenvalue problems in terms of matrices (as
-opposed to differential equations and eigenfunctions). 
+opposed to differential equations and eigenfunctions).
 
 Symmetric matrices have real eigenvalues.
 
@@ -757,6 +757,14 @@ that is the right hand side of the eigenvalue problem. The English edition omits
 A very curious thing: "outer or $\times$ m[ultiplication] of spaces, vectors, operators" shows up in the index of the English translation~\cite{Weyl1931}, but the word ``outer'' is absent on the cross-referenced pages both in the English and German editions. The original German editions don't have an entry with ``outer'' at all. So we must conclude that this was an invention of the English translator, who is himself a notable American physicist.
 
 
+
+\paragraph{Bocher (1931)}
+
+Bocher 1931 appears to have the first inkling that matrices are themselves quantities in their own right rather than simply a collection of elementary quantities - section 21 on "Matrices as complex quantities"
+
+
+
+
 \paragraph{Turnbull and Aitken (1932)}
 
 Emphasis on systematic notation for quadratic and bilinear forms as $x'Ay$.
@@ -810,6 +818,61 @@ matrices and the indeterminate product (dyad) of vectors. All the
 citations in [1] refer to Kronecker products, with the original
 citation being Zehfuss, 1858. [3] refers to Gibbs's terminology of
 dyad, also indeterminate product.
+
+
+
+\paragraph{Bartlett (1934)}
+
+For the
+inner or scalar product $\sum x_1 x_2 $
+ one common notation is $(S_1 S_2)$; but
+since we may regard $S_1$ as a matrix with one row, and $S_2$ the
+transposed matrix of $S_2$ with one column, it will be convenient here
+to write this product $S_1 S_2^\prime$, the usual matrix multiplication being
+understood.
+
+\url{http://dx.doi.org/10.1017/S0305004100012512}
+
+
+
+\paragraph{Turnbull (1934)}
+
+Turnbull 1934 appears to have popularized the notion of row/column vectors/matrices - he references Turnbull and Aitken (requested)
+
+\begin{quote}
+p14: \url{https://archive.org/stream/vectorsofmindmul010122mbp#page/n35/mode/2up}
+"A matrix that consists of a single column will be called a \textit{column vector}. A
+matrix that consists of a single row will be called a \textit{row vector}. The
+vectorial terminology is probably due to the fact that the elements in any
+array may be regarded as the Cartesian coordinates of a point in a space of as
+many dimensions as there are elements in the array. This point, together with
+the original, determines a direction in space. In this manner any array of a
+matrix can be given a vectorial interpretation."
+\end{quote}
+
+Turnbull also uses capitals for matrices and lowers for column vectors.
+
+The idea of row*column = scalar product goes all the way back to Cayley! although he did not use these names and he spelled out the elements.
+doi: 10.1098/rstl.1858.0002
+
+
+
+\paragraph{Bartlett (1938)}
+
+Notation to simplify writing col vector, write them as row vector transposed
+
+"In conformity with orthodox notation, vectors may sometimes for clarity be denoted by small letters, x, being a column vector, x' a row vector" - Bartlett, 1938 \url{https://1988c0fbd715ddc21e4eab393a153f2278df184c.googledrive.com/host/0B8_joYJa2eNzfkNIQ2ZiY1hxS0FlMTI4ZC1IYnRUZ0ttd0NrQlYxcEdMZnFSMnpYZ3ltbUE/v34/1/S0305004100019897.pdf}
+
+\url{http://dx.doi.org/10.1017/S0305004100019897}
+
+Bartlett 1934 (referenced by 1938) did not use this notation, but did use the notation $x^\prime y$ for inner product
+and also was among the first to use the notion of vector transpose.
+
+Other people who ahad the idea of a vctor transpose:
+Thomson, 1936
+\url{http://psycnet.apa.org/journals/edu/27/1/37/}
+
+
 
 \paragraph{Schwerdtfeger (1938)~\cite{Schwerdtfeger1938}}
 
@@ -898,6 +961,47 @@ Hermitian scalar product is $\mathbf x^\dagger \mathbf y$
 
 
 
+\paragraph{Ingram (1944)}
+
+Outer products
+
+TODO \url{http://www.jstor.org/stable/3029991}
+
+TODO \url{http://www.jstor.org/stable/2307548}
+
+In
+\url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1078730/}
+
+they explain their notation is a variant of Birkhoff and Langer, 1923
+
+Row vector $\cdot v$, column vector $u:$
+
+Inner product is $\cdot v u:$
+
+Outer product is $u:\cdot v$
+
+
+
+\paragraph{Schwerdtfeger (1945)}
+
+\url{http://dx.doi.org.libproxy.mit.edu/10.1063/1.1707507}
+
+A vector in the three-dimensional space will
+be represented by a column matrix
+
+where $xy'$ is the column-row product (representing
+the often so-called "dyadic product" of the
+two vectors $x$, $y$),
+
+references his own Les Fonctions de Matrices I, Actualites
+scientifiques (1938) - REQUESTED
+
+TODO \url{http://www.jstor.org/stable/2303007} (1944)
+
+TODO Householder 1950 \url{http://www.jstor.org/stable/2308297}
+
+
+
 \paragraph{Wade (1948)~\cite{Wade1948}}
 
 Cited in second edition of \cite{Margenau1943}.
@@ -937,6 +1041,15 @@ Thus ordered $n$-tuples will be regarded here as objects which may be represente
 
 p. 24, \S2-2.
 \end{quote}
+
+
+
+\paragraph{Milner (1952)}
+
+\url{http://rspa.royalsocietypublishing.org/content/214/1118/312}
+is apparently the first to express the "matrix product" of two vectors, expressed as $a \overline{a}$.
+The terms scalar product $\overline{a} b$ and matrix product are introduced.
+
 
 
 \paragraph{Householder (1953)~\cite{Householder1953}}
@@ -1404,3 +1517,7 @@ $q$ axes, each of length $n$.
 \end{quote}
 
 \end{enumerate}
+
+
+\subsection{OTHER IDENTITIES?}
+Another identity $(Au - v)^T(Au - v) = u'Au -...$
