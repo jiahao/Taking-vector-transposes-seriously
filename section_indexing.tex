@@ -599,6 +599,110 @@ combining this behavior with axis information makes for very expressive code.
 
 
 
+\section{My old notes}
+
+So far we have three distinct proposals for what $'$ means on a vector $v$:
+
+Proposal A: $'$ as identity. $v' == v$
+Proposal B: $'$ as matrix transpose. $v'$ promotes $v$ to a Matrix and computes its matrix transpose (our current behavior)
+Proposal C: $'$ as dual (adjoint). $v'$ produces a new type Covector
+
+In all three proposals, $M'$ on a matrix $M$ is what we understand by matrix transpose.
+
+I support the last proposal.
+
+The difference between the various meanings of $*$ become clear when considering abstract coordinate-free operations, where vectors are simply elements of a vector space and matrices are linear maps between elements of a vector space.
+
+We then have:
+
+- The matmul 'A*B' corresponds to the composition of the map $A : U \rightarrow V$ with the map $B : W \rightarrow Z$. The result is
+  \verb`A*B` : $U \rightarrow Im(V) \subseteq Z$ if $V \subseteq W$
+- The matvec \verb`A*u` corresponds to the application of the map $A : U \rightarrow V$ to the vector $u \in U$. The result is some $v \in V$.
+- The inner product \verb`u'*v` corresponds to the application of the map $u' : V \rightarrow F$. We say that $u' \in U*$, the space dual to $U$.
+- The outer product \verb`u*v'` corresponds to constructing a map $u*v' : V \rightarrow U$.
+- The scaling \verb`c*A == A*c` corresponds to constructing a new map $c*A : U \rightarrow V$.
+- The scaling \verb`c*u == u*c` corresponds to constructing a new element of $U$.
+- The matrix transpose \verb`A'` corresponds to the adjoint map $A' : V \rightarrow U$ with respect to an inner product $< , >`$defined by
+  \verb`<u, A*v> === <A'*u, v>` for all \verb`u` ∈ U and \verb`v` ∈ V.
+
+
+
+Vector in Julia = Vector  + basis
+
+Adjoint vs transpose
+
+Adjoint is ...
+
+Transpose is picking two indices and switching them.
+
+For rank 1:
+- adjoint makes sense - produces covector which is a linear functional.
+- Transposition is an error - there are not two indices to swap.
+
+For rank 2
+- adjoint makes sense - produces comatrix which maps covectors to covectors
+- transposition is unique
+
+For rank n:
+- Adjoint generalizes beyond rank 2 uniquelu
+- Transposition is not unique - there are (n choose 2) possible transpositions
+
+Covector = dual wrt to some dot product
+
+Interface of covector
+should only support
+*(Covector, Vector) = dot product
+*(Covector, Matrix) = Covector
+'(Covector) = vector (involution v'' == v)
+vec(Covector) = vector
+
+You can index into Covectors using (v')[1] = dot(v', e1) but in general this may NOT be a cheap operation if the covector is not defined wrt to the "ordinary" inner product, certainly more expensive than O(1). Hence
+
+
+Shape of covector?
+Stefan's question about shape is similar to quesitons about shape of Givens rotations?
+Normal equations use case
+
+
+If A is not square
+
+
+\begin{verbatim}
+|   |  Current  | Proposed   |  MATLAB |
+|---|---|---|---|---|
+| A * A[1,:]   | No    | Yes  |  No  |
+| A * A[1,:] '  | Yes   | No  |  Yes  |
+|  A[:,1] *A  |   No |   No  | No|
+|  A[:,1] '*A  | Yes  | Yes  | Yes  |
+\end{verbatim}
+
+
+and if A is square
+
+
+\begin{verbatim}
+|   |  Current  | Proposed   |  MATLAB |
+|---|---|---|---|---|
+| A * A[:,1]   | Yes   | Yes  |  Yes  |
+| A * A[:,1] '  | No   | No |  No  |
+|  A[1,:] *A  |   Yes |   No  | Yes|
+|  A[1,:] '*A  | No  | Yes  | No |
+\end{verbatim}
+
+My biggest concern is that
+
+(take a row from a 2d array) * (2d array) * (take a column from a 2d array)
+
+which is a common operation still won't work unless we take
+(take a row) with covector or perhaps better yet
+tag it with a general slot index.
+
+What dimensions to drop in indexing? "APL style" seems uncontroversial.
+What does vector' give?
+
+
+
+
 \subsection{Summary}
 
 The discussion of column and row indexing rules reveals a fundamental tension
