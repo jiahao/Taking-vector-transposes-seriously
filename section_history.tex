@@ -1085,12 +1085,63 @@ A curious footnote on p. 2 says that
     or a \textit{prime}; while a column matrix is referred to as \textit{a vector of the second kind}, or a \textit{point}.
 \end{quote}
 
-The term ``vector of the first kind'' appears in \cite{Silberstein1914} and in
-the related literature on general relativity.
+While the terms ``vector of the first/second kind'' appear in the early descriptions
+of general relativity from the 1910s, these refers to polar and axial vectors
+(vectors and pseudovectors) respectively. Since pseudovectors are formed by
+exterior products of vectors, the resulting dimensionality of the vector space
+is in general different from that of the original vector space.
+Thus, it is unclear what the origins of these names are.
 
-The only other mention of vectors of this book are in a section about rotations
-of three-dimensional vectors. The components of the vectors in a basis are
-placed in a column and referred to collectively as a matrix.
+
+
+\paragraph{MacDuffee (1943)~\cite{MacDuffee1943}}
+
+Cites \cite{Wedderburn1934}.
+
+\todo{Also cites Schreier and Sperner 1932. Requested from library}
+
+``Vectors in ordinary space'' come first, presenting 3D vectors. Then ``vectors
+in general'', in the $n$-dimensional setting. \S 7, p. 17 says
+
+\begin{quote}
+    We define an ordered set
+    \[
+        \phi = (a_1, a_2, \cdots, a_n)
+    \]
+    of $n$ numbers of a field $F$ to be a \textit{vector} of \textit{order} or
+    \textit{dimension} $n$, and call $a_1, a_2, \cdots, a_n$ its components.
+\end{quote}
+
+The inner product is $\phi\cdot\phi_1$.
+
+\begin{quote}
+\S p. 23. - A \textit{matrix} may be thought of as an ordered set of vectors. [...]
+If $A$ is an $m\times n$ array, it consists of $m$ row vectors, each of order $n$.
+If $m=1$, $A$ is an ordinary vector of order $n$, so that the concept of matrix
+generalizes the concept of vector.
+
+p. 25 - A matrix may alternatively be thought of as conssiting of a row of $l$
+columns, each column being a vector...
+\end{quote}
+
+Even here we see that the distinction between vector and (row) matrix is not
+clearly made.
+
+Description of matrix multiplication:
+
+\S pp. 26-7.
+\begin{quote}
+    We define, then, the product of two matrices $A$ and $B$, the first composed of
+    row vectors of order $m$, the second of column vectors of order $m$, to be the
+    matrix whose element in row $r$ and column $s$ is the inner product of the $r$th
+    row vector of $A$ by the $s$th column vector of $B$.
+\end{quote}
+
+At the end of the book the notion of vector space is introduced and Theorem 88
+(p. 182) proves that ``every finite vector space of dimension $n$ is isomorphic with a
+vector space of $n$-tuples of numbers of $F$ as defined in \S7.''
+(Square) matrices are introduced similarly in Theorem 89 (p. 185) as being
+isomorphic to the endomorphism ring of a vector space of dimension $n$.
 
 
 \paragraph{Wade (1948)~\cite{Wade1948}}
@@ -1417,7 +1468,7 @@ Vectors come first, but they have distinct columnness. In particular, p. 2:
 p. 21 - Definiion 3.1 An $m\times n$ \textit{matrix} is a rectangualr array of numbers
 having $m$ rows and $n$ columns.
 
-p. 21 - Example 3.2. The $n\times1$ matrix $A$ [...] looks exactly like a member of \mathbbR^n. In this book
+p. 21 - Example 3.2. The $n\times1$ matrix $A$ [...] looks exactly like a member of $\mathbb R^n$. In this book
 we shall not distinguish between $n\times1$ matrices and $n$-vectors; they will be denoted by
 upper or lower case Latin letters as convenience dictates.
 
