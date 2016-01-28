@@ -242,11 +242,15 @@ Ausdehnungslehre I introduces the concept of outer multiplication (,,äussere Mu
  ,,innere Produkt`` inner product $a \times b$, and the
  ,,innere Quadrat`` inner square $a^2 = a \times a$.
 
+
+
 \paragraph{Hamilton (1847)~\cite{Hamilton1847}}
 
 Introduces the term ``scalar product'' as part of the quaternion product.
 \S. 12 introduces the term ``scalar product'' for the case of parallel vectors (which differs from modern usage by a negative sign).
 He does not appear to have introduced the general case of non-parallel vectors.
+
+
 
 \paragraph{Cauchy (1847)~\cite{Cauchy1847}}
 
@@ -264,13 +268,15 @@ analytiques} dont les diverses coodonn\'ees e'exprimeront \`a l'aide de
 fontions lin\'eares donn\'ees de l'une d'entre elles.
 \end{quote}
 
+
+
 \paragraph{Sylvester (1850)~\cite{Sylvester1850}}
 
 Introduces the term matrix~\cite[p. 150]{Sylvester1850}:
 
 \begin{quote}
-For this purpose we must commence, not
-with a square, but with an oblong arrangement of terms consisting, suppose,
+For this purpose we must commence, not with a square, but with an oblong arrangement
+of terms consisting, suppose,
 of $m$ lines and $n$ columns. This will not in itself represent a determinant,
 but is, as it were, a Matrix out of which we may form various systems of
 determinants by fixing upon a number $p$, and selecting at will $p$ lines and $p$
@@ -288,7 +294,6 @@ terms, out of which different systems of determinants may be engendered,
 as from the womb of a common parent[...] - p. 247
 \end{quote}
 
-\paragraph{Cauchy (1853)~\cite{Cauchy1853}.} clefs algébriques??? influenced Grassmann 1862 for notation in the inner product???
 
 
 \paragraph{Cayley (1855)~\cite{Cayley1855}}
@@ -640,6 +645,73 @@ They are familiar with the notions of vector analysis, but mainly in 3 and 4 dim
 
 
 
+\paragraph{Schreier and Sperner (1931)~\cite{Schreier1931}}
+
+Vectors come first. They have a very careful treatment building from coordinates
+to vectors and finally matrices.
+
+Schreier and Sperner begin with the concept of $n$-dimensional affine space
+as a collection of $n$-tuples: p. 9
+
+\begin{quote}
+    Ein geordnetes $n$-Tupel reeller Zahlen, d.\ i.\ ein System $(x_1, x_2, \dots, x_n)$
+    von $n$ reellen Zahlen in bestimmter Reigenfolge, heißt \textit{Punkt} [...]
+    Die Zahlen $x_1, x_2, \dots, x_n$ heißen \textit{Koordinaten} des Punktes [...]
+    Die Gesamtheit aller $n$-Tupel reeler Zahlen heißt \textbf{der affine
+    Raum von $n$ Dimensionen}.
+
+    An ordered $n$-tuple of real numbers, i.\ e.\ a system $(x_1, x_2, \dots, x_n)$ of
+    $n$ real numbers in a specific order, is called a \textit{point} [...]
+    The numbers $ x_1, x_2, \ dots, x_n$ are called \textit{coordinates} of the point [...]
+    The set of all $n$-tuples of real numbers is called \textbf{the affine
+    space of $n$ dimensions}.
+\end{quote}
+
+They then introduce vectors ,,von der Anschauung ans`` (``intuitively'') through a discussion of
+the coordinate geometry of three-dimensional Euclidean space, before introducing
+vectors as ordered line segments between points in an affine space. Next, they
+introduce the notion of linear dependence of vectors, then describe ``lineare
+Raume'' (``linear spaces'') that are essentially our modern linear vector spaces,
+and finally systems of linear equations and their encodings in matrix form as
+,,[ein] rechteckiges Schema von Zahlen oder Elementen`` (``a rectangular scheme
+of numbers or elements'', p. 37).
+Only then do they introduce the fact that the columns of a matrix are then vectors
+in their own right because they obey the peropeties of a linear space.
+
+\begin{quote}
+    Einer jeden Spalte der Matrix ordnen wir jetzt einen Vektor zu, und zwar der
+    $k$-ten Spalte den Vektor der die Elemente der $k$-ten Spalte der Reihe nach
+    zu Komponenten hat. Diese \textit{Spaltenvektoren} $\mathfrak a_k$ sind
+    $m$-dimensionale Vektoren.
+
+    To each column of the matrix we assign a vector, namely to the $k$-th column
+    the vector with the components of the $k$-th column sequentially.
+    These \textit{column vectors} $\mathfrak a_k$ are $m$-dimensional vectors.
+
+    p. 37
+\end{quote}
+
+
+Interestingly, matrix multiplication does not show up until much later in the
+discussion of the algebraic properties of linear transformations. After being
+encoded into matrices, they then introduce the product of two (square) matrices.
+
+They write, II. \S 5 p.50,
+
+\begin{quote}
+Das Element in der $i$-ten Zeile und $k$-ten Spalte der Productmatrix ist das
+Skalarprodukt des $i$-ten Zeilenvektor $\{a_{i1}, a_{i2}, \dots, a_{in}\}$
+von $A$ met dem $k$-ten Spaltenvektor $\{b_{1k}, b_{2k}, \dots, b_{nk}\}$ von $B$.
+
+Das erinnert an die Multiplikation von Determinanten.
+
+The element in the $i$-th row and $k$-th column of the product matrix is the
+scalar product of the $i$-th row vector $\{a_{i1}, a_{i2}, \dots, a_{in}\}$ of $A$
+and the $k$-th column vector $\{b_{1k}, b_{2k}, \dots, b_{nk}\}$ of $B$.
+\end{quote}
+
+
+
 \paragraph{Van der Waerden (1930/1)~\cite{vdWaerden1930,vdWaerden1931}}
 
 Vectors came first!
@@ -778,14 +850,14 @@ They credit Cullis for his emphasis on the algebra of rectangular matrices. Alth
 preface mentions bilinear and quadratic forms (not sure if book does)
 probably quoting eisenstein
 
-"Denote by (x) the vector or one-column array" - p10
+``Denote by (x) the vector or one-column array'' - p10
 
-"A matrix is often considered as a linear vector function." - p16
+``A matrix is often considered as a linear vector function.'' - p16
 
-"A matrix may be interpreted as a linear homogeneous transformation in
+``A matrix may be interpreted as a linear homogeneous transformation in
 vector space. From this point of view similar matrices represent the
 same transformation referred to different bases. All the theorems of
-this chapter may be interpreted from this standpoint." - p68
+this chapter may be interpreted from this standpoint.'' - p68
 
 Starts with the abstract axioms of linear algebra and shows that the algebra may be represented by naturally by matrices and matrix multiplication. Also defines array as an ordered set with a known number of elements.
 
@@ -801,10 +873,10 @@ Using the $S$-prefix notation for scalar product he also writes the bilinear for
 
 He calls the outer product a ``tensor product'' (\S 5.09, pp. 72-73).
 
-Alternates between "vectors"
-and "hypernumbers". On p72, Sec 5.09, he defined "vector products" as
-"tensor product". He attributed in Footnote 3 that Grassmann invented
-this product as the "general product" or "indeterminate product".
+Alternates between ``vectors''
+and ``hypernumbers''. On p72, Sec 5.09, he defined ``vector products'' as
+``tensor product''. He attributed in Footnote 3 that Grassmann invented
+this product as the "general product'' or ``indeterminate product''.
 
 Follows \cite{Scheffers1889}.
 
@@ -812,7 +884,7 @@ Follows \cite{Scheffers1889}.
 
 \paragraph{King (1934)}
 
-A chemistry paper from 1934 using the term "outer product" in
+A chemistry paper from 1934 using the term ``outer product'' in
 our modern usage. which notes that it is closely related to both Kronecker products on
 matrices and the indeterminate product (dyad) of vectors. All the
 citations in [1] refer to Kronecker products, with the original
@@ -1422,8 +1494,6 @@ Moser - A-2 compiler (1954) and one other thing
 mention of array o subscript variables?
 
 \todo{TAoCP v3 credits Von Neumann with inventing merge sort. Did he also invent the array?}
-
-\todo{De Bakker 1967 requested; does it mention vectors as data types?}
 
 Algol 1958 - array variables may be multidimensional, must correspond to subscripted variable with as many empty parameter positions as dimensions.
 In other words, the dimensionality of an array in Algol is crucial to determine how many indexes to supply.
