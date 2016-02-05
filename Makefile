@@ -7,7 +7,9 @@ all: pdf
 	make -C code/programs
 
 check:
-	biber --tool -V bibliography/*.bib
+	chktex -n1 -n2 -n8 -n11 -n12 -n13 -n14 -n26 -n34 -n33 -n36 -n40 main
+	biber --tool -V bibliography/biblio.bib
+	rm -f bibliography/biblio_bibertool.bib
 
 lint:
 	biber --tool bibliography/biblio.bib --output-fieldcase=lower --isbn-normalise
