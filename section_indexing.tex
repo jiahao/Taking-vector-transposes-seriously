@@ -71,13 +71,13 @@ The astute reader would have noted that in going from \eqref{eq:idx2} to
 extracted rows of a matrix for subcomputations of the form \eqref{eq:v'}.
 Whereas $(e_1)$ is an $n \times 1$ matrix, $e_1$ is an $(n,)$-vector. This
 distinction is glossed over by numerical analysts, but the conflation of these
-two objects poses a problem for computer scientists: $(e_1)^\prime$ must be
+two objects poses a problem for computer scientists: ${(e_1)}^\prime$ must be
 a $1 \times n$ matrix from the rules of matrix transposition, but what then is
 $e_1^\prime$? Recall that the transpose of an $m \times n$ matrix $A$ is an
 $n \times m$ matrix $A^\prime$ whose element in the $i$th row and $j$th column
 is
 \begin{equation}
-	\left(A^\prime\right)_{ij} = A_{ji}.\label{eq:A'}
+	{\left(A^\prime\right)}_{ij} = A_{ji}.\label{eq:A'}
 \end{equation}
 Transposition clearly swaps the two indexes. But what should transposition do
 for an $(n,)$-vector, which has only one dimension?
@@ -111,7 +111,7 @@ Transposing a vector, \lstinline|v^\prime|, returns an object of shape $(n,)$,
       that lies outside our current system.\label{rule:v'3}
 %\end{enumerate}
 %
-\todo{T2 requires a cast of v vector into (v,) matrix. then you transpose it.}
+\todo{T2 requires a cast of v vector into (v,) matrix, then you transpose it.}
 
 \ref{rule:v'2} follows naturally from \ref{rule:col2} and the definition of
 matrix transposition in \eqref{eq:A'}, which swaps the indexes. Similarly,
@@ -290,7 +290,7 @@ correctly excludes all erroneous products.
 Vectors are also defined
 by taking rows and columns of matrices. A typical linear algebra text
 introduces notation for columns of a matrix by rewriting a matrix $A$ as
-$A = [a_1, a_2, \dots, a_n]$ or even ~\cite[for example,
+$A = [a_1, a_2, \dots, a_n]$ or even~\cite[for example,
 p. 6]{Trefethen1997}
 \[
 A = \left[\left.\begin{array}{c}
@@ -317,8 +317,7 @@ a_2\\
 a_n\\
 \\
 \\
-\end{array}\right]
-	.\label{eq:cols}
+\end{array}\right].\label{eq:cols}
 \]
 %
 $a_k$ is therefore a vector that is the $k$th column of $A$.  Thus we can see that
@@ -337,7 +336,7 @@ Matrices have a natural representation in 2-arrays:
 An $m \times n$ matrix $A$ with $m$ rows and $n$ columns can be
 	represented by a $(m,n)$-array, i.e.\ an array of rank 2, size $m$ in
 	the first dimension, and size $n$ in the second
-	dimension).\label{rule:mat}
+	dimension.\label{rule:mat}
 %\end{enumerate}
 
 
@@ -357,7 +356,7 @@ An $m \times n$ matrix $A$ with $m$ rows and $n$ columns can be
 
 \ref{rule:col1} is a special case of the indexing rule where the rank of the
 result is the sum of the ranks of the indexes. This indexing rule is used by
-some languages such as APL. The history of this rule is discussed in
+some languages such as APL.\@ The history of this rule is discussed in
 related work.
 
 It is tempting to generalize \ref{rule:v'1} to arrays of general rank, by
@@ -395,7 +394,7 @@ consider the Rayleigh quotient, denoted $v^{\prime}Av/v^{\prime}v$.
 If $v^{\prime}v$ produced a scalar, the quotient can produce a scalar.
 Similarly, if $v^{\prime}v$ produced a $\left(1,1\right)$-array,
 we can interpret the result as a $1\times1$ matrix and interpret
-the division $/$ as a matrix-matrix right division, i.e. the operation
+the division $/$ as a matrix-matrix right division, i.e.\ the operation
 $A/B=AB^{-1}$. However, if $v^{\prime}v$ produced a $\left(1,\right)$-array,
 the usual correspondence to a 1-vector causes this operation to be
 undefined, since right division by a vector is undefined. A $(1,)$-array
@@ -453,8 +452,8 @@ transpose (`+⍉`), so complex dot products are tricky -- you must remember to
 manually conjugate the left-hand argument.
 
 Matlab chooses A2 (well, in a way...) and B2. Matlab makes this universe
-consistent by making *everything* a matrix. "Scalars" are simply `(1,1)`
-matrices. "Vectors" are `(1,n)` or `(n,1)` matrices [Mathworks doc: Empty
+consistent by making *everything* a matrix. ``Scalars'' are simply `(1,1)`
+matrices. ``Vectors'' are `(1,n)` or `(n,1)` matrices [Mathworks doc: Empty
 Matrices, Scalars, and Vectors][3]. In general, there is an equivalence class
 between any structure that has the same number of trailing ones. As such, there
 really is no such thing as a vector with shape `(n,)`, so they don't really
@@ -464,7 +463,7 @@ that don't exist in classical linear algebra. For example, the product between
 a `(m,n)` matrix (with nonzero `m` and `n`) with a `(1,1)` matrix should be
 undefined. But in Matlab that's a scalar multiplication. Since leading
 dimensions are preserved, the row slice `A(1,:)` is still a row. Thus matrix
-multiplication can be expressed as the inner product of slices. And "vector"
+multiplication can be expressed as the inner product of slices. And ``vector''
 outer products `vv'` are really just matrix multiplications. Interestingly,
 Matlab tries *very* hard to preserve the orientation of vectors, at the expense
 of another special case in its indexing rules. This means that a row-vector
@@ -505,7 +504,7 @@ At the same time, we'd really like to change our indexing behaviors. APL-style
 indexing is a more expressive superset of our current behavior. You can
 manually retain indices by using a 1-element UnitRange. And I'd really like to
 add the capability to add dimensions by indexing by higher rank indices [see footnote]. Plus,
-"the rank of the result is the sum of the rank of the indices" is catchy and
+``the rank of the result is the sum of the rank of the indices'' is catchy and
 simple.
 
 The tricky part about APL indexing is that it loses the orientation of row
@@ -544,7 +543,7 @@ algebra (like covectors, but without support for conjugation) and containers
 \subsection{Review of options based upon the indexing choice}
 
 In short, I believe that dropping singleton dimensions (option B1) is
-inherently a "container" operation that is not directly compatible with linear
+inherently a ``container'' operation that is not directly compatible with linear
 algebra. Even if we also introduce covectors, I cannot see a way to generalize
 slicing behaviors that would rectify this. Folks who want to use Julia's arrays
 as linear algebra objects simply must be aware of the discrepancy between
@@ -552,7 +551,7 @@ containers and linear algebra.
 
 I do not think that only dropping the trailing scalar dimensions matches well
 with Julia's type system. As long as dimensionality is a part of the array's
-type, Julia will never be able to go "full Matlab" and treat one-element
+type, Julia will never be able to go ``full Matlab'' and treat one-element
 matrices as scalars in a type-stable manner. As such, we'll never be able to
 make this semantic fully consistent.
 
@@ -563,7 +562,7 @@ allows option B1 to retain dimensions on a per-axis basis, we could introduce a
 new type that explicitly drops dimensions. This still leaves something to be
 desired, however, since it requires a new `DropDimension` type that is hard to
 explain. It wouldn't be considered a scalar nor an array, but rather a
-"special" type that has its own special-cased semantics. That said, this option
+``special'' type that has its own special-cased semantics. That said, this option
 has the strong advantage that it preserves slices of matrices as one-row or
 one-column matrices. This means that no slices ever become vectors. If we wish
 to make the vector transpose an error, I think that this would be the correct
@@ -615,7 +614,7 @@ The difference between the various meanings of $*$ become clear when considering
 
 We then have:
 
-- The matmul 'A*B' corresponds to the composition of the map $A : U \rightarrow V$ with the map $B : W \rightarrow Z$. The result is
+- The matmul \verb`A*B` corresponds to the composition of the map $A : U \rightarrow V$ with the map $B : W \rightarrow Z$. The result is
   \verb`A*B` : $U \rightarrow Im(V) \subseteq Z$ if $V \subseteq W$
 - The matvec \verb`A*u` corresponds to the application of the map $A : U \rightarrow V$ to the vector $u \in U$. The result is some $v \in V$.
 - The inner product \verb`u'*v` corresponds to the application of the map $u' : V \rightarrow F$. We say that $u' \in U*$, the space dual to $U$.
@@ -644,7 +643,7 @@ For rank 2
 - transposition is unique
 
 For rank n:
-- Adjoint generalizes beyond rank 2 uniquelu
+- Adjoint generalizes beyond rank 2 uniquely
 - Transposition is not unique - there are (n choose 2) possible transpositions
 
 Covector = dual wrt to some dot product
@@ -656,11 +655,13 @@ should only support
 '(Covector) = vector (involution v'' == v)
 vec(Covector) = vector
 
-You can index into Covectors using (v')[1] = dot(v', e1) but in general this may NOT be a cheap operation if the covector is not defined wrt to the "ordinary" inner product, certainly more expensive than O(1). Hence
+You can index into Covectors using (v')[1] = dot(v', e1) but in general this
+may NOT be a cheap operation if the covector is not defined wrt to the
+``ordinary'' inner product, certainly more expensive than O(1). Hence
 
 
 Shape of covector?
-Stefan's question about shape is similar to quesitons about shape of Givens rotations?
+Stefan's question about shape is similar to questions about shape of Givens rotations?
 Normal equations use case
 
 
@@ -697,7 +698,7 @@ which is a common operation still won't work unless we take
 (take a row) with covector or perhaps better yet
 tag it with a general slot index.
 
-What dimensions to drop in indexing? "APL style" seems uncontroversial.
+What dimensions to drop in indexing? ``APL style'' seems uncontroversial.
 What does vector' give?
 
 

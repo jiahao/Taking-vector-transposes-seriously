@@ -1,26 +1,50 @@
 \section{Real programming languages}
 
-Problems arise when trying to implement linear algebra on arrays, which are data structures defined by their indexing behavior. In particular, array data structures have a specific dimensionality specifying the number of indexes needed to address elements in the array~\footnote{The array is such a fundamental data structure that it is difficult to pin down a concrete definition. Nevertheless, the early implementations of arrays in languages such as FORTRAN~\cite[p36]{Backus1956} and ALGOL~60~\cite[Sec. 2.3]{Randell1964} make clear that indexing by a fixed number of integers is the most primitive operation associated with an array.}. While in the mathematical literature the distinction between ``column vector'' and ``column matrix'' is often glossed over, these terms now refer to two different possible representations as one- and two-dimensional arrays respectively. If a column vector can be represented as a one-dimensional array, there is also the question of whether ``row vectors'' can be meaningfully represented using one-dimensional arrays also. Furthermore, there is the question of whether a scalar product, by analogy with matrix multiplication, should return a true scalar (a 0-dimensional array) or a $1\times1$ matrix (a two-dimensional array).
+Problems arise when trying to implement linear algebra on arrays, which are
+data structures defined by their indexing behavior. In particular, array data
+structures have a specific dimensionality specifying the number of indexes
+needed to address elements in the array~\footnote{The array is such a
+fundamental data structure that it is difficult to pin down a concrete
+definition. Nevertheless, the early implementations of arrays in languages such
+as FORTRAN~\cite[p36]{Backus1956} and ALGOL~60~\cite[Sec. 2.3]{Randell1964}
+make clear that indexing by a fixed number of integers is the most primitive
+operation associated with an array.}. While in the mathematical literature the
+distinction between ``column vector'' and ``column matrix'' is often glossed
+over, these terms now refer to two different possible representations as one-
+and two-dimensional arrays respectively. If a column vector can be represented
+as a one-dimensional array, there is also the question of whether ``row
+vectors'' can be meaningfully represented using one-dimensional arrays also.
+Furthermore, there is the question of whether a scalar product, by analogy with
+matrix multiplication, should return a true scalar (a 0-dimensional array) or a
+$1\times1$ matrix (a two-dimensional array).
 
-It turns out that various programming languages and libraries used for numerical computing implement many different approaches to the problem of representing vectors.
+It turns out that various programming languages and libraries used for
+numerical computing implement many different approaches to the problem of
+representing vectors.
 
 In this section, we cover what programming languages do.
 
 \subsection{Methodology}
 
-We considered a variety of real world programming languages (with suitable libraries).
-For each system, we considered the following questions:
+We considered a variety of real world programming languages (with suitable
+libraries).  For each system, we considered the following questions:
 
 \begin{enumerate}
 
 \item
-Does this programming language allow users to provide distinct types for scalar, vector and matrix variables?
+Does this programming language allow users to provide distinct types for
+scalar, vector and matrix variables?
 
 \item
-Are the multiplication, division and transposition operators defined for all possible types of variables?
+Are the multiplication, division and transposition operators defined for all
+possible types of variables?
 
 \item
-Can we use these multiplication, division and transposition operators to construct expressions that conform to the standard way of spelling them in numerical linear algebra and have the expected output? (For example, does \verb|x'*y| compute the inner product of \verb|x| and \verb|y|, producing a scalar?)
+Can we use these multiplication, division and transposition operators to
+construct expressions that conform to the standard way of spelling them in
+numerical linear algebra and have the expected output? (For example, does
+\verb`x'*y` compute the inner product of \verb`x` and \verb`y`, producing a
+scalar?)
 
 \item
 Are standard identities in numerical linear algebra expressible in code form?
@@ -32,21 +56,21 @@ Are standard identities in numerical linear algebra expressible in code form?
 \multicolumn{1}{l|}{} & \multicolumn{10}{l|}{ELEMENTARY BEHAVIORS}\tabularnewline
 \cline{2-11}
 \multicolumn{1}{l|}{} & A{*}B & A{*}b & 1{*}a & a{*}1 & a{*}b & a{*}B & A' & a' & A/B & 1/1\tabularnewline
-\hline
+\midrule
 Julia & M & V & V & V & E & M{*} & M & M & M & S\tabularnewline
-\hline
+\midrule
 Lua/Torch & M & V & \textbf{E} & V & S & E & M & E & E & S\tabularnewline
-\hline
+\midrule
 Mathematica & M & V & V & V & E & V & M & V & M & S\tabularnewline
-\hline
+\midrule
 Matlab & M & - & - & - & - & - & M & - & M & -\tabularnewline
-\hline
+\midrule
 NumPy & M & V & V & V & S & M & M & V & E & S\tabularnewline
-\hline
+\midrule
 Python 3.5 & M & V & V & V & S & M & M & V & E & S\tabularnewline
-\hline
+\midrule
 R & M & M & - & - & E & M{*} & M & M & M & -\tabularnewline
-\hline
+\midrule
 \end{tabular}
 
 M: Matrix, V: Vector, S: Scalar, E: Error, M{*}: matrix only if second
@@ -59,21 +83,21 @@ argument is 1xN, otherwise error, -: Concept does not exist
 \multicolumn{1}{l|}{} & \multicolumn{4}{l|}{EXPRESSIONS} & \multicolumn{3}{l|}{IDENTITIES}\tabularnewline
 \cline{2-8}
 \multicolumn{1}{l|}{} & a'{*}b & a{*}b' & x'{*}A{*}y & x'{*}A{*}x/x'{*}x & (x{*}y'){*}z = x{*}(y'{*}z) & x''=x & (A{*}x)'=(x'{*}A')\tabularnewline
-\hline
+\midrule
 Julia & \textbf{V} & M & \textbf{V} & \textbf{E} & \textbf{E} & F & T\tabularnewline
-\hline
+\midrule
 Lua/Torch & S & \textbf{S} & E & \textbf{E} & \textbf{E} & T & \textbf{F}\tabularnewline
-\hline
+\midrule
 Mathematica & S & \textbf{S} & S & S & V & T & T\tabularnewline
-\hline
+\midrule
 Matlab & M & M & M & M & M & T & T\tabularnewline
-\hline
+\midrule
 NumPy & S & \textbf{S} & S & S & V & T & T\tabularnewline
-\hline
+\midrule
 Python 3.5 & S & \textbf{S} & S & S & V & T & T\tabularnewline
-\hline
+\midrule
 R & M & M & M & M & M & \textbf{F} & T\tabularnewline
-\hline
+\midrule
 \end{tabular}
 
 T: True, F: False
@@ -94,13 +118,13 @@ Eigen heavily exploits C++ expression templates to provide flexibility
 resulting from type polymorphism. Notably, it uses special templates (meant for
 internal use) to capture the result of intermediate expressions, performing
 what computer scientists call ``lazy evaluation''. For example, the result of
-the expression \verb|x.transpose()|, performing the transpose of a vector
-\verb|x| (of type \verb|VectorXd|) is neither a vector \verb|VectorXd| nor a
-matrix \verb|MatrixXd|, but rather a special type, \verb|Transpose<|
-\verb|VectorXd>|, that can be assigned to a new \verb|VectorXd| variable or a
-new \verb|MatrixXd| variable. Similar types are used to capture and build other
-intermediate expressions, such as \verb|ProductReturnType<MatrixXd, VectorXd>|
-for the matrix-vector product \verb|A*x|.  This ingenious strategy of
+the expression \verb`x.transpose()`, performing the transpose of a vector
+\verb`x` (of type \verb`VectorXd`) is neither a vector \verb`VectorXd` nor a
+matrix \verb`MatrixXd`, but rather a special type, \verb`Transpose<`
+\verb`VectorXd>`, that can be assigned to a new \verb`VectorXd` variable or a
+new \verb`MatrixXd` variable. Similar types are used to capture and build other
+intermediate expressions, such as \verb`ProductReturnType<MatrixXd, VectorXd>`
+for the matrix-vector product \verb`A*x`.  This ingenious strategy of
 determining the output type only at assignment time is made possible in a
 static language like C++, where users are expected to specify the output type
 of a variable when declared.\footnote{Strictly speaking, C++ also allows for
@@ -119,9 +143,9 @@ compatible shape and so on. Many new methods have to be introduced to overload
 C++'s assignment and equality testing operators. Furthermore, the assignment
 logic of vector transpose is ambiguous and may lead to subtle logic errors
 because the result of assignment may violate user expectations of the
-transitivity of equality. In Eigen, the result of \verb|x.transpose()| can be
-assigned to either a \verb|VectorXd| variable or \verb|MatrixXd| variable,
-i.e.\ , both of the following statements are valid:
+transitivity of equality. In Eigen, the result of \verb`x.transpose()` can be
+assigned to either a \verb`VectorXd` variable or \verb`MatrixXd` variable,
+i.e., both of the following statements are valid:
 
 \begin{verbatim}
 
@@ -130,9 +154,17 @@ MatrixXd Y = x.transpose();
 
 \end{verbatim}
 %
-However, the shapes of \verb|y| and \verb|Y| differ: the former has $n$ rows and 1 column\footnote{Eigen defaults to column vectors and employs an implicit trailing singleton dimension rule similar to \sc{MATLAB}'s.} whereas the latter has 1 row and $n$ columns. In other words, the type of the variable being assigned to determines whether transposing a vector is the identity operation or produces a row matrix!
+However, the shapes of \verb`y` and \verb`Y` differ: the former has $n$ rows
+and 1 column\footnote{Eigen defaults to column vectors and employs an implicit
+trailing singleton dimension rule similar to \sc{MATLAB}'s.} whereas the latter
+has 1 row and $n$ columns. In other words, the type of the variable being
+assigned to determines whether transposing a vector is the identity operation
+or produces a row matrix!
 
-We find that unexpected behavior may result from the logic above. For example, the identity $(Ax)^\prime = x^\prime A^\prime$ may or may not hold depending on whether the expressions on either side have been assigned to variables, and if so, which variables:
+We find that unexpected behavior may result from the logic above. For example,
+the identity ${(Ax)}^\prime = x^\prime A^\prime$ may or may not hold depending on
+whether the expressions on either side have been assigned to variables, and if
+so, which variables:
 %
 \begin{verbatim}
 
@@ -154,9 +186,14 @@ assert (m1 == v2); // assertion failure
 
 \end{verbatim}
 %
-The equality comparison operator \verb|==| must be suitably defined to understand when two values with complicated and different types can test equal to each other in the three cases above that do not trigger the assertion failure. Furthermore, the result of assigning \verb|(A*x).transpose()| to  \verb|v1| produces a column vector effectively equal to \verb|A*x|,
-but the assignment to \verb|m1| produces a row matrix that is the transpose of \verb|v1|.
-A similar result arises for \verb|v2| and \verb|m2|, with the result that the
+The equality comparison operator \verb`==` must be suitably defined to
+understand when two values with complicated and different types can test equal
+to each other in the three cases above that do not trigger the assertion
+failure. Furthermore, the result of assigning \verb`(A*x).transpose()` to
+\verb`v1` produces a column vector effectively equal to \verb`A*x`, but the
+assignment to \verb`m1` produces a row matrix that is the transpose of
+\verb`v1`.
+A similar result arises for \verb`v2` and \verb`m2`, with the result that the
 equality holds only when neither side is assigned to a vector or matrix
 variable, or when both sides are assigned to variables of the same type. In
 this case, users may be confused as to why certain quantities may not be equal
@@ -169,21 +206,21 @@ expressions.
 Julia is a dynamic for technical computing, whose base library features
 generous functionality for linear algebraic operations.~\cite{Bezanson2012}
 
-Julia's multiplication operator, \verb|*|, implements matrix--matrix and
+Julia's multiplication operator, \verb`*`, implements matrix--matrix and
 matrix--vector products, as well as scalings of vectors and matrices, on top of
 ordinary scalar multiplication.
-Julia's division \verb|x/y| is equivalent to multiplication of \verb|x| by the
-inverse of \verb|y| on the right. For non-scalar \verb|y|, the inverse is
+Julia's division \verb`x/y` is equivalent to multiplication of \verb`x` by the
+inverse of \verb`y` on the right. For non-scalar \verb`y`, the inverse is
 generalized to matrix inverses and pseudoinverses (in the least-squares sense)
 where appropriate.
-Julia's transposition operator, \verb|'|, promotes vectors to column matrices
+Julia's transposition operator, \verb`'`, promotes vectors to column matrices
 before transposing them. Thus we have that vector transposition is not
-idempotent, \verb|x''|$\ne$\verb|x|.
+idempotent, \verb`x''`$\ne$\verb`x`.
 
 Julia's current semantics lead to some unexpected behavior. Expressions like
-\verb|a'*b| for the inner product produce a vector of length 1, which do not
+\verb`a'*b` for the inner product produce a vector of length 1, which do not
 have the semantics of scalars. Other identities, like $(xy^\prime)z =
-x(y^\prime z)$, also fail to hold in code, since \verb|x*(y'z)| becomes the
+x(y^\prime z)$, also fail to hold in code, since \verb`x*(y'z)` becomes the
 product of a vector with a 1-vector, which is not defined.
 
 
@@ -193,24 +230,24 @@ Torch is a Lua\cite{Lua} package for machine learning applications.~\cite{Torch}
 Although not designed for linear algebra per se, Torch uses numerical linear
 algebra routines heavily under the hood for fast computations.
 
-The key data structure of Torch is its \verb|Tensor| class, which implements
+The key data structure of Torch is its \verb`Tensor` class, which implements
 the semantics of multidimensional arrays. Unlike the other languages considered
 here, Torch only defines transposition on matrices (tensors with two
 dimensions). As a result, most of the analysis about expressions and identities
 using vector transposes cannot be applied, as any expression involving a vector
 transpose produces an error.
-Instead, Torch requires the \verb|dot| method to write expressions such as the inner product,
-\verb|x:dot(y)|. \verb|x:dot(y)| can be thought of as the composition of
+Instead, Torch requires the \verb`dot` method to write expressions such as the inner product,
+\verb`x:dot(y)`. \verb`x:dot(y)` can be thought of as the composition of
 \begin{enumerate}
 
 \item
-Reshaping the vector \verb|x| to a row matrix \verb|X|,
+Reshaping the vector \verb`x` to a row matrix \verb`X`,
 
 \item
-Computing the matrix--vector product \verb|z = X*y|,
+Computing the matrix--vector product \verb`z = X*y`,
 
 \item
-Reshaping the 1-vector \verb|z| to a scalar.
+Reshaping the 1-vector \verb`z` to a scalar.
 
 \end{enumerate}
 
@@ -226,17 +263,17 @@ scalar--matrix products in matrix--scalar order.
 R is a widely used language for statistical computing.~\cite{Rlang}.
 R's statistical features work primarily on data frames, time series and vectors.
 R also has matrices, but no true scalars.
-Its matrix multiplication operator is \verb|%*%| and its transposition operator
-is \verb|t()|.
+Its matrix multiplication operator is \verb`%*%` and its transposition operator
+is \verb`t()`.
 R's semantics promotes $n$-vectors automatically to matrices whenever linear algebraic
-operations like \verb|t()| or \verb|%*%| are encountered.
+operations like \verb`t()` or \verb`%*%` are encountered.
 By default, $n$-vectors behave as if they were $1\times n$ row matrices, except in
 transposition, which produces a row matrix, and in matrix--vector products, which
 produce a column matrix.
-Like Python, \verb|%*%| is also defined on two vectors to be the dot product.
-However, unlike Python, \verb|%*%| has a special case where if the second operand
+Like Python, \verb`%*%` is also defined on two vectors to be the dot product.
+However, unlike Python, \verb`%*%` has a special case where if the second operand
 is a length 1 vector, the result is a $1\times n$ matrix.
-Extraneous singleton dimensions can be removed with \verb|drop()|, which converts
+Extraneous singleton dimensions can be removed with \verb`drop()`, which converts
 either $n\times1$ or $1\times n$ matrices into $n$-vectors.
 
 R's semantics imply that transposition is not idempotent on vectors.

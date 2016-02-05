@@ -2,7 +2,10 @@
 
 The thesis of this paper is as follows:
 
-Users want to write, using compositions of the transpose and product operators, linear algebra expressions that involve vectors and matrices, and the results make sense, i.e. the results of \texttt{u'*v} behaves like a scalar.Examples of linear algebraic expressions users expect to write include:
+Users want to write, using compositions of the transpose and product operators,
+linear algebra expressions that involve vectors and matrices, and the results
+make sense, i.e.\ the results of \texttt{u'*v} behaves like a scalar. Examples of
+linear algebraic expressions users expect to write include:
 
 \begin{description}
 
@@ -13,7 +16,9 @@ Users want to write, using compositions of the transpose and product operators, 
 
 \end{description}
 
-The description of these quantities employ Householder notation~\cite{Householder1953,Householder1955}, a convention that is familiar to most, if not all, practitioners of numerical linear algebra today.
+The description of these quantities employ Householder
+notation~\cite{Householder1953,Householder1955}, a convention that is familiar
+to most, if not all, practitioners of numerical linear algebra today.
 
 
 
@@ -31,14 +36,13 @@ and linear algebra vectors have serious coexistence issues.
 
 
 
-To set the stage, in nearly every computer language (other than MATLAB (!!) )
-a ``vector"  is a one dimensional container.  In concrete
-linear algebra there are column vectors and row vectors.
-In  both concrete and abstract linear algebra, vectors are quantities that are subject
-to addition, multiplication by scalars, linear transformations, and
-play a role in scalar and outer products.
-As we shall see, the  seemingly innocuous idea of transposing a vector turns out to be
-a highly contentious subject.
+To set the stage, in nearly every computer language (other than MATLAB (!!)) a
+``vector'' is a one dimensional container. In concrete linear algebra there
+are column vectors and row vectors. In both concrete and abstract linear
+algebra, vectors are quantities that are subject to addition, multiplication by
+scalars, linear transformations, and play a role in scalar and outer products.
+As we shall see, the seemingly innocuous idea of transposing a vector turns
+out to be a highly contentious subject.
 
 
 Consider the following familiar  statements  \begin{itemize}
@@ -75,14 +79,14 @@ we obtain the familiar containers we know simply as vectors and matrices.
 
 Computer science focuses primarily on the homogeneous container semantics of
 vectors and matrices. Oftentimes they are considered synonymous with arrays of
-rank 1 and 2 respectively. The seminal work of \cite{Iliffe1961} says
+rank 1 and 2 respectively. The seminal work of~\cite{Iliffe1961} says
 %
 \begin{quote}
 ``Depending on the organization of the array it may
 be treated as a \textit{set}, a \textit{vector}, or a \textit{matrix}.''
 \end{quote}
 %
-The classic \cite{Knuth1967} focuses only on indexing semantics; the index
+The classic~\cite{Knuth1967} focuses only on indexing semantics; the index
 entry for ``two-dimensional array'' cross-references the entry for ``matrix''.
 Even today, the conflation persists. A modern textbook on programming language
 design writes~\cite[p. 215]{Pratt2001}:
