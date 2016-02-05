@@ -9,6 +9,10 @@ all: pdf
 check:
 	biber --tool -V bibliography/*.bib
 
+lint:
+	biber --tool bibliography/biblio.bib --output-fieldcase=lower --isbn-normalise
+	mv bibliography/biblio_bibertool.bib bibliography/biblio.bib
+
 #For compatibility with Authorea.com
 include.tex: layout.md
 	cut -f1 -d. layout.md | sed 's/^/\\input\{/' | sed 's/$$/\}/' > include.tex
