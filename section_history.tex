@@ -116,17 +116,11 @@ Apparently independently, Gibbs's dyads...
 
 \paragraph{Caspar (1797)}
 
-Coordinate systems? (As described in Katz, 1995)
+Coordinate systems? (As described in \cite{Katz1995})
 
 On the Analytical Representation of Direction
 
 see translation in David Smith, A Source Book in Mathematics
-
-\paragraph{Möbius (1827), Calcolo geometrico}
-
-May have introduced the scalar product
-
-
 
 \paragraph{Cauchy (1829)}
 
@@ -986,6 +980,9 @@ Turnbull also uses capitals for matrices and lowers for column vectors.
 The idea of row*column = scalar product goes all the way back to Cayley! although he did not use these names and he spelled out the elements.
 doi: 10.1098/rstl.1858.0002
 
+\paragraph{Pipes (1937)~\cite{Pipes1937}}
+
+A short review of matrix algebra. Matrix only; no vectors.
 
 
 \paragraph{Bartlett (1938)}
@@ -1010,6 +1007,36 @@ Thomson, 1936
 \url{http://psycnet.apa.org/journals/edu/27/1/37/}
 
 
+\paragraph{Murnaghan (1938)~\cite{Murnaghan1938}}
+
+A vectors first book. While matrices first appear on p2 as examples of a group,
+their algebraic properties are not expounded upon. Instead, linear vector spaces
+come first, then vectors as $n$-tuples.
+
+He does something odd on p. 13:
+
+\begin{quote}
+    It is convenient to indicate the $n$ vectors $(u_1, \cdots, u_n)$ of a basis
+    by the single symbol $\bf u$ so that $\bf u$ is a $1\times n$ matrix
+    whose elements are \textit{vectors}. THen the equations $v_j = t_j^{\;a} u_a$
+    which furnish the new basis $\bf v$ appear in the convenient form (note
+    carefully the order of the factor matrices $\bf u$ and $T$)
+    \[
+    \bf v = \bf u T.
+    \]
+\end{quote}
+
+Note that $\bf u$ is not considered a $m\times n$ matrix...
+
+p. 18 - Structure of metric space is introduced with scalar product $(s|t)$.
+
+p. 19 - Hermitian form $y^* H x$.
+
+p. 24 - Only in \S7 on canonical forms does he then write $X$ for ``the $n\times n$
+matrix whose columns are furnished by the components of the various vectors
+$(x_1, \cdots, x_n)$''.
+
+\todo{Go through bibliography}
 
 \paragraph{Schwerdtfeger (1938)~\cite{Schwerdtfeger1938}}
 
@@ -1119,24 +1146,31 @@ Outer product is $u:\cdot v$
 
 
 
-\paragraph{Schwerdtfeger (1945)}
-
-\url{http://dx.doi.org.libproxy.mit.edu/10.1063/1.1707507}
+\paragraph{Schwerdtfeger (1945)~\cite{Schwerdtfeger1945}}
 
 A vector in the three-dimensional space will
-be represented by a column matrix
+be represented by a column matrix...
 
 where $xy'$ is the column-row product (representing
 the often so-called ``dyadic product'' of the
 two vectors $x$, $y$),
 
-references his own Les Fonctions de Matrices I, Actualites
-scientifiques (1938) - REQUESTED
+references \cite{Schwerdtfeger1938,Murnaghan1938,Pipes1937}
 
 TODO \url{http://www.jstor.org/stable/2303007} (1944)
 
 TODO Householder 1950 \url{http://www.jstor.org/stable/2308297}
 
+\paragraph{Duncan and Collar\cite{Duncan1934}}
+
+Describe the solution of a differential equation in terms of the eigenvalues of
+a matrix representation. The eigenvalues are found by repeated power iterations.
+
+This paper is ``matrices only''. Columns are described as matrices.
+The significance of the resulting column matrix from power iteration as
+eigenvectors is mentioned as ``"``amplitude ratios''.
+Only the implications for finding ``latent roots'' (eigenvalues) are discussed.
+The treatment here references earlier work on principal axes, but differs from the purely geometrical approach by making use of matrix algebra.
 
 \paragraph{Frazer, Duncan and Collar (1938)~\cite{Frazer1938}}
 
@@ -1157,6 +1191,7 @@ exterior products of vectors, the resulting dimensionality of the vector space
 is in general different from that of the original vector space.
 Thus, it is unclear what the origins of these names are.
 
+Actually it's probably from Aitken and Turnbull 1932.
 
 
 \paragraph{MacDuffee (1943)~\cite{MacDuffee1943}}
@@ -1213,6 +1248,7 @@ isomorphic to the endomorphism ring of a vector space of dimension $n$.
 
 Cited in second edition of \cite{Margenau1943}.
 
+Uses Cullis's notation $A = {[a]}^m_n$ for matrices.
 Vectors come first as $n$-tuples with vector space structure.
 Vectors are $\alpha$, matrices are $A = {[a]}^m_n$
 inner product is $\alpha \cdot \beta$, synonymous with dot product, scalar product, direct product.
