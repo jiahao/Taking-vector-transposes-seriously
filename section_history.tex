@@ -298,6 +298,8 @@ columns, the squares corresponding to which may be termed determinants
 of the $p$th order.
 \end{quote}
 
+
+
 \paragraph{Sylvester (1851)~\cite{Sylvester1851}}
 
 Justifies the term ``matrix'' with its older vernacular meaning:
@@ -310,9 +312,50 @@ as from the womb of a common parent[...] - p. 247
 
 
 
+\paragraph{Hermite (1854)~\cite{Hermite1854}}
+
+In a paper studying quadratic forms in three variables, introduced the notation
+\[
+    f = ax^2 + a'y^2 + a''z^2 + 2byz + 2b'xz + 2b''xy
+      = \begin{pmatrix}a,a',a''\\b,b',b''\end{pmatrix}
+\]
+which we might write today
+\[
+    f = \begin{pmatrix}x\\y\\z\end{pmatrix}^\prime
+        \begin{pmatrix}a&b''&b'\\b''&a'&b\\b'&b&a''\end{pmatrix}
+        \begin{pmatrix}x\\y\\z\end{pmatrix}
+\]
+
 \paragraph{Cayley (1855)~\cite{Cayley1855}}
 
 Studied quadratic functions using the notation of matrices.
+
+The atrix he writes in the double bar form
+
+\[\begin{vmatrix}
+\alpha,& \beta,& \gamma,& \dots \\
+\alpha',& \beta',& \gamma',& \dots \\
+\alpha'',& \beta'',& \gamma'',& \dots \\
+\vdots
+\end{vmatrix}\]
+
+sometimes with parentheses enclosing the first row only.
+
+He invited a notation for matrix--vector products
+
+\begin{verbatim}
+(| a, h, g, ... |)(x, y, z)
+| h, b, f, ... |
+| g, f, c, ... |
+| vdots        |
+\end{verbatim}
+with the intelocking parenthesis.
+
+The components of the result he write as $(\alpha, \beta, \gamma, \dots)(a, a', a'')
+= \alpha a + \beta a' + \gamma a'' + ...$ which is clearly the scalar product,
+but he does not name them.
+
+Here are quadratic forms
 
 \begin{verbatim}
 (| a, h, g, ... |)(x, y, z)^2
@@ -321,7 +364,17 @@ Studied quadratic functions using the notation of matrices.
 | vdots        |
 \end{verbatim}
 
+with the intelocking parenthesis
 for $ax^2 + by^2 + cz^2 + 2fyz + 2gzx + 2hxy + \dots$.
+
+Similarly, he writes for the bilinear form (le fonction lineo-linéaire)
+
+\begin{verbatim}
+(| a, h, g, ... |)(\xi, \eta, \zeta)(x, y, z)^2
+| h, b, f, ... |
+| g, f, c, ... |
+| vdots        |
+\end{verbatim}
 
 The matrix part he later denotes with a diamond $\Diamond$.
 
@@ -337,6 +390,8 @@ Care must be taken in the composition of matrices to combine [rows]
 of the matrix on the left with the columns of the matrix on the right to form the
 [rows] of the composite matrix.
 \end{quote}
+
+
 
 \paragraph{Cayley (1858)~\cite{Cayley1858}}
 
@@ -373,6 +428,29 @@ and ``quadric functions''
 
 for $ax^2 + by^2 + cz^2 + 2fyz + 2gzx + 2hxy$.
 
+p. 479 expains the composition rule for multiplication
+
+\begin{quote}
+    It is to be observed, that the operation [of multiplication or composition of
+    two matrices] is not a commutative one; the component matrices may be
+    distinguished as the fist or ofurther compoentn matrix, and the second or
+    nearer component matrix, and the rule of composition is as follows, viz.\ any
+    \textit{line} of the compoounted matrix is obtained by combing the corresponding
+    \textit{line} of the first or further component matrix successively with the several
+    \textit{columns} of the second or neare compound matrix.
+
+    [We may conveniently write
+
+    \begin{tabular}{r|rrr}
+    \multicolumn{1}{r}{} & $(\alpha,\alpha',\alpha'')$, & $(\beta,\beta',\beta'')$, & $(\gamma,\gamma',\gamma'')$,\tabularnewline
+    \cline{2-4}
+    $(a,b,c)$ & $(a,b,c)\!\!(\alpha,\alpha',\alpha'')$ & $(a,b,c)\!\!(\beta,\beta',\beta'')$ & $(a,b,c)\!\!(\gamma,\gamma',\gamma'')$\tabularnewline
+    $(a',b',c')$ & $(a',b',c')\!\!(\alpha,\alpha',\alpha'')$ & $(a',b',c')\!\!(\beta,\beta',\beta'')$ & $(a',b',c')\!\!(\gamma,\gamma',\gamma'')$\tabularnewline
+    $(a'',b'',c'')$ & $(a'',b'',c'')\!\!(\alpha,\alpha',\alpha'')$ & $(a'',b'',c'')\!\!(\beta,\beta',\beta'')$ & $(a'',b'',c'')\!\!(\gamma,\gamma',\gamma'')$\tabularnewline
+    \end{tabular}
+
+    to denote the [product].]
+\end{quote}
 
 
 \paragraph{Grassmann (1862)~\cite{Grassmann1862,Grassmann2000} - Ausdehnungslehre II.}
@@ -391,6 +469,77 @@ Later, the same quantity is referred to informally as
 ,,ein beliebiges Produkt $P_{a_1, a_2, ..., a_n}$``~\cite[\S 353]{Grassmann1862} (``an arbitrary product''~\cite[p. 196, \S 353]{Grassmann2000})
 
 Also introduced the combinatorial product (Ch. 3), which we recognize today as the determinant.
+
+
+\paragraph{Laguerre (1867)~\cite{Laguerre1867}}
+
+Seemingly independently of the works of Cayley and Grassmann, Laguerre wrote down
+le calcul des systèmes linéaires in a letter to Hermite. He wrote that he would
+represent ``linear systems'' by single capital letters, being quantities imbued
+with their own algebraic operations:
+
+\begin{quote}
+    J'appelle, suivant l'usage habituel, \textit{système linéaire} le tableau
+    des coefficient d'un système de $n$ équations linéaires à $n$ inconnues.
+    Un tel système sera dit \textit{système linéaire d'order} $n$ et,
+    sauf une exception dont je parlerai plus loin, je le représentarai
+    oujour par une seule letter majuscule, réservant les lettres
+    minuscules pour désigner spécialement les éléments du système linéaire.
+
+    Ainsi, par exemple, le système linéaire
+    \[
+        \begin{matrix}\alpha & \beta \\ \gamma & \delta \end{matrix}
+    \]
+    sera représenté par le seule lettre majuscule $\bf A$. Dan tout ce qui
+    suit, je considérerai ces lettres majuscules représentant les systèmes
+    linéaires comme de véritable quantités, soumises à toutes
+    les opérations algébriques.
+\end{quote}
+
+He then proceeds to write down the laws for matrix addition, subtraction,
+multiplication $\bf C = \bf A \bf B$,
+diagonal matrices (systèmes simples), transposed matrices (systèmes inverses)
+$\bf A_1$, symmetric matrices (systèmes symetriques), skew-symmetric matrices
+(systèmes gauches),and the adjugate matrix (systèmes reciproques) $\bf A_0$
+(up to a scaling factor).
+
+Laguerre writes down the equivalent of row and column matrices in a zero-padded form,
+\[
+\bf X = \begin{pmatrix}x_1&x_2&\ldots&x_n\end{pmatrix} = \begin{matrix}
+x_1&x_2&\ldots&x_n\\
+0&0&\ldots&0\\
+0&0&\ldots&0\\
+\ldots&\ldots&\ldots&\ldots
+\end{matrix}
+\]
+
+Laguerre then writes the quadratic form using this pure matrix notation as follows
+
+\begin{quote}
+En sorte que si, par exemple, on a
+\[
+f = ax^2 + 2bxy + cy^2,
+\]
+cette relation, qui est équivalente à
+\[
+    \begin{matrix}f&0\\0&0\end{matrix} =
+    \begin{matrix}x&y\\0&0\end{matrix} \times
+    \begin{matrix}a&b\\b&c\end{matrix} \times
+    \begin{matrix}x&0\\y&0\end{matrix},
+\]
+pourr s'écrire
+\[
+    \Omega f = {(x, y)}_1 \bf A (x, y)
+\]
+en posant $\begin{matrix}a&b\\b&c\end{matrix}=\bf A$,
+ou encore
+\[
+    \Omega f = \bf X_1 \bf A \bf X
+\]
+on posant $(x, y) = \bf X$.
+\end{quote}
+where $\Omega$ was previously defined as $\begin{matrix}1&0\\0&0\end{matrix}$.
+
 
 
 \paragraph{B. Peirce (1873)~\cite{Peirce1873} and C. S. Peirce (1874)~\cite{Peirce1874}}
@@ -417,6 +566,13 @@ Notable for introducing vector and scalar products as separate.
 Vector products are $V\alpha\beta$ and scalar products are $A\alpha\$beta$, p. 95.
 
 
+
+\paragraph{Cayley (1880)~\cite{Cayley1880}}
+
+Cayley continues to build on the notation of his 1858 Memoir~\cite{Cayley1858}.
+He now writes $(a)$ for the transpose of a matrix, which he denotes by
+``square-letters'' $a$. Vectors show up as ``row-letters'' $u$.
+The general form he now writes as $(*)(x, y)^2$.
 
 \paragraph{Gibbs (1881)~\cite{Gibbs1881}}
 
@@ -455,7 +611,7 @@ Extends Weierstrass to give the restriction on the structure constants so that t
 
 Of significance for systematically introducing boldface small Roman letters (in ``Clarendon type'') to denote vector variables.~\cite{Heaviside1886}. (Heaviside gives a very amusing diatribe against the prevailing custom of Greek latters by Tait and Germanic Gothic letters by Maxwell in \cite[\S 103, pp. 139-142]{Heaviside1894})
 
-\todo{did Gibbs use bold face too? When?}
+\todo{did he cite Gibbs?}
 
 \cite[\S 107]{Heaviside1894} defines the scalar product as
 \[
@@ -553,6 +709,7 @@ A very old school book about algebra.
 
 Matrices show up in the original form [p. 82] as arrays out of which determinants are formed.
 
+They are not given variable names..??
 
 \paragraph{Ricci and Levi-Civita (1900)~\cite{Ricci1900,Hermann1975}}
 
@@ -997,7 +1154,7 @@ Notation to simplify writing col vector, write them as row vector transposed
 
 \begin{quote}
 In conformity with orthodox notation, vectors may sometimes for clarity be
-denoted by small letters, x, being a column vector, x' a row vector
+denoted by small letters, $x$, being a column vector, $x'$ a row vector
 \end{quote}
 
 \url{https://1988c0fbd715ddc21e4eab393a153f2278df184c.googledrive.com/host/0B8_joYJa2eNzfkNIQ2ZiY1hxS0FlMTI4ZC1IYnRUZ0ttd0NrQlYxcEdMZnFSMnpYZ3ltbUE/v34/1/S0305004100019897.pdf}
@@ -1176,7 +1333,8 @@ This paper is ``matrices only''. Columns are described as matrices.
 The significance of the resulting column matrix from power iteration as
 eigenvectors is mentioned as ``"``amplitude ratios''.
 Only the implications for finding ``latent roots'' (eigenvalues) are discussed.
-The treatment here references earlier work on principal axes, but differs from the purely geometrical approach by making use of matrix algebra.
+The treatment here references earlier work on principal axes, but differs from
+the purely geometrical approach by making use of matrix algebra.
 
 \paragraph{Frazer, Duncan and Collar (1938)~\cite{Frazer1938}}
 
@@ -1363,7 +1521,6 @@ p. 36 - in the discussion of the eigenvalue problem, Householder introduces a
 transposed (numerical) vector for the first time, in the expression $g^{\mathsf
 T}Tf$ in (2.06.23).
 
- \todo{Householder cites Macduffee's Vectors and Matrices}
 
 
 \paragraph{Bodewig (1956/9)~\cite{Bodewig1956}}
@@ -1429,7 +1586,7 @@ Matrices first.
 
 
 
-\paragraph{Schreier and Sperner (1959)~\cite{Schreier1959}}
+\paragraph{Schreier and Sperner (1931)~\cite{Schreier1931}}
 
 Vectors first.
 Vectors are fraktur, $\mathfrak a = \{a_1, a_2, \cdots, a_n\}$
@@ -1438,8 +1595,6 @@ Scalar product $\mathfrak a \cdot \mathfrak b$. - end of \S 2
 \S6 Associate a vector with each column of [a] matrix - \S 6
 
 No mention of forms, inner product or outer product.
-
-\todo{Original first edition requested. (1931)}
 
 
 \paragraph{SODA (1959)}
@@ -1537,7 +1692,7 @@ It is fair to say that by 1962, Iverson recognized the quantity $b c^\prime$ as 
 (Curiously, the APL book does not mention the phrase ``outer product'', despite having it in the index!~\cite{Iverson1962book})
 
 
-\paragraph{Wilkinson's ``The algebraic eigenvalue problem'', 1964}
+\paragraph{Wilkinson's ``The algebraic eigenvalue problem'', 1965}
 
 Did he have anything notationally significant?
 
