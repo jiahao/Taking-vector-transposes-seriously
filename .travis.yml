@@ -1,5 +1,8 @@
+sudo: required
+dist: trusty
 before_install:
-- sudo apt-get update && sudo apt-get install -y texlive-full
+        - sudo add-apt-repository ppa:grand-edgemaster/texlive-backports
+        - sudo apt-get update && sudo apt-get install -y texlive-full
 script:
 - make
 
