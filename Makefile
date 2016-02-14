@@ -1,7 +1,7 @@
 MAIN=main
 
 pdf: include.tex
-	latexmk -pdf $(MAIN)
+	latexmk -halt-on-error -pdf $(MAIN)
 
 all: pdf
 	make -C code/programs
