@@ -1,0 +1,393 @@
+digraph G {
+
+    //Matrices only
+    subgraph matricesonly {
+        node [style=filled,color=yellow];
+        Eisenstein1844;
+        Eisenstein1847;
+        Hermite1854;
+        Sylvester1850 -> Sylvester1851;
+        Cayley1855 -> Cayley1858;
+        Laguerre1867 [label="Laguerre (1867)\nSur le calcul"];
+        Frobenius1878;
+        Weber1895 [label="Weber (1895)\nLehrbuch der Algebra"];
+        Cullis1913 [label="Cullis (1913)\nMat. Determinoids 1"];
+        Cullis1918 [label="Cullis (1918) MD2"];
+        Cullis1925 [label="Cullis (1925) MD3"];
+        Bocher1907 [label="Bôcher (1907)\nIntro. Higher Algebra"];
+        Hilton1914 [label="Hilton (1914)\nHomog. Lin. Subst."];
+        Cayley1858 [label="Cayley (1858)\nMemoir"];
+        Cayley1880 [label="Cayley (1880)\nTheta functions"];
+        Pipes1937 [label="Pipes (1937)\nMatrices in engineering"];
+        Dickson1914 [label="Dickson (1914)\nLinear Algebras"];
+        Dickson1923 [label="Dickson (1923)\nLinear Algebras and their Arithmetics"];
+        Dickson1926 [label="Dickson (1926)\nModern Higher Algebras"];
+
+    }
+
+    //Vectors only
+    subgraph vectorsonly {
+        node [style=filled,color=green];
+        Grassmann1844 [label="Grassmann (1844)\nAusdehnungslehre I"];
+        Grassmann1847 [label="Grassmann (1847)"];
+        Grassmann1862 [label="Grassmann (1862)\nAusdehnungslehre II"];
+        Grassmann1844 -> Grassmann1847 -> Grassmann1862;
+        Grassmann1844 -> Grassmann1862;
+
+        Hamilton1853 [label="Hamilton (1853)\nLect. Quaternions"];
+
+        Cauchy1847;
+        Clifford1878;
+        Peano1888;
+
+        Grassmann1862 -> Peano1888;
+
+        Gibbs1881 -> Gibbs1886 -> Wilson1901;
+        Heaviside1886 -> Heaviside1894;
+
+        Einstein1913;
+        Schreier1931;
+    }
+
+    //Hypercomplex numbers
+    subgraph hypercomplex {
+        node [style=filled, color=salmon];
+        Dickson1903 [label="Dickson (1903)\nTrans. Amer. Math. Soc. 4, 21"];
+        Dickson1905 [label="Dickson (1905)\nTrans. Amer. Math. Soc. 6, 344"];
+        Peirce1873 -> Peirce1874 -> Peirce1881;
+        Weierstrass1884 -> Dedekind1885 -> Scheffers1889;
+        Peirce1881 -> Dickson1903 -> Dickson1905;
+    }
+
+    //Vectors first
+    subgraph vectorsfirst {
+        node [style=filled,color=lightblue];
+        Weyl1928 [label="Weyl (1928)\nGruppentheorie und Quantenmechanik"];
+        VanDerWaerden1930 [label="van der Waerden (1930)\nModerne Algebra"];
+        MacDuffee1933 [label="MacDuffee (1933)\n"];
+        Schwerdtfeger1938 [label="Schwerdtfeger (1938)\nLes Fonctions De Matrices"];
+        Murnaghan1938 [label="Murnaghan (1938)\nTheor. Group Representations"];
+        MacDuffee1943 [label="MacDuffee (1943)\nVectors and Matrices"];
+        Wade1948 [label="Wade (1948)\nIntro. Alg. Vec. Mat."];
+        Halmos1958 [label="Halmos (1958)\nFinite dim. vector spaces"];
+        Bourbaki1947 [label="Bourbaki (1947)\nAlgèbre"];
+        Finkbeiner1960 [label="Finkbeiner (1960)\nMat. Lin. Trans."];
+    }
+
+    //Matrices first
+    subgraph matricesfirst {
+        node [style=filled,color=orange];
+        Taber1890;
+        Hahn1911 [label="Hahn (1911)\nTheorie der lin.  Integralgleich."];
+        Born1925;
+        Turnbull1932; //Or matrices only? Not sure
+        Turnbull1934;
+        Frazer1938;
+        Aitken1939;
+        Margenau1943 [label="Margenau & Murphy (1943)\nMath. Phys. Chem."];
+        Fox1964 [label="Fox (1964)\nIntro. Numer. Lin. Alg."];
+        Wilkinson1965 [label="Wilkinson (1965)\nAEP"];
+        Bodewig1956 [label="Bodewig (1956/9)\nMat. Calculus"];
+        Bellman1960 [label="Bellman (1960)\nIntro. Mat. Anal."];
+        Stewart1973 [label="Stewart (1973)\nIntro. Mat. Comput."];
+        Golub1983 [label="Golub & Van Loan (1983)\nMat. Comput."];
+        Trefethen1997 [label="Trefethen & Bau (1997)\nNumer. Lin. Alg."];
+    }
+
+    //Hard to classify
+    subgraph mixed {
+        node [style=filled,color=grey];
+        Birkhoff1941 [label="Birkhoff & Mac Lane (1943)\nSurvey Modern Alg."];
+        Householder1953 [label="Householder (1953)\nPrinc. Numer. Anal."];
+    }
+
+    //CS books
+    subgraph compsci {
+        node [style=filled,color=pink];
+        Kozen1992 [label="Kozen (1992)\nDesign Anal. Alg."];
+        //Bibliography:
+        //A. V. Aho, J. E. Hopcroft, and J. D. Ullman, The Design and Analysis
+    //of Computer Algorithms. Addison-Wesley, 1975.
+    //• M. R. Garey and D. S. Johnson, Computers and Intractibility: A Guide
+    //to the Theory of NP-Completeness. w. H. Freeman, 1979.
+    //• R. E. Tarjan, Data Structures and Network Algorithms. SIAM Regional
+    //Conference Series in Applied Mathematics 44, 1983.
+    }
+
+    //Unknown
+    Muth1899;
+    Kowalewski1909;
+    Courant1924 [label="Courant & Hilbert (1924)\nMeth. Math. Phys."];
+    Muir1906;
+    Noble1969;
+    Dwyer1951;
+    Frazer1946;
+    Householder1964;
+    Lanczos1956;
+    Varga1962;
+    Wilkinson1963;
+    Forsythe1967 [label="Forsythe & Moler (1967)"];
+    Strang1976 [label="Strang (1976)\nLin. Alg. & Appl."];
+    Demmel1997 [label="Demmel (1997)\nApplied Numerical\nLinear Algebra"];
+    Higham1996 [label="Higham (1996)\nAccuracy and Stability\nof Numerical Algorithms"];
+
+    //Rank constraints
+    subgraph timeline {
+        node [shape=plaintext];
+        edge [weight=100];
+        "1840s"->
+        "1850s" -> "1860s" -> "1870s" -> "1880s" -> "1890s" ->
+        "1900s" -> "1910s" -> "1920s" -> "1930s" -> "1940s" ->
+        "1950s" -> "1960s" -> "1970s" -> "1980s" -> "1990s" ->
+        "2000s" -> "2010s";
+        {rank = same; "1840s"; Eisenstein1844; Eisenstein1847;
+            Grassmann1844; Grassmann1847;
+            Cauchy1847;}
+        {rank = same; "1850s"; Sylvester1850; Sylvester1851;
+            Hamilton1852;
+            Hamilton1853; Hermite1854; Cayley1855; Cayley1858;}
+        {rank = same; "1860s"; Grassmann1862;}
+        {rank = same; "1870s"; Peirce1873; Peirce1874; Clifford1878; Frobenius1878;};
+        {rank = same; "1880s"; Cayley1880; Gibbs1881; Peirce1881;
+            Dedekind1885; Scheffers1889;};
+        {rank = same; "1890s"; Taber1890; Weber1895; Muth1899;}
+        {rank = same; "1900s"; Wilson1901; Dickson1903; Dickson1905;
+            Muir1906; Bocher1907; Kowalewski1909;}
+        {rank = same; "1910s"; Hahn1911; Einstein1913; Cullis1913; Hilton1914; Cullis1918;}
+        {rank = same; "1920s"; Courant1924; Cullis1925; Born1925; Weyl1928;}
+        {rank = same; "1930s"; VanDerWaerden1930; Schreier1931;
+         Turnbull1932; MacDuffee1933; Schwerdtfeger1938; Aitken1939; Pipes1937;
+         Murnaghan1938;}
+        {rank = same; "1940s"; Birkhoff1941; MacDuffee1943; Margenau1943;
+            Schwerdtfeger1945; Frazer1946;}
+        {rank = same; "1950s"; Householder1953; Lanczos1956; Halmos1958;
+            Faddeeva1959;}
+        {rank = same; "1960s"; Moler; Finkbeiner1960; Bellman1960; Varga1962;
+            Faddeev1963; Nehring1963;
+                Householder1964; Wilkinson1963; Wilkinson1965; Fox1964;
+                Forsythe1967;}
+        {rank = same; "1970s"; Strang1976; Stewart1973;}
+        {rank = same; "1980s"; Edelman; Golub1983;}
+        {rank = same; "1990s"; Kozen1992; Higham1996; Demmel1997; Lax1997;
+            Trefethen1997;}
+    }
+
+
+    //Same author relations
+    subgraph sameperson{
+        edge [arrowhead=none, color=blue];
+        Eisenstein1844 -> Eisenstein1847;
+        Hamilton1847 -> Hamilton1853;
+        Cullis1913 -> Cullis1918 -> Cullis1925;
+        Turnbull1932 -> Turnbull1934;
+        Dickson1903 -> Dickson1905 -> Dickson1914 -> Dickson1923 -> Dickson1926;
+        MacDuffee1933 -> MacDuffee1943;
+        Schwerdtfeger1938 -> Schwerdtfeger1945;
+        Wilkinson1963 -> Wilkinson1965;
+        Householder1953 -> Householder1964;
+        Moler -> Forsythe1967;
+        Faddeev1963 -> Faddeeva1959;
+    }
+
+    //PhD advisor-student relations
+    subgraph studentships{
+        edge [color=blue];
+        Dickson1926 -> MacDuffee1933;
+        Trefethen1997 -> Edelman;
+        Kahan -> Demmel1997;
+        Forsythe1967 -> Moler;
+        Moler -> Golub1983; //Charles Van Loan
+        // Forsythe1967 -> Varah;
+        // Forsythe1967 -> Parlett1980;
+    }
+
+    //"Textbook in school" relations
+    subgraph textbooks {
+        edge [color=red];
+        Lax1997 -> Edelman; //Actually 0th edition
+        Mirsky1955 -> Strang1976;
+        Mirsky1955 -> Kahan;
+        Nehring1963 -> Golub1983;
+        Birkhoff1941 -> Moler; //Actually 1953 edition
+    }
+
+    //"Influential" relations
+    subgraph citations {
+        Cullis1925 -> Turnbull1932 -> Frazer1938;
+
+        Fox1964 -> Wilkinson1965;
+        Wilkinson1965 -> Fox1964;
+
+        Wilkinson1963 -> Stewart1973;
+        Wilkinson1965 -> Stewart1973;
+
+        Courant1924 -> Lax1997; //Probably 1953 English edition
+        Bellman1960 -> Lax1997; //Cited 1970 edition
+
+        Golub1983 -> Trefethen1997;
+        Kozen1992 -> Trefethen1997;
+
+        //To look up??
+        //Anne Greenbaum
+    }
+
+    //Citation relations
+    subgraph citations {
+        edge [color=grey];
+
+        Eisenstein1847 -> Laguerre1867;
+        Hermite1854 -> Laguerre1867;
+
+        Cayley1858 -> Cayley1880;
+
+        Hamilton1852 -> Taber1890;
+
+        //Works of Fredholm, Goursat? -> Hahn1911;
+        Kowalewski1909 -> Hahn1911;
+
+        Muth1899 -> Hilton1914;
+        Weber1895 -> Hilton1914; //Cited 2/e 1898
+        Bocher1907 -> Hilton1914;
+
+        Bocher1907 -> Cullis1918;
+        //Heffter and Koehler's Lehrbuch der Analytischen geometrie -> Cullis1918;
+        Muth1899 -> Cullis1918;
+        //Netto' Vorlusunger über Algebra -> Cullis1918;
+        //Veronese Fondamenti di geometric a piu dimensioni,
+        //Whitehead's Universal Algebra -> Cullis1918;
+
+        Bocher1907 -> Cullis1925;
+        //HJS Mith, Hermite, Stickelberger, S. Cantor, K. Hinsel
+        //Kronecker and Hensel Theorie der Determnanten
+        //Some papers by Frobenius, Sylvester, Cayley
+        // Muir's History of the Theory of Determinants
+
+
+
+        Hamilton1853 -> Dickson1914;
+        Cayley1858 -> Dickson1914;
+        Dickson1903 -> Dickson1914;
+        Dickson1905 -> Dickson1914;
+
+
+        Kowalewski1909 -> Courant1924;
+        Bocher1907 -> Courant1924;
+
+        Dickson1923 -> Dickson1926;
+
+        Muth1899 -> Turnbull1932;
+        Bocher1907 -> Turnbull1932;
+        Hilton1914 -> Turnbull1932;
+        Dickson1926 -> Turnbull1932;
+
+        Wedderburn1934 -> Pipes1937;
+        Bocher1907 -> Pipes1937;
+        Peano1888 [label="Math Ann 32 1888 450-6"];
+        Peano1888 -> Pipes1937;
+        Cowley [label="Advanced Practical Mathematics"];
+        Cowley -> Pipes1937;
+        Duncan1934 -> Pipes1937;
+
+        Burnside1911 -> Murnaghan1938;
+        Dickson1926 -> Murnaghan1938;
+        Fricke1924 -> Murnaghan1938;
+        Hilton1908 -> Murnaghan1938; //Groups
+        Hilton1903 -> Murnaghan1938; //Groups
+        Schreier1931 -> Murnaghan1938;
+        Schur1936 -> Murnaghan1938;
+        Speiser1937 -> Murnaghan1938;
+        VanDerWaerden1932 -> Murnaghan1938;
+        VanDerWaerden1935 -> Murnaghan1938;
+        Wedderburn1934 -> Murnaghan1938;
+        Weyl1929 -> Murnaghan1938; //Actually cited 1931 endlish
+        Weyl1938 -> Murnaghan1938;
+        Wigner1931 -> Murnaghan1938;
+
+
+        VanDerWaerden1930 -> Birkhoff1941;
+        Varga1962 -> Birkhoff1941; //Actually cited by 1977 4/e
+        Faddeeva1959 -> Birkhoff1941; //Actually cited by 1977 4/e
+
+        Schreier1931 -> MacDuffee1943;
+        Wedderburn1934 -> MacDuffee1943;
+
+        Muir1906 -> Margenau1943;
+        Bocher1907 -> Margenau1943;
+        Turnbull1932 -> Margenau1943;
+        Whittaker1927 -> Margenau1943;
+        Born1930 -> Margenau1943;
+        Wigner1931 -> Margenau1943;
+        Kowalewski1909 -> Margenau1943; //Cited 3/e, 1942
+        MacDuffee1933 -> Margenau1943;
+        Perlis1952 -> Margenau1943; //Cited by 2/e
+        Schreier1950 -> Margenau1943; //Cited by 2/e
+        Wade1948 -> Margenau1943; //Cited 2/e 1951 by Margenau 2/e 1955
+        Whittaker1927 [label="Treatise on the\nAnalytical Dynamics of\nParticles and Rigid Bodies"] // Discussion of normal coordinates.
+        Born1930 [label="Elementare Quantummechanik"];
+        Wigner1931 [label="Gruppentheorie und ihre\nAnwendung aud die\nQuantenmechanik der\nAtomspektren"]
+        Schreier1950 [label="Introduction to\nModern Algebra and\nMatrix Theory"];
+        Perlis1952 [label="Theory of Matrices"];
+
+        Pipes1937 -> Schwerdtfeger1945;
+        Murnaghan1938 -> Schwerdtfeger1945;
+
+        Aitken1939 -> Wade1948;
+        Albert1940 [label="Introduction to Algebraic Theories"];
+        Birkhoff1941 -> Wade1948;
+        Albert1940 -> Wade1948;
+        Cullis1913 -> Wade1948;
+        Cullis1918 -> Wade1948;
+        Cullis1925 -> Wade1948;
+        Dickson1926 -> Wade1948;
+        Ferrar1941 -> Wade1948;
+        Ferrar1941 [label="Algebra"];
+        Halmos1942 -> Wade1948;
+        Johnston1944 [label="Modern Algebra"];
+        Johnston1944 -> Wade1948;
+        MacDuffee1933 -> Wade1948; //cited 1946 2/e
+        MacDuffee1943 -> Wade1948;
+        Murnaghan1946 -> Wade1948;
+        Murnaghan1946 [label="Analytic Geometry"];
+        Turnbull1929 -> Wade1948;
+        Turnbull1929 [label="Theor. Det. Mat. Invariants"];
+        Turnbull1932 -> Wade1948;
+        Wedderburn1934 -> Wade1948;
+
+        Muir1906 -> Householder1953;
+        MacDuffee1943 -> Householder1953;
+        Frazer1946 -> Householder1953;
+
+        Turnbull1932 -> Mirsky1955;
+
+        VanDerWaerden1930 -> Halmos1958; //Cited 1953 edition
+        Bourbaki1947 -> Halmos1958;
+
+        Varga1962 -> Fox1964;
+        Lanczos1956 -> Fox1964;
+        Dwyer1951 -> Fox1964;
+        Faddeeva1959 -> Fox1964;
+        Wilkinson1963 -> Fox1964;
+        Lanczos1956 -> Fox1964;
+        Bodewig1956 -> Fox1964; //Actually 1959 edition
+        Bellman1960 -> Fox1964;
+
+        Faddeev1963 -> Forsythe1967;
+        Faddeeva1959 -> Forsythe1967;
+        Lanczos1956 -> Forsythe1967;
+        Householder1953 -> Forsythe1967;
+        Wilkinson1965 -> Forsythe1967;
+        Fox1964 -> Forsythe1967;
+
+        Noble1969 -> Stewart1973;
+        Halmos1958 -> Stewart1973;
+        Householder1964 -> Stewart1973;
+        Varga1962 -> Stewart1973;
+
+
+        Forsythe1967 -> Golub1983;
+        Stewart1973 -> Golub1983;
+
+        Higham1996 -> Trefethen1997;
+        Demmel1997 -> Trefethen1997;
+    }
+}
