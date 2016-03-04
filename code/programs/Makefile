@@ -23,6 +23,7 @@ bin/eigen3: eigen.cpp
 	$(CXX) $(CXXOPTS) -I $(DIR_EIGEN)/include/eigen3 -o eigen3 eigen.cpp
 	mkdir -p bin
 	mv eigen3 bin/
+	bin/eigen3
 
 clean:
 	rm -f bin/*

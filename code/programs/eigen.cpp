@@ -61,6 +61,7 @@ int main()
 
     MatrixXd A = make_matrix(n);
     MatrixXd B = make_matrix(n);
+    MatrixXd Scal = make_matrix(1);
     assert (A.rows() == n);
     assert (A.cols() == n);
 
@@ -174,6 +175,14 @@ int main()
     //Result: run-time assertion failure
     //Assertion failed: (dst.rows()==m_lhs.rows() && dst.cols()==m_rhs.cols()), function scaleAndAddTo
 
+    //Eigen doesn't allow automatic depromotion of 1x1 matrices to scalars
+    //
+    //MatrixXd matscalmul = Scal*A;
+    //Result: run-time assertion failure
+    //Assertion failed: (a_lhs.cols() == a_rhs.rows() && "invalid matrix product" && "if you wanted a coeff-wise or a dot product use the respective explicit functions"), function ProductBase
+    //MatrixXd scalmatmul = A*Scal;
+    //Result: run-time assertion failure
+    //Assertion failed: (a_lhs.cols() == a_rhs.rows() && "invalid matrix product" && "if you wanted a coeff-wise or a dot product use the respective explicit functions"), function ProductBase
     //matvec
     //The result is a special type
     //ProductReturnType<Matrix<double, -1, -1, 0,
