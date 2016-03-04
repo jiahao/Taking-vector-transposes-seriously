@@ -7,6 +7,7 @@ n = 4
 A = torch.ones(m, n)
 B = torch.ones(n, m)
 C = torch.ones(m, m)
+Scal = torch.ones(1, 1)
 
 x = torch.ones(m)
 y = torch.ones(n)
@@ -29,6 +30,12 @@ assert(matmul:nDimension() == 2)
 assert(matmul:size(1) == m)
 assert(matmul:size(2) == m)
 
+-- matscalmul = Scal*A
+-- error:
+-- size mismatch, m1: [1 x 1], m2: [5 x 4]
+-- scalmatmul = A*Scal
+-- error:
+-- size mismatch, m1: [5 x 4], m2: [1 x 1]
 matvec = A*y
 assert(matvec:nDimension() == 1)
 assert(matvec:size(1) == m)
