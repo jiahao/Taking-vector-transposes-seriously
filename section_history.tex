@@ -1986,11 +1986,33 @@ Notice that we are identifying $\mathbb R^n$ with $\mathbb R^{m\times1}$ and so 
 \end{quote}
 %
 
+\paragraph{Becker and Chambers (1984)~\cite{Becker1984}}
+
+p. 33
+
+The fundamental data struture [of S] is a \textit{vector}; that is, a seuqnce of data values (numbers, logical values or character strings).
+
+p. 124
+
+Vector structure
+
+Most numerical functions operating element-by-element (e.g., \textbf{abs}, \textbf{sin}) do the obvious: they produce a vector structure with the data values changed and the structure unchangeg. However, some functions produce a vector without structure, regardless of the structure associated with the argument. All the sorting functions have this property. For example, sorting the data values in a matrix should not (and does not) produce a matrix.
+
+p. 444 - The result [of \textbf{sort(data)}] is a vector, even if \textbf{data} was a structure (matrix, time-series).
+
+This is a description of what we could today call vectorized functions. The exceptional behaviors of the sorting functions are interesting.
 
 \paragraph{Becker, Chambers and Wilks (1988)~\cite{Becker1988}}
 
 The definitive book introducing the statistical programming language S in its
 modern form, which was adapted by its open source implementation, R.
+
+p. 125: Classes of objects in S
+
+Class | Use
+vector | simple objects
+matrix | 2-dimensional array
+array | multi-way array
 
 Notable for saying on Ch. 5, p. 128
 
