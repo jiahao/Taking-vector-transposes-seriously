@@ -1783,6 +1783,95 @@ two parameters: the number of dimensions and the type of elements.
 Does Stachey assume integer indexes?
 
 
+
+\paragraph{Fischer (1973)~\cite{Fischer1973}}
+
+Presents the abstract algebra version with rings first, then vector spaces of
+
+p 12-3
+
+0.3 Die Vektoren des n-dimensionalen Raumes.
+
+In der ``Ebene'' $E_2$ wähle man ein (rchtwinkligen) ``Koordinaten-system''. Sei $P$ ein beliebiger ``Punkt'' der Ebene $E_2$.
+
+Ein Element von $R^n$ bezeichnet man mit $x = (x_1, ..., x_n)$, wobei $x_i \in R$ für $i = 1,..., n$.
+
+Für die Elemente von $R^1$, $R^2$ bzw.\ $R^3$ schreibt man stattdessen auch $x$, $(x,y)$ bzw.\ $(x,y.z)$.
+Die Elemente von $R^n$ nennt man ``Punkte'' oder ``Vektoren''
+
+- pp 12-13
+
+Matrices appear on p. 54 as representations of bases of vector spaces
+
+- 1.3 Praktische Bestimmung von Basen
+
+Untr einer \underline{Matrix} (aus Elementen eines Körpers $K$)  versheht man ein rechteckiges Zahleschema...
+
+Matrices The interoduce row and column vectors
+
+Unter dem $i$-ten \underline{Zeilenvektor} von $A (i=1, ..., m)$ versteht man
+
+\[
+a_i := (a_{i1}, ..., a_{in}) \in K^n
+\]
+
+unter dem $j$-ten Spaltenvektor von $A (j=1, ..., n)$
+
+\[
+a^j := (a_{1j}, \vdots, a_{mj}) \in K^m.
+\]
+
+($K$ being the ring over which the vector spaces is being defined.)
+
+On p. 60 the notion of a matrix being a column vector of row vectors is written out explicitly when introducing the notion of row echelon form:
+
+1.3.9. Korollar:
+
+Seien $v_1, ..., v_n \in K^n$ gegeben. Dann gilt:
+$(v_1, d..., v_n)$ ist genau dann eine Basis von $K^n$, wenn sich die $n\times n$-Matrix $A = (v1, \vdots, v_n)$ (mit denn $v_i$ ($i=1,...,n$) als Zeilenvektoren)
+durch endliche viele elementare Zeilenumformungen in eine Dreiecksmatrix mit lauter von 0 verschiedenen Diagonalelementen überführen läßt.
+
+Later matrices are revisited as representations of lienar maps
+
+The transpose is ${}^t A$ (p. 85). The prime notation $a'$ shows up in the ordinary sense of "a new quantity related to a".
+
+Under der \underline{Transposition} der Matrizen aus $M(m\times n; K)$ versteht man die Abbildung
+
+\[
+t: M(m\times n; K) \rightarrow M(n \times m; K) \\
+A = (a_{ij}) \mapsto {}^t A = (a^\prime_{ji})
+\]
+mit $a^\prime_{ji} := a_{ij}$ für $i=1,...,m, j=1,..., m$
+
+---
+
+Matrix multiplication is introduced on page 86.
+
+On p 87 we see explicit conflation of scalars and $1\times1$ matrices
+
+\[
+(a_1...a_n) \cdot (b1 \vdots bn) = a_1 b_1 + \dots + a_n b_n \in K = M(1\times 1; K)\]
+
+In diesem Fall kann man $A$ und $B$ als Vektoren aus $K^n$ auffassen. Für $K=R$ ist dann $A\cdot B$ nichts anderes als das in (0.4.1) definitere Skalarproduct von $A$ und $B$.
+
+Primary influence
+
+Serge Lang: Linear Algebra, 1969
+
+Bibliography
+
+Bourbaki: Algèbre linéaire (Éléments de Mathématique, Première Partie, Livre II, Chapitre II). 1962
+
+Godement, R: Cours d'algèbra. 1966
+
+Greub, Linear Algebra. Springer 1969
+Koecher: Lineare Algebra. orlesungsausarbeitung München 1969
+
+Kowalsky: Lineare Algebra 1969
+
+Lingenberg,: Lineare Algebra. Mannheim 1969
+
+
 \paragraph{Stewart (1973)~\cite{Stewart1973}}
 
 Vectors come first, but they have distinct columnness. In particular, p. 2:
