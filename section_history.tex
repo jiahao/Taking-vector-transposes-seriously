@@ -1472,6 +1472,39 @@ vector space of $n$-tuples of numbers of $F$ as defined in \S7.''
 (Square) matrices are introduced similarly in Theorem 89 (p. 185) as being
 isomorphic to the endomorphism ring of a vector space of dimension $n$.
 
+\paragraph{Von Neumann and Goldstine~\cite{VonNeumann1947} (1947)}
+
+The famous paper about numerically inverting a matrix.
+
+p. 1041: Matrices $A = (a_{ij})$, vectors $\xi = (x_i)$
+
+Matrix products and inner products are written out explicitly in component notation
+...
+
+p. 1042: Mixed associative law, $A(B\xi) = (AB)\xi$.
+
+p. 1044:
+
+For $A=(a_{ij})$ fix $j=1,\dots,n$ and view $i=1,\dots,n$ as a vector index, then $A^{\{j\}} = (a_{ij})$ ($i=1,\dots,n$) defines a vector $A^{\{j\}}$.
+
+p. 1045:
+
+They introduce a zero-left-padded notion of a matrix associated with the vector
+
+Given a vector $\xi = (x_i)$ $(i=1,\dots,n)$ define a matrix
+
+\[
+\xi^\sim = (x_{ij}) \qquad x_{ij} = \begin{cases}
+x_i\textrm{ for }j=1,\\
+0\textrm{ for }j\ne1.
+\end{cases}
+\]
+
+p. 1044
+
+
+
+
 \paragraph{Bourbaki (1947)}
 \url{https://archive.org/stream/ElementsOfMathematics-AlgebraPart1/Bourbaki-ElementsOfMathematicsAlgebraPart1#page/n237/mode/2up}
 
@@ -1678,7 +1711,60 @@ paper that explains what an array is that I can find:
 \url{http://research.microsoft.com/en-us/um/people/gbell/CGB%20Files/Translation%20Routine%20for%20the%20Deuce%20Computer%20July%201959%20c.pdf}
 
 
+\paragraph{Finkbeiner (1960)~\cite{Finkbeiner1960}}
 
+Starts with sets and abstract algebra (and even a little bit of category theory).
+
+Vector spaces come first, then vectors over $R^n$ as $n$-tuples. (p. 27)
+
+Real numbers also trivially form a vector space (p. 27)
+
+A linear algebra is then defined (p. 49) the combination of a vector space and a composition operator for linear maps over the vector space.
+
+p 26. [A] vector space is somewhat more complicated that the abstrat systems in the first chapter, principally because there are two sets of elements involved. One set $V$ consists of abstract elements called \texit{vectors} and are denoted by small Greek letters; the other set $F$ is a field whose elements are called \textit{scalars} and are denoted by small Latin latters. In addition to the two field opeations, $+$ and $\cdot$, two operations in volving vectors are postulated: the ``addition'' of vectors, denoted $\alpha \oplus \beta$, and the ``multiplication'' of a scalar and a vector, denoted $a \oplus \alpha$.
+
+
+Definition 2.1. A system $\mathcal V = \{V, F; +, \cdot, \oplus, \odot\}$ is called a \textit{vector space over the field} $\mathcal F$ if and only if
+(a) $\{F, +, \cdot\}$ is a field $\mathcal F$ whose identity elements are denoted by 0 and 1,
+(b) $\{V; \oplus\}$ is a commutative group whose identity element is denoted $\theta$,
+(c) for all $a,v\in\mathcal F$ and all $\alpha, \beta \in V$, $a \odot  \alpha \in \mathcal V$ and
+(i) $(a + b) \odot \alpha = (a \odot \alpha) \oplus (b \odot \alpha)$,
+(ii) $a \odot (\alpha \oplus \beta) = (a \odot \alpha) \oplus (b \odot \beta)$,
+(iii) $(ab) \odot \alpha = a \odot (b \odot \alpha)$,
+(iv) 1 \odot \alpha = \alpha$.
+
+``Fortunately, the notation used above can be simplified. From the type of letters involved it is clways clear whether we are adding two scalars or two vectors, or multiplying two scalars or a scalar and a vector; therefore, we can use $+$ to indicate both types of addition and juxtaposition to indiate both types of multiplication.''
+
+This description of a vector space is interesting because it tries to disentangle the different defintions of addition and multiplication when discussing vectors, and then conflates the notation again, noting that the types of the operands determine which definition is to be used.
+
+Definition 3.4. A \textit{linear algebra} $\mathcal L$ over a field $\mathcal F$ is a system
+\[
+\mathcal L = \{L, F; +, \cdot, \oplus, \odot, \boxdot\}
+\]
+which satisfies the postulates:
+(a) the system $\{L, F; +, \cdot, \oplus, \odot\}$ is a vector space over $\mathcal F$,
+(b) $\boxdot$ is a binary operation on $\mathcal L$ which is closed, associative, and bilinear.
+
+$\mathcal L$ is also a vector space over $\mathcal F$.
+
+
+p. 71: Row and column vectors are introduced under \S 4.2, Special Types of Matrices.
+
+Relative to a fixed basis, every vector of $\mathcal V_n$ has a unique representation as an $n$-tiple of scalars, $(a_1, \dots, a_n)$. Except for the presence of commans, this is formally the same as a matrix of one row and $n$ columns. Accordingly, a $1\times n$ matrix is called a \textit{row vector}. The transpose of a row vector is an $n \times1$ matrix, $n$ rows and one column, and is called a \textit{column vector}. If $A$ is a reow vector, where $A = \begin{pmatrix} a_1 & a_2 & \ldots & a_n\end{pmatrix}$, and if $B^\prime$ is a column vector, where $A = \begin{pmatrix} b_1 & b_2 & \ldots & b_n\end{pmatrix}$, then both $AB^\prime$ and $B^\prime A$ are defined:
+
+\[
+AB^\prime = \begin{pmatrix} a_1 & a_2 & \ldots & a_n\end{pmatrix}
+            \begin{pmatrix} b_1\\ b_2\\ \vdots\\ b_n\end{pmatrix}
+          = \begin{pmatrix} a_1b_1 + a_2b_2 + \ldots a_nb_n\end{pmatrix},
+\]
+
+which is a $1\times1$ matrix, or by Exercise 5, \S 4.1, a scalar[.]
+
+Exercise 5 in question (p. 67) is:
+
+Show that the system of $1\times1$ matrices over a field $\mathcal F$, together with matrix addition and multiplication, is a field which is isomorphic to $\mathcal F$.
+
+This again speaks to the importance of recognizing isomorphisms...
 
 \paragraph{Gantmacher (1960)~\cite{Gantmacher1960}}
 
@@ -1946,7 +2032,7 @@ p 83 - gives as an example a program to compute the scalar product.
 Wirth does not refer to the arrays as vectors, but simply lists the elements of
 both vectors, each with a single subscript.
 
-p 87 - ``Components of arrays need not be scalars---they themselves may be strucutred.
+p 87 - ``Components of arrays need not be scalars---they themselves may be structured.
 If they are again arrays, then the orrignal array $A$ is called \textit{multi-dimensional}.
 If the components of the componet arrays are scalars, then
 $A$ is called a \textit{matrix}.'' Wirth clearly defines arrays recursively.
@@ -2001,6 +2087,14 @@ Most numerical functions operating element-by-element (e.g., \textbf{abs}, \text
 p. 444 - The result [of \textbf{sort(data)}] is a vector, even if \textbf{data} was a structure (matrix, time-series).
 
 This is a description of what we could today call vectorized functions. The exceptional behaviors of the sorting functions are interesting.
+
+References:
+
+John M Chambers, Computational Methods for Data Analysis, 1977
+
+R Gnanadesikan, Methods for Statistical Data Analysis of Multivariate Observations, 1977
+
+K V Mardia, J Kent, J M Bibby, Multivariate Analysis, 1979
 
 \paragraph{Becker, Chambers and Wilks (1988)~\cite{Becker1988}}
 
