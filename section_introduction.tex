@@ -1,5 +1,74 @@
 \section{Introduction}
 
+The terms ``vector'' and ``(one-dimensional) array'' appear so often as
+synonyms that you may believe they actually are. In reality, computer
+scientists and mathematicians mean different things by ``vectors''.  Computer
+science is rife with terms such as ``vectorization'', ``vector machine,
+``vector registers,'' and ``vector architecture'', where a ``vector''
+simply means an ordered sequence of similar objects, or a one-dimensional
+array. This meaning of ``vector'' is used in terms like ``vector operations''
+to mean sorting, computing averages along an axis, and so on.
+In contrast, mathematicians speak of ``vectors'' that are elements of
+vector spaces. In the most abstract formulation, there is nothing said about
+what the elements of a vector space are, only what operations are defined over
+the vectors and the underlying scalar field.
+In scientific computing, these two meanings of vectors can clash and cause
+problems, particularly when working with matrices and vectors in the
+conventions of numerical linear algebra in expressions like
+$x^\prime Ay/x^\prime y$.
+
+There are a few clues that a problem exists:
+
+
+\begin{enumerate}
+
+\item
+Computer science terms like ``vectorization'' refer to one dimensional arrays
+of homogeneous objects. Vectorized operations, like \code{sin(x)} for an array
+\code{x}, have no need for the structure of a vector space.
+
+\item
+Programming language design issues regarding how to express linear algebra,
+such as Julia's ``Taking vector transposes seriously''~\cite{julia4774} and
+Python's ``A dedicated infix operator for matrix multiplication''~
+\cite{numpy4351,Smith2014}, attract hundreds of comments from users expressing
+a diversity of mutually incompatible opinions.
+
+\item
+Some computer languages cannot express identities familiar from linear algebra,
+like $(ab')c = a(b'c)$ for vectors $a$, $b$ and $c$, using only multiplication
+and transposition operations. Instead, the outer product $ab'$ must be written
+as a call to a dedication function, such as gw
+\code{numpy.outer}\url{http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.outer.html}
+in Python or
+\code{Outer}\url{https://reference.wolfram.com/language/ref/Outer.html}
+in Mathematica.
+
+\item The original ``Matrix Laboratory''~\cite{Moler1980} had only
+two-dimensional complex arrays, linear algebra, and broadcasting array
+operations like \code{sin(x)}. All other functionality like sorting an array
+were retrofit onto later versions of MATLAB, but every natural one dimensional
+operation takes an optional \code{dim} argument to distinguish between
+operations over rows from operations over columns. The default \code{dim}
+choice occasionally risks confusion.
+
+\item The linear algebra literature can be classified by whether vectors
+appear first (on or close to page 1) or whether matrices appear first.
+In the former case, vectors live in a vector space; in the latter,
+we have vectors that are matrices with one row or column.
+
+\end{enumerate}
+
+
+This paper is targeted to those who speak the language of linear algebra and
+also use a computer language. The linear algebra world has grown used to
+operations such as $x^\prime Ay/x^\prime y$.(x’*A*y)/(x’*y), while the
+non-linear algebra world considers array operations such as sorting, taking a
+mean, sort(x) or mean(x) etc. In this paper, we argue that it is impossible to
+have our beloved Householder notation $(x'Ay)/(x'y)$ and one dimensional arrays
+in the same language without some sort of compromise.
+
+
 The thesis of this paper is as follows:
 
 Users want to write, using compositions of the transpose and product operators,
