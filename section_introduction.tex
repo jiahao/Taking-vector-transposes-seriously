@@ -38,13 +38,12 @@ a diversity of mutually incompatible opinions.
 Some computer languages cannot express identities familiar from linear algebra,
 like $(ab')c = a(b'c)$ for vectors $a$, $b$ and $c$, using only multiplication
 and transposition operations. Instead, the outer product $ab'$ must be written
-as a call to a dedication function, such as gw
-\code{numpy.outer}\url{http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.outer.html}
-in Python or
-\code{Outer}\url{https://reference.wolfram.com/language/ref/Outer.html}
-in Mathematica.
+as a call to a dedication function, such as
+\code{numpy.outer}\cite{numpy.outer} in Python or
+\code{Outer}\cite{Wolfram.Outer} in Mathematica.
 
-\item The original ``Matrix Laboratory''~\cite{Moler1980} had only
+\item
+The original ``Matrix Laboratory''~\cite{Moler1980} had only
 two-dimensional complex arrays, linear algebra, and broadcasting array
 operations like \code{sin(x)}. All other functionality like sorting an array
 were retrofit onto later versions of MATLAB, but every natural one dimensional
@@ -52,13 +51,40 @@ operation takes an optional \code{dim} argument to distinguish between
 operations over rows from operations over columns. The default \code{dim}
 choice occasionally risks confusion.
 
-\item The linear algebra literature can be classified by whether vectors
+\item
+The linear algebra literature can be classified by whether vectors
 appear first (on or close to page 1) or whether matrices appear first.
 In the former case, vectors live in a vector space; in the latter,
 we have vectors that are matrices with one row or column.
 
+\item
+Programming languages do not consistently define what it means to transpose a vector. They can be classified by whether the result is the identity (a no-op), an error, a $1\times n$ matrix, or a value of a special row vector type.
+
+\item
+The scalar product $u^\prime v$ can be written as both \code{u.T @ v} and
+\code{u @ v} in NumPy/Python; both produce a scalar. The analogous R code, \code{u\%*\%v}, produces a $1\times1$ matrix.
+
+\item
+A matrix times a vector is a vector, except in R, where the result of \code{A \%*\% b} is a matrix.
+
+\item
+A two dimensional array can be recursively defined is an array of arrays. A matrix cannot be defined recursively, but instead is a row vector of column vectors or a column vector of row vectors, never a row vector of row vectors or a column vector of column vectors.
+
+\item
+Matrix multiplication $C=AB$, is often defined in a first course in linear algebra as taking the scalar product of rows of $A$ with columns of $B$.
+In MATLAB, we can express the computation of \code{C(i,j)} as \code{A(i,:)*B(:,j)}, but not with \code{u=A(i,:);v=B(:,j);u'v}, which returns an error.
+In R, the analogous \code{A[i,] \%*\% B[,j]} returns a $1\times1$ matrix.
+In NumPy/Python, the analogous \code{A[i-1,:] @ B[:,j-1]} returns a scalar.
+Furthermore, this definition is sound for real matrices but is ambiguous for complex matrices and matrices over non-self-dual vector spaces.
+The MATLAB code \code{dot(A(i,:),B(:,j))} returns the wrong answer for complex matrices.
+
+\item
+In the mathematical literature, $1\times 1$ matrices are often identified with scalars, and $n\times 1$ matrices are often identified with vectors. However, MATLAB is the only programming language used in scientific computing which makes these identifications. All other languages require users to convert between $1\times 1$ matrices and scalars, and $n\times 1$ matrices and vectors explicitly.
+
 \end{enumerate}
 
+
+These examples illustrate how computers have trouble with abstractions that humans, to a fault, are so good at overlooking. In fact, we did not initially think that this paper was actually worth writing, until we dug into the details. Decades after APL made multidimensional arrays first class objects, and MATLAB made Householder notation popular in computer code, we recently reached an inescapable conclusion, one we preferred not to believe, that vectors, in the sense of computer languages, and linear algebra vectors have serious coexistence issues.
 
 This paper is targeted to those who speak the language of linear algebra and
 also use a computer language. The linear algebra world has grown used to
@@ -68,69 +94,9 @@ mean, sort(x) or mean(x) etc. In this paper, we argue that it is impossible to
 have our beloved Householder notation $(x'Ay)/(x'y)$ and one dimensional arrays
 in the same language without some sort of compromise.
 
-
-The thesis of this paper is as follows:
-
-Users want to write, using compositions of the transpose and product operators,
-linear algebra expressions that involve vectors and matrices, and the results
-make sense, i.e.\ the results of \texttt{u'*v} behaves like a scalar. Examples of
-linear algebraic expressions users expect to write include:
-
-\begin{description}
-
-\item{Inner product} $u^T v$, a scalar,
-\item{Outer product} $u v^T$, a matrix,
-\item{Quadratic form} $u^T A u$, a scalar,
-\item{Bilinear form} $u^T A v$, a scalar,
-
-\end{description}
-
-The description of these quantities employ Householder
-notation~\cite{Householder1953,Householder1955}, a convention that is familiar
-to most, if not all, practitioners of numerical linear algebra today.
-
-
-
-\subsection{Introduction (v1)}
-
-Humans, to a fault, are so good at special casing abstractions
-by context that it would be easy to conclude that a discussion
-of how linear algebra fits into computer languages would hardly
-seem necessary.  Decades after APL made multidimensional
-arrays first class objects, and MATLAB made matrix laboratory
-syntax popular,  we recently  reached an inescapable conclusion,
-one we preferred not to believe, that
-vectors, in the sense of computer languages,
-and linear algebra vectors have serious coexistence issues.
-
-
-
-To set the stage, in nearly every computer language (other than MATLAB (!!)) a
-``vector'' is a one dimensional container. In concrete linear algebra there
-are column vectors and row vectors. In both concrete and abstract linear
-algebra, vectors are quantities that are subject to addition, multiplication by
-scalars, linear transformations, and play a role in scalar and outer products.
-As we shall see, the seemingly innocuous idea of transposing a vector turns
-out to be a highly contentious subject.
-
-
-Consider the following familiar  statements  \begin{itemize}
-\item A matrix times a vector is a vector
-\item Matrix Multiplication of $A$ and $B$ is defined by taking the scalar product
-of a row of $A$ with a column of $B$.
-\item  The scalar product is defined on a pair of vectors.
-The scalar product of  $v$ with itself is a non-negative number known as
-$\|v\|^2$.
-\end{itemize}
-
-and consider common  notations in math or software:
-\begin{itemize}
-\item  \verb+A[i,:]*B[:,j]+ or \verb+dot(A[i,:],B[:,j]) +
-\item   $v^T\!v=(v,v)=$ \verb+v'*v+=\verb+dot(v,v)+
-\end{itemize}
-
-(more coming)
-
+In Sec.~\ref{sec:householder}, we examine which embeddings are implicit in linear algebraic expressions like inner products $u^T v$, outer products $u v^T$, and bilinear forms $u^T A v$, which are expressed in Householder notation~\cite{Householder1953,Householder1955} which is familiar to practitioners of numerical linear algebra today.
+In Sec.~\ref{sec:arrays}, we review the use of vectors as arrays in computer science.
+In Sec.~\ref{sec:linalghistory}, we review the historical development of vectors, matrices and linear algebra in mathematics.
 
 
 \subsection{Introduction (v0)}
