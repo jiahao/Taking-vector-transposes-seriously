@@ -1644,6 +1644,67 @@ T}Tf$ in (2.06.23).
 
 
 
+\paragraph{Mirsky (1955)~\cite{Mirsky1955}}
+
+Mirsky 1955
+
+An Introduction to Linear Algebra
+
+Matrix first (sort of). Actually, determinants, then vectors, then matrices.
+
+Starts with determinants and totally antisymmetric permutations.
+
+The rule for matrix multiplication shows up in Sec 1.3 pp 12-13 on the multiplication of determinants. They do say though that since determinants are invariant to row and column permutations, that
+
+The determinant C constructed in this way may be said to have been obtained by multiplying A and B ‘rows by columns’. … we can equally well form the product the product AB by carrying out the multiplication ‘rows by rows’, or ‘columns by columns’, or ‘columus (sic) by rows’.
+
+Algebra of vectors, p 39 - give as citation Hamburger and Grimshaw, 30, 171
+
+P 40 - Def 2.1.2. Let fraktur F be a field. A vector x of order n>0 over F is an ordered set (x1, x2, …, xn) for n numbers which belong to F… called the reference field.
+
+P 77- Def 3.2.8 A smcaps column matrix is a matti of type n x 1, say (x1; x2; . . . ; xn).
+
+A smcaps row matrix is a matrix of type 1 x n, say
+(x1 x2 … xn).
+Matrices of both these types may be regarded as vectors<dagger> and referred to respectively as column vectors and row vectors. A matrix may thus be thought of as a generalization of a vector.
+
+… In particular, the vectors e1, … en defined by (2.1.2) on p. 43 will from now be regarrded as column vectos.
+The transpose of a column vector is a row vector, and we shall then have x^T = (x1, …, xn). For typographical reasons it is generally predereable to… write instead x = (x1,, … xn)^T. The notion of row vectors and column vectors enables us to introduce a very conenient notation connected with matrices.
+
+P 78 Def 3.2.9. The i-th row of a matrix A (regarded a s a row vector) is denoted by Ai*; the j-th column of A (refard as a column vector) is denoted by A*j.
+
+P 80 - matmul as (AB)ij = Ai* B*j. (Ex. 3.3.3)
+
+[Appears to have invented slice notation!!!!!!!!!! - 6-star |\/]
+
+Gives as influenctial
+Turnbull and Aitken, An Introduction to the Theoruy of Canonical Matrices
+MacDuffee, The Theory of Matrices
+
+Cites: Macduffee Intro to Abstract Algebra, 1940, Ch. vii; Albert, Modern Higher Algebra 1938, Chs. 3-5, Durell and Robson, Advanced Algebra vol 3 1937, ch 17.
+
+Other cites -
+Wade, 1951, Algebra of Vectors and Matrices
+Ferrar - Algebra 2/e 1957
+Brown: Intro Theory of Detemrinants and Matrices 1958
+Horn: Elementary Matrix Algebra 1958
+Archbold Algebra 1958
+Murdoch: Lin Alg for Undergrads 1957
+Brikhoff and MacLane, Survey Mod ALgenra 1953
+Shreier and Sperner: Intro Mod Alg and Mat Thy 1951
+Schwerdtfeger: Intro Lin Alg and the Theory of Matrices, Groningen 1950
+MacDuffee, Vectors an Matrices, 1943
+Thrall and Tornheim, Vector Spaces and Matrices, 1957
+
+AItken: Det Matrices 9/e 1956
+M Bocher: Intro Higher ALg 1937
+Bodewig: Matrix Calc 1959
+Halmos, Fin Dem Vec Spaces 2/e 1958
+Frazer-Duncan-Collar: Elementary Matrices 1938
+Bellman, Into Mat Anal
+Turnbull: Theoy of matrices
+
+
 \paragraph{Bodewig (1956/9)~\cite{Bodewig1956}}
 
 Vectors come first, but $n$-tuples don't actually play a part in the exposition.
@@ -2058,6 +2119,29 @@ If they are again arrays, then the orrignal array $A$ is called \textit{multi-di
 If the components of the componet arrays are scalars, then
 $A$ is called a \textit{matrix}.'' Wirth clearly defines arrays recursively.
 
+
+\paragraph{Moler (1980)~\cite{Moler1980}}
+
+The technical report describing the original version of MATLAB.
+
+``In some ways, MATLAB resembles SPEAKEASY [4] and ,to a lesser extent, APL.''
+
+``For MATLAB, the matrix is the only data type (although scalars, vectors and text are special cases)''
+ P 1
+
+``Since MATLAB is not primarily concerned with either execution time efficiency or storage savings, it ignores most of the special matrix properties that LINPACK and EISPACK subroutines use to advantage.'' P 2
+
+``MATLAB works with essentially only one kind of object, a rectangular matrix with complex elements… In some situations, special meaning is attached to 1 by 1 matrices, that is scalars, and to 1 by n and m by 1 matrices, that is row and column vectors.''
+
+The special character prime (\code{'}) is used to denote the transpose of a matrix, so
+
+\code{X = x'}
+
+Changes the row vector above into the column vector… - p3
+
+Matrix functions on p6
+
+The list of functions given in MATLAB are exclusively matrix-oriented, not what Alan likes to call \code{sort()}. The only other functions in MATLAB are I/O, control flow constructs or auxiliary things related to floating point arithmetic.
 
 
 \paragraph{Golub and Van Loan (1983)~\cite{Golub1983}}
