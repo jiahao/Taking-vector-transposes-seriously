@@ -1,4 +1,82 @@
-\section{Axiomatic behavior}
+\label{sec:array}
+\section{Axiomatic behavior of arrays}
+
+\subsection{Indexing is subscripting}
+
+How do we index $x^{T}$ and $y$? If $y$ is represented by a 1-D
+array then it is indexable by a single subscript, $y[i]=y_{i}$. Indexing
+really is a subscript operation - the earliest literature on array
+data structures say as much.\footnote{The array is such a fundamental data structure that it is difficult
+to pin down a concrete definition. Nevertheless, the early implementations
+of arrays in languages such as FORTRAN~\cite[p36]{Backus1956} and
+ALGOL~60~\cite[Sec. 2.3]{Randell1964} make clear that indexing
+by a fixed number of integers is the most primitive operation associated
+with an array.} The earliest mention of array data structures describe then as subscripted
+variables. (CAN SAY MORE) It's intuitively pleasing since in the canonical
+basis $e_{1},e_{2},\dots,e_{n}$ one writes
+\begin{equation}
+y=y_{1}e_{1}+y_{2}e_{2}+\dots+y_{n}e_{n}.
+\end{equation}
+and we can say that the collection of numbers $y_{1},y_{2},\dots,y_{n}$
+represents the vector $y$. We see from this discussion that indexing
+a numeric vector is equivalent to premultiplying by a particular basis
+vector, $e_{i}\cdot y=e_{i}\cdot\left(\sum_{j}y_{j}e_{j}\right)=\sum_{j}y_{j}e_{i}\cdot e_{j}=y_{i}$
+since the canonical basis is orthogonal.
+
+$x^{T}$ is different though. Nominally it is a row vector, so if
+we write down the analogous relations for $x$ and transpose them,
+we get
+\begin{equation}
+x^{T}=\left(x^{T}\right)_{1}e_{1}^{T}+\left(x^{T}\right)_{2}e_{2}^{T}+\dots+\left(x^{T}\right)_{n}e_{n}
+\end{equation}
+and $x_{i}^{T}=x^{T}e_{i}=x\cdot e_{i}$. Everything looks normal
+for real vectors, but in the complex case we have by property of the
+inner product that
+\[
+\left(x^{\prime}\right)_{i}=x\cdot e_{i}=\left(e_{i}\cdot x\right)^{*}=x_{i}^{*}
+\]
+and we suddenly now have to remember to complex conjugate. In other
+words $x^{\prime}[i]$ should be the complex conjugate of $x[i]$.
+
+Now consider a matrix, which are ordinarily represented by 2D arrays.
+A 2D array is defined recursively as an array of arrays. In contrast,
+a matrix must be defined either as a row vector of column vectors
+or a column vector of row vectors. A matrix cannot be defined as a
+column vector of column vectors or a row vector of row vectors. Thus
+again we are confronted with the fact that 1D arrays are intrinsically
+``flat'', lacking the rowness or columnness that vectors possess.
+
+If we again consider the process of indexing, we have again an equivalence
+between indexing an array and the bilinear form with two canonical
+basis vectors.
+\begin{equation}
+A_{ij}=e_{i}^{T}Ae_{j}=A[i,j]
+\end{equation}
+
+Whereas for 2D arrays we can recursively index $A$ as $\left(A[i]\right)[j]$,
+the matrix analogue requires $\left(e_{i}^{T}A\right)e_{j}$ to be
+the composition of two fundamenatally different operations. The first
+is a (row) vector–matrix product, returning a row vector, which then
+gets multiplied with a column vector to yield the scalar $A_{ij}$.
+
+We see this again in ``baby matmul''. Definining $C=AB$ as the
+matrix with elements $C_{ij}=\sum A_{ik}B_{kj}$, we sometimes see
+that matmul is defined as saying that $C_{ij}$ , the element of $C$
+in the $i$th row and $j$th column, is the product of the $i$th
+row of $A$ with the $j$th row of $B$. At least for nonreal matrices,
+this product is \uline{not} the same as the inner product $u\cdot v$!
+The $i$th row of $A$ is not conjugated, reflecting the fact that
+$C$ represents the composition of two linear maps $A$ and $B$.
+If we write this operation as $A[i,:]*B[:,j]$, then we need the version
+of indexing that does not conjugate the row in $A[i,:]$.
+
+Thus we see that for real numbers the operations of indexing (subscripting)
+and taking inner products are deeply intertwined. However for nonreal
+numbers we inconsistently switch between the ``array world'', where
+everything is intrinsically flat, and ``linear algebra'' world,
+where the additional structure of the inner product implies additional
+complexity for nonreal matrices and vectors.
+
 
 \subsection{Vector indexing and inner products}
 
@@ -700,8 +778,6 @@ tag it with a general slot index.
 
 What dimensions to drop in indexing? ``APL style'' seems uncontroversial.
 What does vector' give?
-
-
 
 
 \subsection{Summary}

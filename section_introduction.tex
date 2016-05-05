@@ -86,56 +86,85 @@ In the mathematical literature, $1\times 1$ matrices are often identified with s
 
 These examples illustrate how computers have trouble with abstractions that humans, to a fault, are so good at overlooking. In fact, we did not initially think that this paper was actually worth writing, until we dug into the details. Decades after APL made multidimensional arrays first class objects, and MATLAB made Householder notation popular in computer code, we recently reached an inescapable conclusion, one we preferred not to believe, that vectors, in the sense of computer languages, and linear algebra vectors have serious coexistence issues.
 
-This paper is targeted to those who speak the language of linear algebra and
-also use a computer language. The linear algebra world has grown used to
-operations such as $x^\prime Ay/x^\prime y$.(x’*A*y)/(x’*y), while the
-non-linear algebra world considers array operations such as sorting, taking a
-mean, sort(x) or mean(x) etc. In this paper, we argue that it is impossible to
-have our beloved Householder notation $(x'Ay)/(x'y)$ and one dimensional arrays
-in the same language without some sort of compromise.
+The discrepancies listed above illustrates that computers struggle to identify quantities that humans treat as equivalent. The specific examples of quantities that humans treat as equivalent that most computer languages do not are:
 
-In Sec.~\ref{sec:householder}, we examine which embeddings are implicit in linear algebraic expressions like inner products $u^T v$, outer products $u v^T$, and bilinear forms $u^T A v$, which are expressed in Householder notation~\cite{Householder1953,Householder1955} which is familiar to practitioners of numerical linear algebra today.
-In Sec.~\ref{sec:arrays}, we review the use of vectors as arrays in computer science.
-In Sec.~\ref{sec:linalghistory}, we review the historical development of vectors, matrices and linear algebra in mathematics.
+\begin{itemize}
+\item
+Scalars, $1$-vectors, and $1\times1$ matrices. Each of these define scalar fields which can be used to define vector spaces over. However, most programming languages distinguish between these quantities, for example by providing different indexing behaviors.
 
+\item
+$n$-vectors, $1\times n$ matrices and and $n\times1$ matrices. All of these can be used as vectors in vector spaces that are all isomorphic to each other.
 
-\subsection{Introduction (v0)}
+\end{itemize}
 
-Matrices and vectors are fundamental concepts for both computer science
-~\cite{Knuth1967,Pratt2001} and computational
-science~\cite{Strang2003,Trefethen1997}. Nevertheless, the terms ``vector'' and
-``matrix'' mean different things in the contexts of data structures and linear
-algebra. As data structures, they are simply arrays, whereas as linear
-algebraic objects, vectors are elements of a vector space and matrices are linear transformations.
-When we represent linear algebra vectors and linear algebra transformation in a basis,
-we obtain the familiar containers we know simply as vectors and matrices.
+\begin{figure}
+\caption{A menagerie of objects that one might not care to distinguish. Historically,
+the distinction between column matrices and column vectors (and similarly
+for rows) was not made until some time around the 1930s.}
 
+\begin{centering}
+\includegraphics[width=0.95\columnwidth]{figures/fig-zoo}
+\par\end{centering}
+\end{figure}
 
+For the purposes of this discussion, we use the following definitions.
+\begin{description}
+\item [{Definition}] An \textbf{array} or \textbf{one-dimensional} \textbf{array}
+of size $N$ is a collection of elements $F$ and an indexing function
+$idx:\left\{ 1,2,\dots,N\right\} \mapsto F$ that allows the getting
+and setting of the $i$th element.
+\item [{Definition}] A \textbf{matrix} is a two-dimensional array of size
+$M\times N$, i.e. it is a collection of elements $F$ and an indexing
+function $idx:\{\left(1,1\right),\left(1,2\right),\dots,\left(1,N\right),\left(2,1\right),\left(2,2\right),\dots,$
+$\left(2,N\right),\dots,\left(M,N\right)\}\mapsto F$ that allows
+the getting and setting of the $\left(i,j\right)$th element.
+\item [{Definition}] A \textbf{vector} is an ordered tuple of $N$ scalars
+from a field $F$ that is an element of a vector space $F^{N}$.
+\end{description}
+From the first definition, we get indexing behavior. From the second
+defition, we get algebra, i.e. a defined interface of what operations
+like addition $+$ and multiplication $*$ mean.
 
-Computer science focuses primarily on the homogeneous container semantics of
-vectors and matrices. Oftentimes they are considered synonymous with arrays of
-rank 1 and 2 respectively. The seminal work of~\cite{Iliffe1961} says
-%
-\begin{quote}
-``Depending on the organization of the array it may
-be treated as a \textit{set}, a \textit{vector}, or a \textit{matrix}.''
-\end{quote}
-%
-The classic~\cite{Knuth1967} focuses only on indexing semantics; the index
-entry for ``two-dimensional array'' cross-references the entry for ``matrix''.
-Even today, the conflation persists. A modern textbook on programming language
-design writes~\cite[p. 215]{Pratt2001}:
-%
-\begin{quote}
-A vector is a one-dimensional array; a matrix composed of rows and columns of
-components is a two-dimensional array[.]
-\end{quote}
+The problem arises when considering this alternate definition of a
+vector:
+\begin{description}
+\item [{Definition}] A \textbf{column vector} is a column matrix, i.e.
+a matrix with one column. A \textbf{row vector} is a row matrix, i.e.
+a matrix with one row.
+\end{description}
+In this latter definition, vectors have intrinsic rowness or columnness.
+In the former definition, vectors are intrinsically flat and have
+no notion of rowness or columnness.
 
-%PZ p 217 also has a nice description of linear indexing semantics adopted from
-%Fortran. Slicing came from PL/I.
+Figure 1 shows
 
-In contrast, vectors and matrices in linear algebra are defined by their
-algebraic properties, such as inner products and matrix-vector products.
+and transposition $\prime$All languages can be divided into languages
+that retrofitted linear algebra onto arrays, or else grafted array
+semantics onto linear algebra.
 
-The aim of this paper is to identify if and when the semantics of array
-indexing and linear algebra may conflict.
+Computer science talks about arrays; mathematics talks about vectors
+and matrices. As data structures, we want indexing behavior. As linear
+algebraic objects, we want algebra, i.e. a defined interface of $+,*,'$.
+
+Thesis: one-dimensional arrays have fundamenatally different semantics
+from vectors.
+
+Consider only fixed size arrays for now. The problem now shows up
+when asking about what the transpose of a vector should be. A 1-D
+array by definition can be indexed with a single subscript, $A[i]$,
+and has shape $\left(n,\right)$. In contrast, vectors in linear algebra
+are often assumed to have intrinsic rowness or columnness. For example,
+an expression like the bilinear form $x^{T}Ay$ is thought of as the
+product of $x^{T}$, $A$ and $y$. While $x^{T}$ and $y$ are usually
+considered vectors, the former is a row vector whereas the latter
+is a column vector. They have fundamentally different algebras: $y$
+can only be premultiplied by a matrix $A$ of conformant shape, and
+$x^{T}$ can only be postmultiplied.
+
+\begin{figure}
+\caption{Flat vectors vs row/column vectors and embeddings and transpositions.}
+
+\centering{}\includegraphics[width=0.9\columnwidth]{figures/fig-embed}
+\end{figure}
+
+Isomorphisms between these various quantities are ubiquitous in the mathematical literature of linear algebra, but are rare, if outright nonexistent, in computer science. The former is used to expressions written in Householder notation~\cite{Householder1953,Householder1955} like $x^\prime Ay/x^\prime y$; in Sec.~\ref{sec:householder}, we discuss explicitly the embeddings used in expressions like inner products $u^T v$, outer products $u v^T$, and bilinear forms $u^T A v$. In Sec.~\ref{sec:math_history}, we review the historical development of matrices and vectors in linear algebra, demonstrating that the modern presentation of matrices and vectors has a surprisingly recent history. The latter studies indexing, mapping and reduction operations, like sorting and computing means along axes. Because of the fundamentally incompatible disagreements of which quantities to treat as equivalent, we argue in this paper that it is impossible to have our beloved Householder notation and one dimensional arrays in the same language without some sort of compromise. In Sec.~\ref{sec:array}, we review how arrays are used in computer science and review their history in Sec.~\ref{sec:array_history}. Finally, we review in Sec.~\ref{sec:reallanguages} how array and vector semantics are implemented in various languages.

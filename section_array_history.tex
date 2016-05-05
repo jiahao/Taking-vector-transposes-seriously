@@ -1,0 +1,183 @@
+\label{sec:array_history}
+\section{Vectors in computer science}
+
+In computer science, vectors are synonymous with one-dimensional arrays, or simply arrays.~\cite{Knuth1967,Pratt2001} The array data structure is
+defined algebraic objects, vectors are elements of a vector space and matrices are linear transformations.
+
+\subsection{A brief history}
+
+
+
+\subsection{More notes}
+
+The seminal work of~\cite{Iliffe1961} says
+%
+\begin{quote}
+``Depending on the organization of the array it may
+be treated as a \textit{set}, a \textit{vector}, or a \textit{matrix}.''
+\end{quote}
+
+
+Computer science focuses primarily on the homogeneous container semantics of
+vectors and matrices. Oftentimes they are considered synonymous with arrays of
+rank 1 and 2 respectively.
+%
+The classic~\cite{Knuth1967} focuses only on indexing semantics; the index
+entry for ``two-dimensional array'' cross-references the entry for ``matrix''.
+Even today, the conflation persists. A modern textbook on programming language
+design writes~\cite[p. 215]{Pratt2001}:
+%
+\begin{quote}
+A vector is a one-dimensional array; a matrix composed of rows and columns of
+components is a two-dimensional array[.]
+\end{quote}
+
+%PZ p 217 also has a nice description of linear indexing semantics adopted from
+%Fortran. Slicing came from PL/I.
+
+\paragraph{Hockney (1961)~\cite{Hockney1961}}
+
+A 1961 paper by Hockney in the ALGOL Bulletin
+describes the modern concept of the array data structure as describing
+both elements and shape. Para. 3.7:
+
+``This concept of <array type> requires that an array carries with it a
+statement of its dimensions and the dimensions of any of its elements
+that may themselves be arrays... One should think of an array as the
+totality of the elements of the array together with all the bound pair
+lists describing the dimensions of the array.''
+
+The term ``array'' appears to have evolved from its vernacular usage in ``array of cobscripted variables''
+
+Has the first description of a multidimensional array as parametric on indexing quantities and the element type.
+
+
+\paragraph{Strachey (1967)~\cite{Strachey1967}}
+
+By the time computer scientists thought of formalizing the grammar and semantics of programming languages,
+vectors and arrays are considered well-understood data structures. \cite[\S 3.7.7, pp. 43--44]{Strachey1967} writes:
+\begin{quote}
+Vectors and arrays are reasonably well understood. They are parametric types so that the type of an array includes its dimensionality (the number of
+its dimensions but not their size) and also the type of its elements[...]
+all the elements of an array have to be of the same type, though their number may vary dynamically.
+It is convenient, though perhaps not really necessary, to regard an $n$-array
+(i.e., one with $n$ dimensions) as a vector whose elements are ($n-1$)-arrays.
+We can then regard the R-value of a vector as something [that] gives access (or points to) the elements rather than containing them.
+\end{quote}
+We recognize herein the modern description of the array data type being defined by
+two parameters: the number of dimensions and the type of elements.
+
+Does Strachey assume integer indexes?
+
+
+\paragraph{Wirth (1973)~\cite{Wirth1973}}
+
+The book ``Structured Programming'' is possibly the first major textbook on theoretical computer science, as it introduces the study of data structures and algorithms as a discipline separate from mathematics.
+
+Wirth uses a pseudocode notation inspired by ALGOL 60. He also credits Rutishauser
+in the preface as ``the originator of the idea of programming languages''.
+
+This book is notable for Ch. 11, about the array data structure, and Ch. 8, on data types and types.
+
+Types: Wirth introduces p44 that ``The introduction of a new variable, in particular,
+should be accompanied by the specification of
+its range of possible values.'' Wirth states that doing so is necessary to understand
+how an algorithm works and its correctness, and further allows reasoning about memory requirements
+of efficient representations.
+Wirth defines ``type'' informally as ``[t]he set of values that a variable may
+assume''. p45 also introduces the concept of ``scalar value'' as a value
+which is ``unstructured (i.e.,\ not decomposable into components.)''
+
+
+Wirth defines the array data structure as `` a collection of \textit{component
+variables of the same type}'' - Ch. 11, p. 80, being one of his primary
+examples of a structured type. As distinct from a file, ``Each single component
+of an array is explicitly denotable and directly accessible''.\footnote{Wirth
+also says that the number of
+components of an array is fixed once initialized, which is something we don't
+consider to be an essential characteristic of arrays anymore in the context of
+mutable lists.}
+
+Wirth says that an array type must specift rhe componen type and the index type,
+generalizing Strachey's definition to introduce possibly non-integer indexes.
+
+p 83 - gives as an example a program to compute the scalar product.
+Wirth does not refer to the arrays as vectors, but simply lists the elements of
+both vectors, each with a single subscript.
+
+p 87 - ``Components of arrays need not be scalars---they themselves may be structured.
+If they are again arrays, then the orrignal array $A$ is called \textit{multi-dimensional}.
+If the components of the componet arrays are scalars, then
+$A$ is called a \textit{matrix}.'' Wirth clearly defines arrays recursively.
+
+
+\paragraph{Array theory} The APL literature contains a comprehensive discussion
+of multidimensional array indexing semantics~\cite{Brown1982}, which were
+absent in the classical APL of \cite{Iverson1962}. \cite{Ruehr1982,Gerth1988}
+surveyed the development of array semantics in APL.
+
+What we refer to as APL style indexing was first written down in the APL/360
+manual~\cite{Falkoff1968}, albeit only for rank 2 only, where indexing by a
+matrix returned a matrix. \cite{Haegi1976} noted an inconsistency. The general
+case has been termed ``scatter-point indexing'' or ``choose indexing''
+\cite{Brown1972,Ruehr1982}, and was perhaps most clearly described
+in~\cite{More1979}. \cite{Gull1979} emphasized the importance of preserving
+the rank of the index set in the rank of the output for multidimensional
+arrays.
+
+\cite{More1973} built a theory of multidimensional arrays using recursive
+nesting of one-dimensional arrays, formalized upon axiomatic set theory.
+\cite{Ghandour1973} emphasized the ordering of elements as a defining
+characteristic of arrays. \cite{Gerth1988} emphasized indexing as a function on
+arrays from index sets to value sets. We do not consider functional aspects of
+indexing in this paper.
+
+The APL literature makes some mention of linear algebra semantics, but does not
+consider the interplay with array indexing semantics.
+
+\begin{enumerate}
+\item \cite{More1973} mentions the inner product returning a scalar as an
+	important rule for guiding array semantics.
+
+\item \cite{Haegi1976} bemoans the conflation of scalars and $(1,)$-arrays in
+	classical APL.
+
+\item \cite[p. 153]{More1973} also suggests the possibility of more complicated
+	multidimensional array semantics:
+
+\begin{quote}
+Let $V$ be an $n$-dimensional vector space over a field. Disregarding
+considerations of contravariance and covariance, a tensor of valence $q$ on $V$
+is a multilinear mapping of the Cartesian product of the list $V V \dots V$ of
+length $q$ into a vector space. If $V$ has a base, then a tensor of valence $q$
+on $V$ can be represented by a \textit{component tensor}, which is an array on
+$q$ axes, each of length $n$.
+\end{quote}
+
+\end{enumerate}
+
+
+\paragraph{Becker, Chambers and Wilks (1988)~\cite{Becker1988}}
+
+The definitive book introducing the statistical programming language S in its
+modern form, which was adapted by its open source implementation, R.
+
+p. 125: Classes of objects in S
+
+Class | Use
+vector | simple objects
+matrix | 2-dimensional array
+array | multi-way array
+
+Notable for saying on Ch. 5, p. 128
+
+\begin{quote}
+If the matrices resulting from subscripting end up with one row or one
+column, there is a chocie to make. S can retain the matrix properties or it can
+drop one dimension to rpoduce a vector. By default, S drops these redundant,
+or ``dead,'' dimensions. [...]
+In most cases of interactive computing, that is the right choice since it tends to
+reuduce complexity---why have a 1-column matrix when a vector will do.
+\end{quote}
+
+which is not mentioned in the 1984 book or the 1985 book.

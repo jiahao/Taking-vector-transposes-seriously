@@ -1,1 +1,27 @@
 \section{Conclusions}
+
+You can't have your cake and eat it too.
+\begin{itemize}
+\item If you have MATLAB semantics $\phi$, $\theta$, $I,$ $*$ and $\cdot^{T}$,
+then indexing a vector requires trailing singleton dimensions or linear
+indexing rules or the embedding $\phi^{-1}$. You also need the embeddings
+$\phi$ and $\theta$.
+\item If you have NumPy semantics $*_{vm}$, $*_{mv}$, $*_{vv}$, $*$,
+$\cdot_{v}^{T}$, $I$ and $I_{v}$, then you have a ``unphysical''
+vector-matrix product $*_{vm}$, and you cannot express the outer
+product $uv^{T}$ using these semantics.
+\item If you have PARI/GP-like semantics $*_{\tilde{v}v}$, $*_{v\tilde{v}}$,
+$*_{\tilde{v}m}$, $*_{mv}$, $*$, $\cdot_{v}^{\tilde{T}}$ and $I_{v}$,
+you need the extra operations $*_{v\tilde{v}},*_{\tilde{v}m}$ for
+the outer product and guaranteeing associativity. However, you have
+to define row vectors as a new type of object, and you have to define
+ how to index row vectors. Now arrays are no longer uniquely mapped
+to just (column) vectors, but they can also be mapped to row vectors.
+Not only do you now have a parallel universe of row vectors, but the
+equivalence with the inner product operation $*_{\tilde{v}v}$ requires
+complex conjugation for nonreal $F$, which some may find strange.
+Furthermore an indexing operation like $A[:,1]$ now returns a column
+vector, which is a different type from $A[1,:]$, a row vector. Users
+are forced to deal with the complexity of intermixing row and column
+vectors.
+\end{itemize}

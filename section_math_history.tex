@@ -1,4 +1,142 @@
-\section{Summary of historical development}
+\label{sec:math_history}
+
+\section{A brief history of matrices and vectors}
+
+\subsection{A brief history of the array data structure}
+
+The array data structure is so old that it has been surpisingly difficult
+to get authoritative accounts of its invention and evolution.
+
+We should note that prior to the modern era of electronic computers,
+the word ``array'' almost exclusively meant a two dimensional collection
+of numbers, such as the numbers inside a matrix, a table, or a determinant.
+``Array'' was often not carefully distinguished from these notions,
+but when the literature did so, arrays referred exclusively to the
+collection of numbers, with the actual object determined by other
+typographical notation such as parentheses, vertical lines, plus a
+definition of the algebra (or interface) which was what defined a
+matrix, for example. For example, ``Mathematics of Physics and Chemistry''
+by Margenau and Murphy, 1943, \S10.1, p. 288, defines arrays effectively
+as matrices without linear algebra:
+\begin{quote}
+A collection of real or complex quantities is called an \emph{array}
+if it can be displayed in an orderly table of \emph{rows} and \emph{columns}.
+\end{quote}
+Interestingly, this meaning of array became practically extinct soon
+after the advent of the array data structure. Again, it is difficult
+to pinpoint where and when exactly it was invented - John Backus's
+early FORTRAN reports mention repeatedly the use of array data structures
+even prior to the first FORTRAN I manual of 1956/7. In the earliest
+days, what we would now call arrays were simply referred to as ``subscripted
+variables''. What is clear, however, is that the earliest electronic
+programmable computers offered users the ability to repeatedly apply
+the same operation to different data stored consecutively in memory.
+The Manchester 1948 computer offered what was called a ``B line'',
+what we could call today a memory offset register. All user code had
+to do was increment the B line and the computer was ready to repeat
+a program on a new datum. So reasoning about memory leds naturally
+to a linear, one-dimensional array concept.
+
+Later on the International Algorithmic Language (IAL) of 1959, precursor
+to ALGOL 60, formalized the notion of the array as a one dimensional
+quantity. ALGOL 60 led to the development of our modern understanding
+of the array data structure as a homogeneous collection with a single
+dimension of extent. Early attempts to extend ALGOL 60 also introduced
+multidimensional arrays by recusive definition. For example, a two-dimensional
+array was simply an array of arrays. Attempts to formalize ALGOL 60
+led to modern type theory as it is used by virtually every modern
+programming language, with the notable exceptions of MATLAB, R, and
+related languages which are used in scientific, mathematical and statistical
+computing. Strachey in his influential 1967 talk on the design of
+programming languages, writes in \S3.7.7, pp. 43-44:
+\begin{quote}
+Vectors and arrays are reasonably well understood. They are parametric
+types so that the type of an array includes its dimensionality (the
+number of its dimensions but not their size) and also the type of
+its elements{[}...{]} all the elements of an array have to be of the
+same type, though their number may vary dynamically. It is convenient,
+though perhaps not really necessary, to regard an $n$-array (i.e.,
+one with $n$ dimensions) as a vector whose elements are ($n-1$)-arrays.\footnote{Arrays defined in the latter style are known today as Iliffe vectors,
+as distinguished from ``Fortran style'' dope vector describing a
+contiguous chunk of memory. Niklaus Wirth used this definition in
+Structured Programming. APL was very big on Iliffe-style arrays Even
+though many languages implement the recursive semantics assoicated
+with this style of array, in practice Iliffe vectors are not used
+much anymore. However on modern computers where access to memory is
+slower than CPU computations, Iliffe vectors are now rarely used in
+practical implementations except in limited circumstances to describe
+ragged arrays of irregular shape. All the languages we describe in
+this paper use arrays described by dope vectors.}
+\end{quote}
+Already, we see that vectors are conflated with one-dimensional arrays.
+
+In modern languages with multidimensional arrays, an array is defined
+in terms of the type of element it stores, and its either its rank
+(dimensionality) or its shape. The rank or shape information is critical
+for compilers to reason about memory layout such as strides, and it
+also defines very much how indexing works.
+
+\subsection{``Matrices first'' vs ``vectors first'' linear algebra}
+
+Even in the confines of linear algebra, we are not always entirely
+clear about what vectors really are.
+
+It is clear to modern readers that column matrices (and similarly
+row matrices) have the structure of a vector space. But so do ordered
+collections of $n$ numbers, what we could call today $n$-tuples.
+In the past we knew them as $n$-dimensional coordinates.
+
+It was not always the case that we were so cavalier about the distinction
+between vectors and column matrices. The mathematical literature prior
+to the early 20th century discussed either matrices or vectors separately,
+without intermixing the two ideas. It was only with interest in generalized
+$n$-dimensional numbers, or what was termed ``hypercomplex numbers'',
+that the algebraic structure of $n$-tuples were really studied in
+earnest and formalized by Peano in the axioms of vector space. Only
+with the advent of modern abstract algebra in the presentation of
+Noether, Artin and van der Waerden in the 1930s did it become clear
+that the algebraic structure of $n$-tuples was identical up to isomorphism
+with that of column matrices (and similarly with row matrices). Only
+then did authors began to refer to column matrices and column vectors
+interchangably, and similarly for row matrices and row vectors. (Notably,
+it was only around this time in the 1930s and 1940s that the subject
+was given the name ``linear algebra'', as opposed to ``vector analysis''
+or ``matricial calculus''.)
+
+Even in modern presentations of linear algebra the fusion of the two
+ideas is not entirely complete. When we describe ``baby matmul''
+as taking the product of a row and a column, the vectors in that presentation
+have intrinsic rowness and columness. In the presentation of vector
+spaces, when one describes inner product spaces we think of the inner
+product as acting on two elements of a vector space, producing a scalar.
+So sometimes we describe ``baby matmul'' as taking the inner products
+of each row with each column. But the equivalence of the two ideas
+is only true for real inner product spaces! The analogy breaks down
+the moment we go to complex number fields. Many authors are careful
+to make the distinction of the two different inner products, but sometimes
+the difference is glossed over, presumably for ease of exposition.
+
+Even today, we still see that there is a historical divide in how
+vectors and matrices are presented in linear algebra textbooks. Virtually
+all textbooks fall into two camps. In the ``matrices first'' camp,
+matrices are introduced first as two-dimensional arrays with some
+algebraic structure, and vectors are derived by taking columns and
+rows out of matrices. In this presentation it is natural to describe
+vectors as having intrinsic rowness and columnness. Alternatively
+there is the ``vectors first'' camp, where the formal algebraic
+structure of $n$-tuples is introduced first, and then matrices are
+introduced as linear maps, sometimes geometrically as describing changes
+of coordinates between $n$-dimensional coordinates. In this presentation
+it is natural to describe vectors as being intrinsically flat, and
+the notion of rowness and columnness is very artificial. (Some authors
+like Birkhoff and Mac Lane somewhat glibly describe the tuple $(x_{1},x_{2},\dots,x_{n})$
+as having intrinsic rowness, but they only mean it in the typographical
+sense that it is written horizontally across a page.) As we will see,
+the (one-dimensional) array data structure was very much developed
+in the historical vein of the latter school, whereas MATLAB very much
+came from the former school.
+
+\subsection{A brief history of matrices and vectors (v0)}
 
 The expectations of users today, and the conflict resulting in the question
 of what the vector transpose does, can be traced back to the convoluted history
@@ -1818,24 +1956,6 @@ Gantmacher also distinguishes \cite[pp. 54-56]{Gantmacher1960} between the linea
 The fuss over the abstractions of vector space may seem fussy, but in fact it the definition of matrix multiplication arises naturally from the composition of linear operators, and is correct independent of basis. The notion of basis-independent properties is what is often neglected in computer representations, as is the notion of ``up to isomorphism'' as described by Gantmacher.
 
 
-
-\paragraph{Hockney (1961)~\cite{Hockney1961}}
-
-A 1961 paper by Hockney in the ALGOL Bulletin
-describes the modern concept of the array data structure as describing
-both elements and shape. Para. 3.7:
-
-``This concept of <array type> requires that an array carries with it a
-statement of its dimensions and the dimensions of any of its elements
-that may themselves be arrays... One should think of an array as the
-totality of the elements of the array together with all the bound pair
-lists describing the dimensions of the array.''
-
-The term ``array'' appears to have evolved from its vernacular usage in ``array of cobscripted variables''
-
-Has the first description of a multidimensional array as parametric on indexing quantities and the element type.
-
-
 \paragraph{Mirsky (1961)~\cite{Mirsky1961}}
 
 Matrix first (sort of). Actually, determinants, then vectors, then matrices.
@@ -1931,26 +2051,6 @@ They present the vector transpose on p. 2.
 \end{quote}
 
 Although they cite \cite{Faddeev1959} for the introductory material, \cite{Faddeev1959} itself is firmly rooted in the ``matrices only'' tradition, with column vectors treated as synonymous with column matrices.
-
-
-
-\paragraph{Strachey (1967)~\cite{Strachey1967}}
-
-By the time computer scientists thought of formalizing the grammar and semantics of programming languages,
-vectors and arrays are considered well-understood data structures. \cite[\S 3.7.7, pp. 43--44]{Strachey1967} writes:
-\begin{quote}
-Vectors and arrays are reasonably well understood. They are parametric types so that the type of an array includes its dimensionality (the number of
-its dimensions but not their size) and also the type of its elements[...]
-all the elements of an array have to be of the same type, though their number may vary dynamically.
-It is convenient, though perhaps not really necessary, to regard an $n$-array
-(i.e., one with $n$ dimensions) as a vector whose elements are ($n-1$)-arrays.
-We can then regard the R-value of a vector as something [that] gives access (or points to) the elements rather than containing them.
-\end{quote}
-We recognize herein the modern description of the array data type being defined by
-two parameters: the number of dimensions and the type of elements.
-
-Does Stachey assume integer indexes?
-
 
 
 \paragraph{Fischer (1973)~\cite{Fischer1973}}
@@ -2053,7 +2153,7 @@ Vectors come first, but they have distinct columnness. In particular, p. 2:
     \]
 \end{quote}
 
-p. 21 - Definiion 3.1 An $m\times n$ \textit{matrix} is a rectangualr array of numbers
+p. 21 - Definiion 3.1 An $m\times n$ \textit{matrix} is a rectangular array of numbers
 having $m$ rows and $n$ columns.
 
 p. 21 - Example 3.2. The $n\times1$ matrix $A$ [...] looks exactly like a member of $\mathbb R^n$. In this book
@@ -2069,45 +2169,6 @@ Such a matrix will be called a \textit{row vector}
 We see here an asymmetry in the indexing conventions between row vectors and
 column vectors.
 
-\paragraph{Wirth (1973)~\cite{Wirth1973}}
-
-The book ``Structured Programming'' is possibly the first major textbook on theoretical computer science, as it introduces the study of data structures and algorithms as a discipline separate from mathematics.
-
-Wirth uses a pseudocode notation inspired by ALGOL 60. He also credits Rutishauser
-in the preface as ``the originator of the idea of programming languages''.
-
-This book is notable for Ch. 11, about the array data structure, and Ch. 8, on data types and types.
-
-Types: Wirth introduces p44 that ``The introduction of a new variable, in particular,
-should be accompanied by the specification of
-its range of possible values.'' Wirth states that doing so is necessary to understand
-how an algorithm works and its correctness, and further allows reasoning about memory requirements
-of efficient representations.
-Wirth defines ``type'' informally as ``[t]he set of values that a variable may
-assume''. p45 also introduces the concept of ``scalar value'' as a value
-which is ``unstructured (i.e.,\ not decomposable into components.)''
-
-
-Wirth defines the array data structure as `` a collection of \textit{component
-variables of the same type}'' - Ch. 11, p. 80, being one of his primary
-examples of a structured type. As distinct from a file, ``Each single component
-of an array is explicitly denotable and directly accessible''.\footnote{Wirth
-also says that the number of
-components of an array is fixed once initialized, which is something we don't
-consider to be an essential characteristic of arrays anymore in the context of
-mutable lists.}
-
-Wirth says that an array type must specift rhe componen type and the index type,
-generalizing Strachey's definition to introduce possibly non-integer indexes.
-
-p 83 - gives as an example a program to compute the scalar product.
-Wirth does not refer to the arrays as vectors, but simply lists the elements of
-both vectors, each with a single subscript.
-
-p 87 - ``Components of arrays need not be scalars---they themselves may be structured.
-If they are again arrays, then the orrignal array $A$ is called \textit{multi-dimensional}.
-If the components of the componet arrays are scalars, then
-$A$ is called a \textit{matrix}.'' Wirth clearly defines arrays recursively.
 
 
 \paragraph{Moler (1980)~\cite{Moler1980}}
@@ -2190,35 +2251,6 @@ John M Chambers, Computational Methods for Data Analysis, 1977
 R Gnanadesikan, Methods for Statistical Data Analysis of Multivariate Observations, 1977
 
 K V Mardia, J Kent, J M Bibby, Multivariate Analysis, 1979
-
-\paragraph{Becker, Chambers and Wilks (1988)~\cite{Becker1988}}
-
-The definitive book introducing the statistical programming language S in its
-modern form, which was adapted by its open source implementation, R.
-
-p. 125: Classes of objects in S
-
-Class | Use
-vector | simple objects
-matrix | 2-dimensional array
-array | multi-way array
-
-Notable for saying on Ch. 5, p. 128
-
-\begin{quote}
-If the matrices resulting from subscripting end up with one row or one
-column, there is a chocie to make. S can retain the matrix properties or it can
-drop one dimension to rpoduce a vector. By default, S drops these redundant,
-or ``dead,'' dimensions. [...]
-In most cases of interactive computing, that is the right choice since it tends to
-reuduce complexity---why have a 1-column matrix when a vector will do.
-\end{quote}
-
-which is not mentioned in the 1984 book.
-\todo{Are dropping dimensions mentioned in ``Extending the S System'', 1985?}
-
-
-
 
 
 
@@ -2330,52 +2362,6 @@ We shall display the $m$-tuple $(t_{1k}, \dots, t_{mk})$ vertically... [t]his ar
 If we interchange the rows and columns of a rectangular matrix $A$, the new matrix so obtained is called the \textit{transpose} of $A$ and is denoted by $A^t$. \cite[p. 615, Exercise 7]{Apostol1967}.
 
 (Another axiom: ${(A^t)}^{-1} = {(A^{-1})}^t$)
-
-\paragraph{Array theory} The APL literature contains a comprehensive discussion
-of multidimensional array indexing semantics~\cite{Brown1982}, which were
-absent in the classical APL of \cite{Iverson1962}. \cite{Ruehr1982,Gerth1988}
-surveyed the development of array semantics in APL.
-
-What we refer to as APL style indexing was first written down in the APL/360
-manual~\cite{Falkoff1968}, albeit only for rank 2 only, where indexing by a
-matrix returned a matrix. \cite{Haegi1976} noted an inconsistency. The general
-case has been termed ``scatter-point indexing'' or ``choose indexing''
-\cite{Brown1972,Ruehr1982}, and was perhaps most clearly described
-in~\cite{More1979}. \cite{Gull1979} emphasized the importance of preserving
-the rank of the index set in the rank of the output for multidimensional
-arrays.
-
-\cite{More1973} built a theory of multidimensional arrays using recursive
-nesting of one-dimensional arrays, formalized upon axiomatic set theory.
-\cite{Ghandour1973} emphasized the ordering of elements as a defining
-characteristic of arrays. \cite{Gerth1988} emphasized indexing as a function on
-arrays from index sets to value sets. We do not consider functional aspects of
-indexing in this paper.
-
-The APL literature makes some mention of linear algebra semantics, but does not
-consider the interplay with array indexing semantics.
-
-\begin{enumerate}
-\item \cite{More1973} mentions the inner product returning a scalar as an
-	important rule for guiding array semantics.
-
-\item \cite{Haegi1976} bemoans the conflation of scalars and $(1,)$-arrays in
-	classical APL.
-
-\item \cite[p. 153]{More1973} also suggests the possibility of more complicated
-	multidimensional array semantics:
-
-\begin{quote}
-Let $V$ be an $n$-dimensional vector space over a field. Disregarding
-considerations of contravariance and covariance, a tensor of valence $q$ on $V$
-is a multilinear mapping of the Cartesian product of the list $V V \dots V$ of
-length $q$ into a vector space. If $V$ has a base, then a tensor of valence $q$
-on $V$ can be represented by a \textit{component tensor}, which is an array on
-$q$ axes, each of length $n$.
-\end{quote}
-
-\end{enumerate}
-
 
 \subsection{OTHER IDENTITIES?}
 Another identity ${(Au - v)}^T(Au - v) = u'Au -...$

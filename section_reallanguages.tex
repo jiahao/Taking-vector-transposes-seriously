@@ -1,4 +1,87 @@
+\label{sec:reallanguages}
 \section{Real programming languages}
+
+\subsection{The polymorphic algebra of {*}: composition and broadcasting}
+
+Another legacy of the post ALGOL 60 working committee was the {*}
+symbol.\cite{Hockney1961}
+
+As we all know, matrix multiplication and its derivative products
+(matvec, outer, etc) has its origins in the composition of linear
+maps, which historically arose from considering substitutions of variables
+in systems of linear equations. At the same time, there is an entirely
+different kind of product, that of broadcasting, which is scalar-vector
+product and scalar-matrix product. Scalar multiplication is an axiom
+associated with vector space structure, whereas the composition of
+two matrices is very much the province of group theory and abstract
+algebra. Interestingly the latter is usually about square matrices
+though...
+
+Scalar multiplication semantics has evolved today to much more complicated
+operations, such as broadcasting operations, which are very much ``tensor
+flavored'' and are incompatible with the ordinary matrix product.
+(The equivalent operation between two matrices goes by the name Hadamard
+product.) MATLAB uses .{*}, Eigen uses cwiseProduct.
+
+We won't focus very much on general broadcasting products other than
+to acknowledge that it is very much ``arraylike semantics'' and
+complicates the discussion beyond one and two dimensional objects.
+For our purposes it will suffice to note that almost all modern languages
+have an operator or function that is ALGOL's {*} that has both compositional
+and broadcasting semantics.\footnote{A notable exception is APL, which clearly distinguished broadcasting
+products in multiply $\times$ (via what is called ``scalar extension''
+in APL, i.e. broadcasting) from the compositional product $+.\times$.}
+
+To tease apart the semantics more clearly, we will denote compositional
+products like matrix multiply by $*$ and broadcasting products by
+$\circledast$. The circle around the latter symbol will remind us
+that it has pointwise semantics, just like the . in MATLAB's .{*}.
+Where convenient we will also subscript each product operation by
+the type of its operands, be they \uline{s}calar, \uline{v}ector
+or \uline{m}atrix.
+
+
+\subsection{A note on the tensor transpose}
+
+Does the general tensor transpose allow us to reconcile these semantics?
+Yes and no.
+
+The NumPy definition $\cdot_{v}^{T}$ is compatible with the tensor
+transpose, which really a permutation of indices. APL also uses this
+``reverse dims'' definition of transpose in its ⍉ operator. But
+note that the tensor object here is really constructed only from ``column
+vectors'',
+\[
+F^{m_{1}\times m_{2}\times\dots\times m_{r}}=F^{m_{1}}\times F^{m_{2}}\times\dots\times F^{m_{r}}.
+\]
+You can express a 2D array as $F^{m}\times F^{n}$, but now you index
+a matrix with $\sum_{kl}A_{kl}\left(e_{i}\right)_{k}\left(e_{i}\right)_{l}=A_{ij}$
+which really can't be expressed in linear algebra form like $e_{i}^{\prime}Ae_{j}$.
+That matrix instead is $F^{m}\times\tilde{F}^{n}$, which requires
+a more general definition of tensor that allows an arbitrary $\times$-combination
+of $F$s and $\tilde{F}$s. But then an implementation of this data
+type needs to store not only the rank $r$ but also the ``up- or
+downness'' representing the exact sequence of $F$ and $\tilde{F}$s.
+Furthermore, you now see that the tensor transpose $\cdot_{t}^{T}$
+now means something like
+\[
+\cdot_{t}^{T}:F^{m}\times\tilde{F}^{n}\rightarrow F^{n}\times\tilde{F}^{m}
+\]
+
+\[
+\cdot_{t}^{T}:F^{m}\rightarrow F^{m}
+\]
+associated with the permutations $\overline{21}$ and $1$ respectively,
+with the overline $\overline{\cdot}$ over each index meaning that
+$F$ goes to $\tilde{F}$ and vice versa. It is no longer the simple
+permutation 21. Furthermore you now get other ``transposes'' associated
+with the permutations $\overline{2}1$ and $2\overline{1}$, neither
+of which are matrices. We speculate that forcing users to worry about
+up-or-downness is undesirable.
+
+
+\subsection{There be problems}
+
 
 Problems arise when trying to implement linear algebra on arrays, which are
 data structures defined by their indexing behavior. In particular, array data
@@ -280,3 +363,459 @@ R's semantics imply that transposition is not idempotent on vectors.
 Nevertheless, we've already seen precedent in the mathematical literature
 that does...
 \todo{cite}
+
+\section{Embedding calculus}
+
+It turns out that various programming languages and libraries used
+for numerical computing implement many different approaches to the
+problem of representing vectors.
+
+We considered a variety of real world programming languages (with
+suitable libraries). For each system, we considered the following
+questions:
+\begin{enumerate}
+\item Does this programming language allow users to provide distinct types
+for scalar, vector and matrix variables?
+\item Are the multiplication, division and transposition operators defined
+for all possible types of variables?
+\item Can we use these multiplication, division and transposition operators
+to construct expressions that conform to the standard way of spelling
+them in numerical linear algebra and have the expected output? (For
+example, does \verb`x'*y` compute the inner product of \verb`x`
+and \verb`y`, producing a scalar?)
+\item Are standard identities in numerical linear algebra expressible in
+code form?
+\end{enumerate}
+\begin{table*}
+\caption{Summary of semantics across programming languages}
+\begin{tabular}{lllllllllll}
+\cmidrule{2-11}
+\multicolumn{1}{l}{} & \multicolumn{10}{l}{ELEMENTARY BEHAVIORS}\tabularnewline
+\cmidrule{2-11}
+\multicolumn{1}{l}{} & A{*}B  & A{*}b  & 1{*}a  & a{*}1  & a{*}b  & a{*}B  & A'  & a'  & A/B  & 1/1\tabularnewline
+\midrule
+Julia  & M  & V  & V  & V  & E  & M{*}  & M  & M  & M  & S\tabularnewline
+\midrule
+Lua/Torch  & M  & V  & \textbf{E}  & V  & S  & E  & M  & E  & E  & S\tabularnewline
+\midrule
+Mathematica  & M  & V  & V  & V  & E  & V  & M  & V  & M  & S\tabularnewline
+\midrule
+Matlab  & M  & -  & -  & -  & -  & -  & M  & -  & M  & -\tabularnewline
+\midrule
+NumPy  & M  & V  & V  & V  & S  & M  & M  & V  & E  & S\tabularnewline
+\midrule
+Python 3.5  & M  & V  & V  & V  & S  & M  & M  & V  & E  & S\tabularnewline
+\midrule
+R  & M  & M  & -  & -  & E  & M{*}  & M  & M  & M  & -\tabularnewline
+\bottomrule
+\end{tabular}
+
+M: Matrix, V: Vector, S: Scalar, E: Error, M{*}: matrix only if second
+argument is 1xN, otherwise error, -: Concept does not exist
+
+\textbf{Bold} : Most people consider this wrong behavior
+
+\begin{tabular}{llllllll}
+\cmidrule{2-8}
+\multicolumn{1}{l}{} & \multicolumn{4}{l}{EXPRESSIONS} & \multicolumn{3}{l}{IDENTITIES}\tabularnewline
+\cmidrule{2-8}
+\multicolumn{1}{l}{} & a'{*}b  & a{*}b'  & x'{*}A{*}y  & x'{*}A{*}x/x'{*}x  & (x{*}y'){*}z = x{*}(y'{*}z)  & x''=x  & (A{*}x)'=(x'{*}A')\tabularnewline
+\midrule
+Julia  & \textbf{V}  & M  & \textbf{V}  & \textbf{E}  & \textbf{E}  & F  & T\tabularnewline
+\midrule
+Lua/Torch  & S  & \textbf{S}  & E  & \textbf{E}  & \textbf{E}  & T  & \textbf{F}\tabularnewline
+\midrule
+Mathematica  & S  & \textbf{S}  & S  & S  & V  & T  & T\tabularnewline
+\midrule
+Matlab  & M  & M  & M  & M  & M  & T  & T\tabularnewline
+\midrule
+NumPy  & S  & \textbf{S}  & S  & S  & V  & T  & T\tabularnewline
+\midrule
+Python 3.5  & S  & \textbf{S}  & S  & S  & V  & T  & T\tabularnewline
+\midrule
+R  & M  & M  & M  & M  & M  & \textbf{F}  & T\tabularnewline
+\bottomrule
+\end{tabular}
+
+T: True, F: False
+\end{table*}
+
+
+\subsection{Matlab}
+
+Matlab is...
+
+Matlab supports real and complex numbers, $F=\mathbb{R}$ or $\mathbb{C}$.
+Reprsented by single or double (default) precision floating point
+numbers.
+
+Matlab has no true scalars or vectors. Everything is a matrix.
+
+Matlab's definition of vectors, unlike most of the other languages
+considered here, fall back to the older ``matrix first'' view of
+linear algebra.
+\begin{quotation}
+``Matrices with one dimension equal to one and the other greater
+than one are called vectors.'' - \cite{matlab-empty-mat}
+\end{quotation}
+The semantics of Matlab's {*} and ' operations are:
+\begin{itemize}
+\item {*}: $F^{m\times k}\times F^{k\times n}\rightarrow F^{m\times n}$
+is matrix multiply, $*_{mm}$.
+\item {*}: $F^{1\times1}\times F^{m\times n}\rightarrow F^{m\times n}$
+is the scalar–matrix product, $\circledast_{sm}\circ\left(\theta\times I\right)$.
+\item {*}: $F^{m\times n}\times F^{1\times1}\rightarrow F^{m\times n}$
+is the matrix–scalar product, $\circledast_{ms}\circ\left(I\times\theta\right)$.
+\item .': $F^{m\times n}\rightarrow F^{n\times m}$ is matrix transpose
+$\cdot^{T}$
+\item ': $F^{m\times n}\rightarrow\left(F^{*}\right)^{n\times m}$ is matrix
+transpose with complex conjugation $\cdot^{\prime}=\cdot^{*}\circ\cdot^{T}$.
+\end{itemize}
+Results:
+\begin{itemize}
+\item Transpose is idempotent, since A'' = $\left(\cdot^{T}\circ\cdot^{T}\right)(A)=A$.
+\item u'{*}v=$*_{mm}\circ\left(\cdot^{\prime}\times I\right)$ returns the
+inner product as a $1\times1$ matrix.
+\item u{*}v'=$*_{mm}\circ\left(I\times\cdot^{\prime}\right)$ returns the
+outer product.
+\item u'{*}A{*}v=(u'{*}A){*}v' because MATLAB evaluates from left to right.
+So (u'{*}A){*}v'$=*_{mm}\circ\left(*_{mm}\times I\right)\circ\left(\cdot^{\prime}\times I\times I\right)$
+computes the bilinear form as a $1\times1$ matrix.
+\end{itemize}
+Indexing behaviors:
+
+Summary:
+
+MATLAB has nearly pure matrix semantics $\theta$, $*_{mm}$, $\cdot^{T}$,
+$I$. Since MATLAB only has matrices and no separate vector or scalar
+types, the matrix-to-scalar embedding $\theta$ is used to convert
+$1\times1$ matrices into scalars, and therefore even basic operations
+like {*} in MATLAB must check the shape of the inputs before deciding
+whether to do $*_{mm}$, $\circledast_{sm}$ or $\circledast_{ms}$.
+
+\subsection{Python/NumPy}
+
+NumPy's dot function has a nice rank rule, which is that
+\begin{quotation}
+Dot product of two arrays.
+
+For 2-D arrays it is equivalent to matrix multiplication, and for
+1-D arrays to inner product of vectors (without complex conjugation).
+For N dimensions it is a sum product over the last axis of a and the
+second-to-last of b. \cite{numpy.dot}
+\end{quotation}
+But even so, dot allows scalars! so this description is incomplete.
+It only describes the $*$ semantics but not the $\circledast$ semantics!
+
+NumPy also now has a matmul function which allows working on fields
+of $F^{m_{1}\times...\times m_{r}}$. It implements the semantics
+of the @ operator implemented in Python 3.5 following PEP 465 \cite{Smith2014}.
+The definition of @ is that
+\begin{quote}
+1d vector inputs are promoted to 2d by prepending or appending a '1'
+to the shape, the operation is performed, and then the added dimension
+is removed from the output. The 1 is always added on the \textquotedbl{}outside\textquotedbl{}
+of the shape: prepended for left arguments, and appended for right
+arguments.
+\end{quote}
+The semantics described in PEP 465 can be transcribed directly into
+our notation as follows:
+\begin{itemize}
+\item @: $F^{m\times k}\times F^{k\times n}\rightarrow F^{m\times n}$ is
+matrix multiply, $*_{mm}$.
+\item @: $F^{m\times n}\times F^{n}\rightarrow F^{n}$ is the matrix–vector
+product, $*_{mv}$, decomposed explicitly as $*_{mv}=\phi^{-1}\circ*_{mm}\circ\left(I\times\phi\right)$.
+\item @: $F^{m}\times F^{m\times n}\rightarrow F^{n}$ is the matrix–vector
+product, $*_{vm}$, decomposed explicitly as $*_{vm}=\tilde{\phi}^{-1}\circ*_{mm}\circ\left(\tilde{\phi}\times I\right)$
+where $\tilde{\phi}:F^{n}\rightarrow F^{1\times n}$ is the embedding
+of an $n$-vector into a row matrix and is formally equivalent to
+$\tilde{\phi}=\cdot^{T}\circ\phi$.
+\item @: $F^{m}\times F^{m}\rightarrow F$ is the vector–vector product,
+$*_{vv}$, decomposed explicitly as $*_{vv}=\theta\circ*_{mm}\circ\left(\tilde{\phi}\times\phi\right)$.
+\item numpy.transpose: $F^{m}\rightarrow F^{m}$ is the identity, $I_{v}$.
+\item numpy.transpose: $F^{m\times n}\rightarrow F^{n\times m}$ is the
+matrix transpose, $\cdot^{T}$.
+\end{itemize}
+numpy.transpose implements the tensor transpose without up-or-down
+semantics, defaulting to the permutation that reverses all the dimensions.
+
+numpy.dot includes the same semantics of @ (which is implemented as
+numpy.matmul), but additionally allows either argument to be a scalar,
+hence including $\circledast$ semantics also. There are also differences
+in handling arrays of higher rank which we shall not consider.
+
+Consequence:
+\begin{itemize}
+\item u'@v is the inner product, $*_{vv}\circ\left(I_{v}\times I_{v}\right)=*_{vv}$.
+\item u@v' is not the outer product, but is instead the inner product, $*_{vv}\circ\left(I_{v}\times I_{v}\right)=*_{vv}$.
+\item u'@A@v is the bilinear form. Since Python evaluates operators from
+left to right \footnote{with the exception of the exponentiation operator {*}{*} which we
+do not consider here.}, u'@A@v=(u'@A)@v is the operation $*_{vv}\circ\left(*_{vm}\times I_{v}\right)\circ\left(I_{v}\times I\times I_{v}\right)$.
+\end{itemize}
+Python's @ semantics have the advantage of clearly separating compositional
+product $*$ from broadcasting product $\circledast$ .
+
+\subsection{C++/Eigen}
+
+Eigen is a C++ library for high performance numerical linear algebra.\cite{eigenweb}\footnote{The version of Eigen tested was v3.2.6, compiled with clang with Apple
+LLVM v7.0.2. Eigen supports vectors and matrices of fixed sizes (known
+at compile time) and dynamic sizes (known only at run time). Here,
+we consider only the dynamic classes, which have the most intricate
+semantics. }
+
+Eigen heavily exploits C++ expression templates to provide flexibility
+resulting from type polymorphism. Notably, it uses special templates
+(meant for internal use) to capture the result of intermediate expressions,
+performing what computer scientists call ``lazy evaluation''. For
+example, the result of the expression \verb`x.transpose()`, performing
+the transpose of a vector \verb`x` (of type \verb`VectorXd`) is
+neither a vector \verb`VectorXd` nor a matrix \verb`MatrixXd`, but
+rather a special type, \verb`Transpose<` \verb`VectorXd>`, that
+can be assigned to a new \verb`VectorXd` variable or a new \verb`MatrixXd`
+variable. Similar types are used to capture and build other intermediate
+expressions, such as \verb`ProductReturnType<MatrixXd, VectorXd>`
+for the matrix-vector product \verb`A*x`. This ingenious strategy
+of determining the output type only at assignment time is made possible
+in a static language like C++, where users are expected to specify
+the output type of a variable when declared.\footnote{Strictly speaking, C++ also allows for run-time polymorphism, where
+the output type is only determined at run time. However, the mechanisms
+for doing so are cumbersome and in most cases produce significant
+performance slowdowns.} The result is that in almost all cases, users can choose to imagine
+the result of most linear algebra expressions as vectors or matrices
+as they so choose.
+
+Nevertheless, Eigen's strategy is not perfect. The heavy use of internal
+classes to represent the output of computations means that both assignment
+and equality testing in Eigen must be overloaded with new definitions
+to meet user expectations. Oftentimes, the validity of an assignment
+statement can only be determined at run time, resulting in overhead
+due to run time checks for compatible shape and so on. Many new methods
+have to be introduced to overload C++'s assignment and equality testing
+operators. Furthermore, the assignment logic of vector transpose is
+ambiguous and may lead to subtle logic errors because the result of
+assignment may violate user expectations of the transitivity of equality.
+In Eigen, the result of \verb`x.transpose()` can be assigned to either
+a \verb`VectorXd` variable or \verb`MatrixXd` variable, i.e., both
+of the following statements are valid:
+\begin{verbatim}
+
+VectorXd y = x.transpose();
+MatrixXd Y = x.transpose();
+
+\end{verbatim}
+However, the shapes of \verb`y` and \verb`Y` differ: the former
+has $n$ rows and 1 column\footnote{Eigen defaults to column vectors and employs an implicit trailing
+singleton dimension rule similar to \textsc{{MATLAB}'s.}} whereas the latter has 1 row and $n$ columns. In other words, the
+type of the variable being assigned to determines whether transposing
+a vector is the identity operation or produces a row matrix!
+
+We find that unexpected behavior may result from the logic above.
+For example, the identity ${(Ax)}^{\prime}=x^{\prime}A^{\prime}$
+may or may not hold depending on whether the expressions on either
+side have been assigned to variables, and if so, which variables:
+\begin{verbatim}
+
+//The type of (A*x).transpose() is
+//  Transpose<GeneralProduct<MatrixXd, VectorXd>>
+VectorXd v1 = (A*x).transpose();
+MatrixXd m1 = (A*x).transpose();
+
+//The type of x.transpose() * A.transpose() is
+//  ProductReturnType<Transpose<VectorXd>, Transpose<MatrixXd>>
+VectorXd v2 = x.transpose() * A.transpose();
+MatrixXd m2 = x.transpose() * A.transpose();
+
+assert ((A*x).transpose() == x.transpose() * A.transpose()); //true
+assert (v1 == v2); // true
+assert (m1 == m2); // true
+assert (v1 == m2); // assertion failure
+assert (m1 == v2); // assertion failure
+
+\end{verbatim}
+The equality comparison operator \verb`==` must be suitably defined
+to understand when two values with complicated and different types
+can test equal to each other in the three cases above that do not
+trigger the assertion failure. Furthermore, the result of assigning
+\verb`(A*x).transpose()` to \verb`v1` produces a column vector effectively
+equal to \verb`A*x`, but the assignment to \verb`m1` produces a
+row matrix that is the transpose of \verb`v1`. A similar result arises
+for \verb`v2` and \verb`m2`, with the result that the equality holds
+only when neither side is assigned to a vector or matrix variable,
+or when both sides are assigned to variables of the same type. Note
+that in Eigen, a row matrix is not assignable to a vector variable.
+In this case, users may be confused as to why certain quantities may
+not be equal to each other as a result of subtle reasoning errors
+about the types of various expressions.
+
+Eigen's semantics may be summarized as follows:
+\begin{itemize}
+\item \verb`.transpose()`: $F^{m\times n}\rightarrow F^{n\times m}$ is
+$\cdot^{T}$.
+\item \verb`.transpose()`: $F^{m}\rightarrow F^{m}$ is the identity map
+$I_{v}$.
+\item \verb`.transpose()`: $F^{m}\rightarrow F^{1\times m}$ is $\tilde{\phi}=\cdot^{T}\circ\phi$.
+\item \verb`*`: $F^{m\times k}\times F^{k\times n}\rightarrow F^{m\times n}$
+is matrix multiplication $*_{mm}$.
+\item \verb`*`: $F^{m\times n}\times F^{n}\rightarrow F^{m\times1}$ is
+the composition $*_{mm}\circ\left(I\times\phi\right)$.
+\item \verb`*`: $F^{m\times n}\times F\rightarrow F^{m\times n}$ is $\circledast_{ms}$.
+\item \verb`*`: $F\times F^{m\times n}\rightarrow F^{m\times n}$ is $\circledast_{sm}$.
+\item \verb`*`: $F^{m}\times F^{1\times n}\rightarrow F^{m\times n}$ is
+the outer product, $*_{mm}\circ\left(\phi\times I\right)$.
+\end{itemize}
+For every allowed method of \verb`*` producing $F^{m\times1}$ there
+is an analogous method yielding $F^{m}$ which adds a final composition
+$\phi^{-1}\circ$ to the computation. There are no corresponding method
+of \verb`*` producing $F^{m}$ when the result produces row matrices
+$F^{1\times m}$. In other words, $\tilde{\phi}^{-1}$ does not exist
+in Eigen. However, $\tilde{\phi}$ DOES exist, but only as part of
+the semantics of transpose.
+
+\subsection{Julia}
+
+Julia is a dynamic for technical computing, whose base library features
+generous functionality for linear algebraic operations.~\cite{Bezanson2012}
+
+Julia's multiplication operator, \verb`*`, implements matrix–matrix
+and matrix–vector products, as well as scalings of vectors and matrices,
+on top of ordinary scalar multiplication. Julia's division \verb`x/y`
+is equivalent to multiplication of \verb`x` by the inverse of \verb`y`
+on the right. For non-scalar \verb`y`, the inverse is generalized
+to matrix inverses and pseudoinverses (in the least-squares sense)
+where appropriate. Julia's transposition operator, \verb`'`, promotes
+vectors to column matrices before transposing them. Thus we have that
+vector transposition is not idempotent, \verb`x''`$\ne$\verb`x`.
+
+Julia's current semantics lead to some unexpected behavior. Expressions
+like \verb`a'*b` for the inner product produce a vector of length
+1, which do not have the semantics of scalars. Other identities, like
+$(xy^{\prime})z=x(y^{\prime}z)$, also fail to hold in code, since
+\verb`x*(y'z)` becomes the product of a vector with a 1-vector, which
+is not defined.
+
+Julia's semantics are:
+\begin{itemize}
+\item Scalars $F$, vectors $F^{m}$ and matrices $F^{m\times n}$.
+\item .': $F^{m\times n}\rightarrow F^{n\times m}$ is matrix transpose
+$\cdot^{T}$.
+\item .': $F^{m}\rightarrow F^{1\times n}$ is the composition $\cdot^{T}\circ\phi$.
+\item ': $F^{m\times n}\rightarrow\left(F^{*}\right)^{n\times m}$ is matrix
+transpose with complex conjugation $\cdot^{\prime}=\cdot^{*}\circ\cdot^{T}$,
+and similarly for vectors and scalars
+\item \verb`*`: $F^{m\times k}\times F^{k\times n}\rightarrow F^{m\times n}$
+is matrix multiplication $*_{mm}$.
+\item \verb`*`: $F^{m\times n}\times F^{n}\rightarrow F^{m}$ is the composition
+$\phi^{-1}\circ*_{mm}\circ\left(I\times\phi\right)$.
+\item \verb`*`: $F^{m}\times F^{m\times n}\rightarrow F^{m\times n}$ is
+an error except when $m=1$, when it is the composition $*_{mm}\circ\left(\phi\times I\right)$
+producing a $1\times1$ matrix.
+\end{itemize}
+As a result,
+\begin{itemize}
+\item u'{*}v$=\left(*_{mv}\circ\left(\cdot'\times I_{v}\right)\right)\left(u\times v\right)$
+returns the inner product \uline{stored as a $1$-vector}
+\item u{*}v'$=\left(*_{mv}\circ\left(I_{v}\times\cdot'\right)\right)\left(u\times v\right)$
+returns the outer product as expected.
+\item u'{*}A{*}v=(u'{*}A){*}v$=\left(*_{mv}\circ\left(*\times I_{v}\right)\circ\left(\cdot'\times I\times I_{v}\right)\right)\left(u\times A\times v\right)$
+returns the bilinear form \uline{stored as a $1$-vector}
+\item u''$=\left(\cdot'\circ\cdot'\right)\left(u\right)=\left(\cdot^{T}\circ\cdot^{T}\circ\phi\right)\left(u\right)=\phi\left(u\right)$
+is not idempotent.
+\end{itemize}
+Not symmetic in treatment of $\phi^{-1}$ and $\phi$.
+
+\subsection{Torch/Lua}
+
+Torch is a Lua\cite{Lua} package for machine learning applications.~\cite{Torch}
+Although not designed for linear algebra per se, Torch uses numerical
+linear algebra routines heavily under the hood for fast computations.
+
+The key data structure of Torch is its \verb`Tensor` class, which
+implements the semantics of multidimensional arrays. Unlike the other
+languages considered here, Torch only defines transposition on matrices
+(tensors with two dimensions). As a result, most of the analysis about
+expressions and identities using vector transposes cannot be applied,
+as any expression involving a vector transpose produces an error.
+Instead, Torch requires the \verb`dot` method to write expressions
+such as the inner product, \verb`x:dot(y)`.
+
+Semantics:
+
+\verb`x:dot(y)` is now the composition $\theta\circ*_{mm}\circ\left(\tilde{\phi}\times\phi\right)$
+that computes the (nonconjugated) inner product
+
+A:t() : $F^{m\times n}\rightarrow F^{n\times m}$ is the matrix transpose,
+$\cdot^{T}$. :t() is syntax sugar for the general :transpose(1, 2)
+method, which is a permutation swapping the dimensions 1 and 2.
+
+A:transpose(1) : $F^{n}\rightarrow F^{n}$ is the identity, $I_{v}$.
+
+Another quirk of Torch is that binary expressions of a scalar and
+a tensor must have the tensor operand come first, due to limitations
+of the underlying Lua language, which does not allow packages to define
+new methods on built-in types such as floating-point numbers. Thus
+care must be taken to write scalar–matrix products in matrix–scalar
+order.
+
+\subsection{R}
+
+R is a widely used language for statistical computing.~\cite{Rlang}.
+R's statistical features work primarily on data frames, time series
+and vectors. R also has matrices, but no true scalars. Its matrix
+multiplication operator is \verb`%*%` and its transposition operator
+is \verb`t()`. R's semantics promotes $n$-vectors automatically
+to matrices whenever linear algebraic operations like \verb`t()`
+or \verb`%*%` are encountered. However as we see later, $n$-vectors
+behave either as $n\times1$ column matrices or $1\times n$ row matrices
+depending on the context.
+
+Extraneous singleton dimensions can be removed with \verb`drop()`,
+which converts either $n\times1$ or $1\times n$ matrices into $n$-vectors.
+
+R's semantics are:
+\begin{itemize}
+\item Only vectors $F^{m}$ and matrices $F^{m\times n}$.
+\item \verb`t()`: $F^{m\times n}\rightarrow F^{n\times m}$ is matrix transpose
+$\cdot^{T}$.
+\item \verb`t()`: $F^{m}\rightarrow F^{1\times m}$ is the row matrix embedding
+$\tilde{\phi}=\cdot^{T}\circ\phi$.
+\item \verb`%*%`: $F^{m\times k}\times F^{k\times n}\rightarrow F^{m\times n}$
+is matrix multiplication $\cdot^{T}$.
+\item \verb`%*%`: $F^{m\times n}\times F^{n}\rightarrow F^{m\times1}$
+is the matrix–vector product, $*_{mm}\circ\left(I\times\phi\right)$.
+\item \verb`%*%`: $F^{m\times n}\times F^{1}\rightarrow F^{m\times n}$
+is the matrix–scalar product, $\circledast_{ms}\circ\left(I\times\psi\right)$,
+where $\psi=\theta\circ\phi$ is the vector-to-scalar embedding.
+\item \verb`%*%`: $F^{m}\times F^{m\times n}\rightarrow F^{1\times n}$
+is the vector–matrix product, $*_{vm}=*_{mm}\circ\left(\tilde{\phi}\times I\right)$.
+Note that the first argument is promoted to a row matrix.
+\item \verb`%*%`: $F^{m}\times F^{1\times n}\rightarrow F^{m\times n}$
+is the outer product, $*_{mm}\circ\left(\phi\times I\right)$. Note
+that the first argument is promoted to a column matrix.
+\item \verb`%*%`: $F^{m}\times F^{m}\rightarrow F^{1\times1}$ is the vector–vector
+product, $*_{mm}\circ\left(\tilde{\phi}\times\phi\right)$.
+\item \verb`%*%`: $F^{1}\times F^{m\times n}\rightarrow F^{m\times n}$
+is the scalar–matrix product, $\circledast_{sm}\circ\left(\psi\times I\right)$.
+\item \verb`%*%`: $F^{1}\times F^{m}\rightarrow F^{1\times m}$ is the
+scalar–vector product, $\circledast_{sm}\circ\left(\psi\times\tilde{\phi}\right)$.
+Note that the analogous operation over $F^{m}\times F^{1}$ is not
+defined.
+\item \verb`drop()`: $F^{n\times1}\rightarrow F^{n}$ is the $\phi^{-1}$
+embedding.
+\item \verb`drop()`: $F^{1\times n}\rightarrow F^{n}$ is the $\tilde{\phi}^{-1}$
+embedding.
+\end{itemize}
+As you can see, the \verb`%*%` operator in R is the most overloaded
+operator in the set we are considering. On some level, \verb`%*%`
+is simple in that its output is always a matrix. However, the embeddings
+implicitly applied to vector arguments are by far the most complicated
+of all the languags we have studied. Since R lacks true scalars, products
+involving over vectors of length 1 implicitly $\psi$-embed them into
+scalars. Depending on the context, vectors of other lengths undergo
+either a $\tilde{\phi}$- or $\phi$-embedding, depending on context.
+
+The results are
+\begin{itemize}
+\item u''$=\left(\cdot'\circ\cdot'\right)\left(u\right)=\left(\cdot^{T}\circ\cdot^{T}\circ\phi\right)\left(u\right)=\phi\left(u\right)$
+is not idempotent. Nevertheless, we've already seen precedent in the
+mathematical literature that does so... .
+\end{itemize}
