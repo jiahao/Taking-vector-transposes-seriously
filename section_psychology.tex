@@ -1,123 +1,126 @@
 \label{sec:householder}
-\section{User psychology}
+\section{Linear algebra and indexing}
+
+Modern numerical linear algebraists are used to writing expressions like:
+
+\begin{itemize}
+
+\item
+The inner product of two vectors, $x^\prime y$, producing a scalar.
+
+\item
+The outer product of two vectors, $x y^\prime$, producing a matrix.
+
+\item
+Bilinear forms, $x^\prime A y$, and
+quadratic/Hermitian forms, $x^\prime A y$, producing scalars.
+
+\end{itemize}
+
+These elementary forms can be used to construct much more complicated expressions, such as
+
+\begin{itemize}
+
+\item
+Rayleigh quotients, $x^\prime A x / x^\prime x$,
+
+\item
+Updates to the quasi-Hessian in the Broyden--Fletcher--Goldfarb--Shanno (or BFGS) quasi-Newton algorithm, which take the form $\frac{x x^\prime}{x^\prime y} - \frac{A y y^\prime A}{y^\prime A y}$.
+
+\item
+The $F$-test statistic from linear hypothesis testing, which takes the form  $(Ax-y)^\prime (ABA^\prime)^{-1} (Ax-y)/\alpha$.
+
+\end{itemize}
+
+These expressions use Householder notation~\cite{Householder1953,Householder1955}, which used capital Roman letters for matrices, small Roman letters for (column) vectors, and small Greek letters for scalars.
+
+We now argue that Householder notation was really meant for matrices, not scalars or vectors. If we use matrices in the expressions $U^\prime V$, $U V^\prime$ and $U^\prime A V$, then all these expressions can be defined with just matrix multiplication and matrix transposition. In fact, this is how Householder's seminal textbook on numerical computation defines vectors!\cite{Householder1955} Householder called $x$ and $y$ in these expressions ``numerical vectors'', which he identified with $n\times1$-matrices, as distinguished from
+``geometrical vectors'', which are $n$-tuples with vector space structure.
+If $x$ and $y$ were matrices, then the expressions for bilinear forms $x^\prime A y$ and inner products $x^\prime y$ can be evaluated using matrix multiplication and matrix transposition to produce $1\times1$ matrices. These resultant matrices are elements of $F^{1\times1}$, which is isomorphic to the field of zero-dimensional scalars $F$. In this sense, vectors in Householder notation are not ``flat'' $n$-tuples, but column vectors as shown in Figure~\ref{fig:zoo}. There are no true zero- or one-dimensional quantities in the universe described by Householder notation, only two-dimensional quantities whose names use capital Roman letters, small Roman letters or small Greek letters depending on how many dimensions are equal to 1.
+
+Readers familiar with MATLAB will no doubt at this point be itching to point out MATLAB's automatic removal of trailing singleton dimensions in indexing expressions, which reads:
 
 \begin{quote}
-``In linear algebra, better theorems and more insight emerge if complex numbers
-are investigated along with real numbers.''-\cite[p. 1]{Axler2015}
+``MATLAB automatically removes trailing singleton dimensions (dimensions whose sizes are equal to 1) from all multidimensional arrays. For example, if you attempt to create an array of size 3-by-2-by-1-by-1, perhaps with the command \code{rand(3,2,1,1)}, then MATLAB strips away the singleton dimensions at the end of the array and creates a 3-by-2 matrix. This is because every array technically has an \textit{infinite} number of trailing singleton dimensions. A 3-by-2 array is the same as an array with size 3-by-2-by-1-by-1-by-1-by-...''--\cite{matlab.singleton}
 \end{quote}
 
-The goal of this section is to substantiate the ``what users want'' part of our
-thesis. While seemingly obvious to most practitioners today, the historical
-evidence for writing expressions using compositions of transposition and
-products has been most illuminating and reflects the multifaceted evolution of
-what we know today as linear algebra.
+The trailing singleton dimensions rule allows MATLAB to identify $n\times1$ matrices with $n$-vectors, and $1\times1$ matrices with scalars, thus providing  the isomorphisms needed to produce scalars from $x^\prime A y$ and $x^\prime y$ while allowing one-dimensional indexing into the vectors $x$ and $y$. We believe it is no accident that MATLAB, the only language that has the trailing singleton dimensions rule for indexing, is also the only computer language designed from the very beginning for linear algebra.~\cite{Moler1980}
 
-Programming languages designed for scientific computing have many users which
-are familiar with linear algebraic constructs expressible using various
-products and quotients involving matrix and vector quantities. Some of these
-quantities include:
+These identifications are also ubiquitous in the linear algebra literature; few authors bother to write out the isomorphisms explicitly. To give but one example, ``Lineare Algebra'' by Fischer, a well-known German text, writes
 
-\begin{itemize}
-  \item Inner products, $u^\prime v$
-  \item Outer products, $u v^\prime$
-  \item Bilinear forms, $u^\prime A v$
-  \item Quadratic/Hermitian forms, $v^\prime A v$
-\end{itemize}
+\begin{quote}
+\[
+(a_1...a_n) \cdot (b1 \vdots bn) = a_1 b_1 + \dots + a_n b_n \in K = M(1\times 1; K)
+\]
 
-The notation for these quantities were systematized by Householder
-\cite{Householder1953,Householder1955}, who used capital Roman letters for
-matrices, small Roman letters for (column) vectors, and small Greek letters for
-scalars. Importantly, Householder also uses the vector transpose notation
-$u^\prime$ to express row vectors, which are then used to construct the above
-products and forms. \cite{Householder1955} uses $u^T = {(u_1, \cdots, u_n)}^T$ to
-express row vectors as tuples, a construct which we shall see later as having
-ample precedent. \cite{Householder1955} writes the inner product as $u^* v$,
-noting that $*$ ``denotes the conjugate transpose''. \cite[Sec.
-4.01]{Householder1953} introduces the Hermitian form. \cite[Sec.
-2.04]{Householder1953} introduces the row vector $u^T$ corresponding to the
-column vector $u$. Householder also acknowledges in \cite[Sec.
-2.04]{Householder1953} the analogy between a numerical vector (as a column of a
-matrix) and a geometric vector in the sense of Gibbs. He writes the vector
-transpose as if it follows immediately from the matrix transpose:
+,,In diesem Fall kann man $A$ und $B$ als Vektoren aus $K^n$ auffassen. Für $K=R$ ist dann $A\cdot B$ nichts anderes als das in (0.4.1) definiert Skalarproduct von $A$ und $B$.``
 
-If each column of a matrix $M$ is written as a row, the order remaining the
-same, the resulting matrix is known as the transpose of the original and is
-designated $M^T$. In particular, if $x$ is the column vector of the $\xi_i$,
-$x^T$ is the row vector of the $\xi_i$.
+``In this case, one can regard $A$ and $B$ as vectors in $K^n$. For $K=R$ (the reals), $A\cdot B$ is none other than the scalar product of $A$ and
+$B$ defined in (0.4.1).''
 
-The outer product shows up in \cite[Sec. 2.24]{Householder1953}, although
-Householder does not give the quantity $u v^T$ a special name\footnote{while
-\cite[Sec. 2.03]{Householder1953} introduces ``outer products'' $[u v]$, these
-quantities are known today as bivectors and are conventionally denoted $u
-\wedge v$.}, and the discussion in context clearly implies that Householder
-considers vector-scalar-vector products $u \sigma v^T$ special cases of matrix
-products $U S V^T$.
+-\cite[p.\ 87]{Fischer1973}
+\end{quote}
 
-Interestingly, \cite{Householder1953} does not use the terms ``bilinear form'',
-``quadratic form'', or ``Hermitian form''. He uses ``scalar product''.
-\cite{Householder1955} clearly spells out his notational convention.
-(\cite{Householder1953} has a missing page which might also spell it out, but
-it's not clear.)
+$K$ is the ring (,,Körper``) that is the underlying scalar field, and the equality $K = M(1\times 1; K)$ denotes the identification of the scalar field $K$ with $1\times 1$ matrices over $K$, $M(1\times 1; K)$ (which one might write as $K^{1\times1}$ in more contemporary notation). Two other authors notable for distinguishing carefully between $K$ and $K^{1\times1}$, and $K^{n\times1}$ and $K^n$ are Gantmacher\cite{Gantmacher1960} and Finkbeiner~\cite{Finkbeiner1960}.
+
+The discussion of trailing singleton dimensions also makes clear that one of the fundamental distinctions between scalars, vectors and matrices are their abilities to be indexed into by zero, one and two indexes respectively.\footnote{Some languages like MATLAB support \textit{linear indexing}, where arrays of any rank can be indexed by one index. We ignore this complication here, focusing on simple indexing with Cartesian indexes.}
+Thus it is their indexing behavior, specificially how many numbers are needed to label an element, that defines how scalars, vectors and matrices are said to be zero-, one- and two-dimensional objects respectively. In other words, scalars, vectors and matrices are arrays whose rank or dimensionality determines how many numbers are required to index an array element.
 
 
+\subsection{A calculus for isomorphisms}
 
-\subsection{More complicated expressions}
+Let $F$ be a scalar field, $F^n$ be an $n$-dimensional vector space over $F$, and $F^{m\times n}$ be the set of $m\times n$-matrices over $F$.
+Householder notation implicitly assumes a few embeddings,
 
-These basic expressions can be used to build more complicated expressions that
-occur in scientific computing.
-
-Examples of more complicated expressions
-
-BFGS Update Step
-
-Alan's example with least squares? MANOVA/Jacobi distribution formulas?
-
-\section{Householder notation assumes implicit embeddings between scalars,
-vectors and matrices.}
-
-This notation is what we associate today with modern linear algebra.
-We have
-\begin{description}
-\item [{Inner~product}] $u^{T}v$, a scalar,
-\item [{Outer~product}] $uv^{T}$, a matrix,
-\item [{Quadratic~form}] $u^{T}Au$, a scalar,
-\item [{Bilinear~form}] $u^{T}Av$, a scalar,
-\end{description}
-from which a wide variety of expressions like Rayleigh quotients $u^{T}Au/u^{T}u$
-can be constructed.
-
-PEP 465 gives the example $\left(H\beta-r\right)^{T}\left(HVH^{T}\right)\left(H\beta-r\right)$,
-which is part of the expression for the $F$ test statistic in hypothesis
-testing. This fomula is a quadratic form composed of matrix–vector
-and matrix–matrix products.
-
-The trick here is that $u$ and $v$ in these expressions are what
-Householder called ``numerical vectors'', to be distinguished from
-``geometrical vectors''. Householder implicitly assumes a few embeddings,
 \begin{enumerate}
-\item A $1\times1$ matrix is a scalar. Give this embedding a name, $\theta:F^{1\times1}\rightarrow F$.
-\item An $n$-vector is an $n\times1$ matrix. Give this embedding a name,
-$\phi:F^{n}\rightarrow F^{n\times1}$.
-\end{enumerate}
-These assumptions are ubiquitous in the linear algebra literature.
-Only a few authors (like Gantmacher) take care to distinguish them.
+\item
+A $1\times1$ matrix is a scalar.
+Give this embedding a name, $\theta:F^{1\times1}\rightarrow F$.
 
-Now given these embeddings, and the identity embedding $I:F^{m\times n}\rightarrow F^{m\times n}$,
-we can derive meanings for all these products from the matrix–matrix
+\item
+An $n$-vector is an $n\times1$ matrix.
+Give this embedding a name,
+$\phi:F^n\rightarrow F^{n\times1}$.
+\end{enumerate}
+
+Figure~\ref{fig:embed} shows these embeddings $\theta$ and $\phi$ and how they are related to the menagerie of Figure~\ref{fig:zoo}.
+
+\begin{figure}
+\label{fig:embed}
+\caption{Flat vectors vs row/column vectors and embeddings and transpositions.}
+
+\centering{}\includegraphics[width=0.9\columnwidth]{figures/fig-embed}
+\end{figure}
+
+Let's use these embeddings, and the identity embedding $I:F^{m\times n}\rightarrow F^{m\times n}$, to analyze the expressions listed at the beginning of Sec.~\ref{sec:householder}. Let $\circ$ denote composition of embeddings and operations like the matrix–matrix
 product $*_{mm}:F^{m\times k}\times F^{k\times n}=F^{m\times n}$,
-the matrix transpose $\cdot^{T}:F^{m\times n}\rightarrow F^{n\times m}$,
-and a suitable choice of embeddings:
+the matrix transpose $\cdot^\prime:F^{m\times n}\rightarrow F^{n\times m}$. Then:
+
 \begin{itemize}
-\item Inner product $u^{T}v$ is the composition of $\theta\circ*_{mm}\circ\left(\cdot^{T}\times I\right)\circ\left(\phi\times\phi\right)$
-acting on $(u,v)$.
-\item Outer product $uv^{T}$ is the composition of $*_{mm}\circ\left(I\times\cdot^{T}\right)\circ\left(\phi\times\phi\right)$
-acting on $(u,v)$.
-\item Quadratic form and bilinear form $u^{T}Av$ are the composition of
-$\theta\circ*_{mm}\circ\left(\cdot^{T}\times*_{mm}\right)\circ\left(\phi\times I\times\phi\right)$
-thinking of $u^{T}\left(Av\right)$, and thinking of $\left(u^{T}A\right)v$,
-is the composition $\theta\circ*_{mm}\circ\left(*_{mm}\times I\right)\circ\left(\cdot^{T}\times I\times I\right)\circ\left(\phi\times I\times\phi\right)$,
-both acting on $(u,A,v)$. Thus we must have the identity $*_{mm}\circ\left(\cdot^{T}\times*_{mm}\right)=\left(*_{mm}\times I\right)\circ\left(\cdot^{T}\times I\times I\right)$.
+\item
+The inner product $x^\prime y$ is the composition
+$\theta\circ*_{mm}\circ\left(\cdot^\prime\times I\right)\circ\left(\phi\times\phi\right)$
+acting on $(x,y)$.
+
+\item
+The outer product $xy^\prime$ is the composition
+$*_{mm}\circ\left(I\times\cdot^{T}\right)\circ\left(\phi\times\phi\right)$
+acting on $(x,y)$.
+
+\item
+The bilinear form $x^\prime Ay$, when evaluated in the order $x^\prime(Ay)$, is the composition
+$\theta\circ*_{mm}\circ\left(\cdot^\prime\times*_{mm}\right)\circ\left(\phi\times I\times\phi\right)$ %
+%
+and when evaluated as $(x^\prime A)y$,
+is the composition $\theta\circ*_{mm}\circ\left(*_{mm}\times I\right)\circ\left(\cdot^\prime\times I\times I\right)\circ\left(\phi\times I\times\phi\right)$,
+%
+both acting on $(x,A,y)$.
+%
+Some programming languages evaluate from left to right or from right to left.
+Other programming languages (like C++) do not guarantee an evaluation order.
+In these languages, for $x^\prime Ay$ to be well-defined regardless of the evaluation order, we must have the identity $*_{mm}\circ\left(\cdot^\prime\times*_{mm}\right)=\left(*_{mm}\times I\right)\circ\left(\cdot^\prime\times I\times I\right)$.
 \end{itemize}
+
 In these expressions, $\circ$ is function composition and $a\times b$
 describes a sequence of operations $a$ and $b$ to be applied left
 to right on a sequence of operands. $(I\times I)(A,B)$ means to apply
@@ -126,102 +129,5 @@ $(A,B)$. $(I\times*)(A,B,C)$ means to apply the identity map to
 $A$ and the $*$ to the next two operands $B$ and $C$ (since $I$
 is monadic and $*$ is dyadic), producing the result $(A,BC)$.
 
-Suppose we were to try defining the vector transpose $\cdot_{v}^{T}:F^{m}\rightarrow F^{m}$
-as the identity map and introduce also a special vecvec product, $*_{vv}:F^{m}\times F^{m}\rightarrow F$,
-the matvec $*_{mv}:F^{m\times n}\times F^{n}\rightarrow F^{m}$, and
-the vector identity map, $I_{v}:F^{m}\rightarrow F^{m}$. Languages
-like Python/NumPy use this definition. If we now consider only the
-elementary operations $\cdot_{v}^{T}$, $*_{vv}$, $*_{mv}$, $I_{v}$
-and $I$, then we have that
-\begin{itemize}
-\item Inner product $u^{T}v$ is the composition of $*_{vv}\circ\left(\cdot_{v}^{T}\times I_{v}\right)=*_{vv}\circ\left(I_{v}\times I_{v}\right)=*_{vv}$.
-\item Outer product $uv^{T}$ cannot be expressed as any composition of
-$*_{mv}$, $*_{vv}$, $\cdot_{v}^{T}$ and $I_{v}$.
-\item Quadratic form and bilinear form $u^{T}Av$ are the composition of
-$*_{vv}\circ\left(\cdot_{v}^{T}\times*_{mv}\right)$ when thought
-of as $u^{T}\left(Av\right)$, and when thought of $\left(u^{T}A\right)v$,
-must be $*_{vv}\circ\left(*_{vm}\times I_{v}\right)\circ\left(\cdot_{v}^{T}\times I\times I_{v}\right)$.
-\end{itemize}
-Note that the associativity constraint associated with bilinear forms
-requires the vector-matrix product $*_{vm}:F^{m}\times F^{m\times n}\rightarrow F^{n}$
-to be defined.
-
-We can go through the exercise of finding out if the set of elementary
-operations $*_{vm}$, $*_{mv}$, $*_{vv}$, $\cdot_{v}^{T}$, $I$
-and $I_{v}$ have are equivalent to the set $\phi$, $\theta$, $I,$
-$*$ and $\cdot^{T}$. (??? Bad phrasing) The answer is no. While
-we can express $*_{vv}=\theta\circ*\circ\left(\cdot^{T}\times I\right)\circ\left(\phi\times\phi\right)$,
-$*_{mv}=\phi^{-1}\circ*\circ\left(I\times\phi\right)$, $I_{v}=\phi^{-1}\circ I\circ\phi$
-and $*_{vm}=\phi^{-1}\circ*\circ\left(\phi\times I\right)$,  note
-however that $\cdot_{v}^{T}$ is now ambiguous. We cannot write $\cdot_{v}^{T}=\phi^{-1}\circ\cdot^{T}\circ\phi$
-in general since for any vetor of length $m\ne1$, $\phi^{-1}$ cannot
-be applied to the result of $\cdot^{T}\circ\phi$, which is a $1\times m$
-matrix. Instead, $\cdot_{v}^{T}=I_{v}=\phi^{-1}\circ I\circ\phi$,
-so that vector transpose is now fundamentally diffeent from the matrix
-transpose $\cdot^{T}$.
-
-Take now a third choice of elementary operations: $*_{mv}$ and $I_{v}$
-from above, but use now $\cdot_{v}^{\tilde{T}}:F^{m}\rightarrow\tilde{F}^{m}$,
-mapping to a new thing, row vectors. Introduce also the row-vector–column-vector
-product $*_{\tilde{v}v}:\tilde{F}^{m}\times F^{m}\rightarrow F$ and
-the column-vector–row-vector product $*_{v\tilde{v}}:F^{m}\times\tilde{F}^{n}\rightarrow F^{m\times n}$.
-Then we can say that
-\begin{itemize}
-\item Inner product $u^{T}v$ is the composition of $*_{\tilde{v}v}\circ\left(\cdot_{v}^{\tilde{T}}\times I_{v}\right)$
-starting from $u\times v$.
-\item Outer product $uv^{T}$ is the composition of $*_{v\tilde{v}}\circ\left(I_{v}\times\cdot_{v}^{\tilde{T}}\right)$
-starting from $u\times v$.
-\item Quadratic form and bilinear form $u^{T}Av$ are trickier. If we group
-the operations by $u^{T}\left(Av\right)$ then they are the composition
-of $*_{\tilde{v}v}\circ\left(\cdot_{v}^{\tilde{T}}\times*_{mv}\right)$
-starting from $u\times\left(A\times v\right)$. To define the order
-$\left(u^{T}A\right)v$ to yield the same result, we need a new elementary
-operation $*_{\tilde{v}m}:\tilde{F}^{m}\times F^{m\times n}\rightarrow\tilde{F}^{n}$
-for the row-vector–matrix product, so that we can write $*_{\tilde{v}v}\circ\left(*_{\tilde{v}m}\times I_{v}\right)$.
-In practice, however, expressions written in the vast majority of
-programming languages implicitly assume one grouping or the order,
-depending on whether operators are evaluated left-to-right or right-to-left.
-\end{itemize}
-Note now that $\cdot_{v}^{\tilde{T}}$ and $*_{\tilde{v}m}$, being
-the elementary operations that produce row vectors, cannot be expressed
-as any combination of the elementary matrix operations $\phi,$ $\theta$,
-$I,$ $*$ and $\cdot^{T}$. However we now can no longer insist on
-the equivalence of indexing and taking inner products with a set of
-basis vectors, we now have since for the inner product $\cdot=*_{\tilde{v}v}$,
-the expression $\left(x^{\prime}\right)_{i}=x\cdot e_{i}$ is now
-the result of the operation $*_{\tilde{v}v}$ on $x^{\prime}\times e_{i}$.
-A true inner product on $\tilde{F}^{m}\times F^{n}$ should be defined
-by $x\cdot y=\sum_{i}x_{i}^{*}y_{i}$, so the result is the complex
-conjugate of the same indexing operation on $x$.
-
-To summarize,
-\begin{itemize}
-\item If you have ``matrix first'' semantics $\phi$, $\theta$, $I,$
-$*_{mm}$ and $\cdot^{T}$, then indexing a vector requires trailing
-singleton dimensions or linear indexing rules or the embedding $\phi^{-1}$.
-You also need the embeddings $\phi$ and $\theta$.
-\item If you have ``vector first'' $*_{vm}$, $*_{mv}$, $*_{vv}$, $*_{mm}$,
-$\cdot_{v}^{T}$, $I$ and $I_{v}$, then you have a ``unphysical''
-vector-matrix product $*_{vm}$, and you cannot express the outer
-product $uv^{T}$ using these semantics.
-\item If you have ``vector and dual vector'' semantics $*_{\tilde{v}v}$,
-$*_{v\tilde{v}}$, $*_{\tilde{v}m}$, $*_{mv}$, $*$, $\cdot_{v}^{\tilde{T}}$
-and $I_{v}$, you need the extra operations $*_{v\tilde{v}},*_{\tilde{v}m}$
-for the outer product and guaranteeing associativity. However, you
-have to define row vectors as a new type of object, and you have to
-define  how to index row vectors. Now arrays are no longer uniquely
-mapped to just (column) vectors, but they can also be mapped to row
-vectors. Not only do you now have a parallel universe of row vectors,
-but the equivalence with the inner product operation $*_{\tilde{v}v}$
-requires complex conjugation for nonreal $F$, which some may find
-strange. Furthermore an indexing operation like $A[:,1]$ now returns
-a column vector, which is a different type from $A[1,:]$, a row vector.
-Users are forced to deal with the complexity of intermixing row and
-column vectors. (TODO SHOULD INTRODUCE EMBEDDINGS THAT PRODUCE TRAILING
-SINGLETONS. INSIST THAT EMBEDDINGS CHANGE THE NATURE OF INDEXING.)
-\end{itemize}
-This section was about defining platonic ideal semantics. In a later
-section we will see how the real world of implementaiton in programming
-languages complicates the picture, namely the limitations of working
-only at the individual operator level and not at the whole-expression
+This section was about defining platonic ideal semantics. In Sec.~\ref{sec:reallanguages}, we will see how the real world of implementaiton in programming languages complicates the picture, namely the limitations of working only at the individual operator level and not at the whole-expression
 level.

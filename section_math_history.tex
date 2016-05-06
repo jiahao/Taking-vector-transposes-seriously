@@ -2,6 +2,11 @@
 
 \section{A brief history of matrices and vectors}
 
+\begin{quote}
+``In linear algebra, better theorems and more insight emerge if complex numbers
+are investigated along with real numbers.''-\cite[p. 1]{Axler2015}
+\end{quote}
+
 \subsection{A brief history of the array data structure}
 
 The array data structure is so old that it has been surpisingly difficult
@@ -1781,6 +1786,41 @@ transposed (numerical) vector for the first time, in the expression $g^{\mathsf
 T}Tf$ in (2.06.23).
 
 
+\paragraph{Householder (1955)~\cite{Householder1955}}
+
+Importantly, Householder also uses the vector transpose notation
+$u^\prime$ to express row vectors, which are then used to construct the above
+products and forms. \cite{Householder1955} uses $u^T = {(u_1, \cdots, u_n)}^T$ to
+express row vectors as tuples, a construct which we shall see later as having
+ample precedent. \cite{Householder1955} writes the inner product as $u^* v$,
+noting that $*$ ``denotes the conjugate transpose''. \cite[Sec.
+4.01]{Householder1953} introduces the Hermitian form. \cite[Sec.
+2.04]{Householder1953} introduces the row vector $u^T$ corresponding to the
+column vector $u$. Householder also acknowledges in \cite[Sec.
+2.04]{Householder1953} the analogy between a numerical vector (as a column of a
+matrix) and a geometric vector in the sense of Gibbs. He writes the vector
+transpose as if it follows immediately from the matrix transpose:
+
+If each column of a matrix $M$ is written as a row, the order remaining the
+same, the resulting matrix is known as the transpose of the original and is
+designated $M^T$. In particular, if $x$ is the column vector of the $\xi_i$,
+$x^T$ is the row vector of the $\xi_i$.
+
+The outer product shows up in \cite[Sec. 2.24]{Householder1953}, although
+Householder does not give the quantity $u v^T$ a special name\footnote{while
+\cite[Sec. 2.03]{Householder1953} introduces ``outer products'' $[u v]$, these
+quantities are known today as bivectors and are conventionally denoted $u
+\wedge v$.}, and the discussion in context clearly implies that Householder
+considers vector-scalar-vector products $u \sigma v^T$ special cases of matrix
+products $U S V^T$.
+
+Interestingly, \cite{Householder1953} does not use the terms ``bilinear form'',
+``quadratic form'', or ``Hermitian form''. He uses ``scalar product''.
+\cite{Householder1955} clearly spells out his notational convention.
+(\cite{Householder1953} has a missing page which might also spell it out, but
+it's not clear.)
+
+
 \paragraph{Bodewig (1956/9)~\cite{Bodewig1956}}
 
 Vectors come first, but $n$-tuples don't actually play a part in the exposition.
@@ -1908,7 +1948,7 @@ $\mathcal L$ is also a vector space over $\mathcal F$.
 
 p. 71: Row and column vectors are introduced under \S 4.2, Special Types of Matrices.
 
-Relative to a fixed basis, every vector of $\mathcal V_n$ has a unique representation as an $n$-tiple of scalars, $(a_1, \dots, a_n)$. Except for the presence of commans, this is formally the same as a matrix of one row and $n$ columns. Accordingly, a $1\times n$ matrix is called a \textit{row vector}. The transpose of a row vector is an $n \times1$ matrix, $n$ rows and one column, and is called a \textit{column vector}. If $A$ is a reow vector, where $A = \begin{pmatrix} a_1 & a_2 & \ldots & a_n\end{pmatrix}$, and if $B^\prime$ is a column vector, where $A = \begin{pmatrix} b_1 & b_2 & \ldots & b_n\end{pmatrix}$, then both $AB^\prime$ and $B^\prime A$ are defined:
+Relative to a fixed basis, every vector of $\mathcal V_n$ has a unique representation as an $n$-tiple of scalars, $(a_1, \dots, a_n)$. Except for the presence of commas, this is formally the same as a matrix of one row and $n$ columns. Accordingly, a $1\times n$ matrix is called a \textit{row vector}. The transpose of a row vector is an $n \times1$ matrix, $n$ rows and one column, and is called a \textit{column vector}. If $A$ is a row vector, where $A = \begin{pmatrix} a_1 & a_2 & \ldots & a_n\end{pmatrix}$, and if $B^\prime$ is a column vector, where $A = \begin{pmatrix} b_1 & b_2 & \ldots & b_n\end{pmatrix}$, then both $AB^\prime$ and $B^\prime A$ are defined:
 
 \[
 AB^\prime = \begin{pmatrix} a_1 & a_2 & \ldots & a_n\end{pmatrix}
@@ -2121,7 +2161,7 @@ On p 87 we see explicit conflation of scalars and $1\times1$ matrices
 \[
 (a_1...a_n) \cdot (b1 \vdots bn) = a_1 b_1 + \dots + a_n b_n \in K = M(1\times 1; K)\]
 
-In diesem Fall kann man $A$ und $B$ als Vektoren aus $K^n$ auffassen. Für $K=R$ ist dann $A\cdot B$ nichts anderes als das in (0.4.1) definitere Skalarproduct von $A$ und $B$.
+In diesem Fall kann man $A$ und $B$ als Vektoren aus $K^n$ auffassen. Für $K=R$ ist dann $A\cdot B$ nichts anderes als das in (0.4.1) definiert Skalarproduct von $A$ und $B$.
 
 Primary influence
 
@@ -2134,7 +2174,7 @@ Bourbaki: Algèbre linéaire (Éléments de Mathématique, Première Partie, Liv
 Godement, R: Cours d'algèbra. 1966
 
 Greub, Linear Algebra. Springer 1969
-Koecher: Lineare Algebra. orlesungsausarbeitung München 1969
+Koecher: Lineare Algebra. Vorlesungsausarbeitung München 1969
 
 Kowalsky: Lineare Algebra 1969
 

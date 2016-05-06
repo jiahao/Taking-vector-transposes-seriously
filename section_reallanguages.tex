@@ -555,6 +555,36 @@ do not consider here.}, u'@A@v=(u'@A)@v is the operation $*_{vv}\circ\left(*_{vm
 Python's @ semantics have the advantage of clearly separating compositional
 product $*$ from broadcasting product $\circledast$ .
 
+
+Suppose we were to try defining the vector transpose $\cdot_{v}^\prime:F^{m}\rightarrow F^{m}$
+as the identity map and introduce also a special vecvec product, $*_{vv}:F^{m}\times F^{m}\rightarrow F$,
+the matvec $*_{mv}:F^{m\times n}\times F^{n}\rightarrow F^{m}$, and
+the vector identity map, $I_{v}:F^{m}\rightarrow F^{m}$. Languages
+like Python/NumPy use this definition. If we now consider only the
+elementary operations $\cdot_{v}^\prime$, $*_{vv}$, $*_{mv}$, $I_{v}$
+and $I$, then we have that
+\begin{itemize}
+\item
+The inner product $x^\prime y$ is the composition $*_{vv}\circ\left(\cdot_{v}^\prime\times I_{v}\right)=*_{vv}\circ\left(I_{v}\times I_{v}\right)=*_{vv}$.
+
+\item
+The outer product $xy^\prime$ cannot be expressed as any composition of
+$*_{mv}$, $*_{vv}$, $\cdot_{v}^\prime$ and $I_{v}$.
+
+\item
+The bilinear form $x^\prime Ay$ is the composition of
+$*_{vv}\circ\left(\cdot_{v}^{T}\times*_{mv}\right)$
+when thought of as $x^\prime \left(Ay\right)$,
+
+and when thought of $\left(x^\prime A\right)y$, must be
+$*_{vv}\circ\left(*_{vm}\times I_{v}\right)\circ\left(\cdot_{v}^{T}\times I\times I_{v}\right)$.
+
+\end{itemize}
+
+Note that the associativity constraint associated with bilinear forms
+requires the vector-matrix product $*_{vm}:F^{m}\times F^{m\times n}\rightarrow F^{n}$ to be defined.
+
+
 \subsection{C++/Eigen}
 
 Eigen is a C++ library for high performance numerical linear algebra.\cite{eigenweb}\footnote{The version of Eigen tested was v3.2.6, compiled with clang with Apple
@@ -818,4 +848,68 @@ The results are
 \item u''$=\left(\cdot'\circ\cdot'\right)\left(u\right)=\left(\cdot^{T}\circ\cdot^{T}\circ\phi\right)\left(u\right)=\phi\left(u\right)$
 is not idempotent. Nevertheless, we've already seen precedent in the
 mathematical literature that does so... .
+\end{itemize}
+
+\subsection{PARI}
+
+Take now a third choice of elementary operations: $*_{mv}$ and $I_{v}$
+from above, but use now $\cdot_{v}^{\tilde{T}}:F^{m}\rightarrow\tilde{F}^{m}$,
+mapping to a new thing, row vectors. Introduce also the row-vector–column-vector
+product $*_{\tilde{v}v}:\tilde{F}^{m}\times F^{m}\rightarrow F$ and
+the column-vector–row-vector product $*_{v\tilde{v}}:F^{m}\times\tilde{F}^{n}\rightarrow F^{m\times n}$.
+Then we can say that
+\begin{itemize}
+\item Inner product $u^{T}v$ is the composition of $*_{\tilde{v}v}\circ\left(\cdot_{v}^{\tilde{T}}\times I_{v}\right)$
+starting from $u\times v$.
+\item Outer product $uv^{T}$ is the composition of $*_{v\tilde{v}}\circ\left(I_{v}\times\cdot_{v}^{\tilde{T}}\right)$
+starting from $u\times v$.
+\item Quadratic form and bilinear form $u^{T}Av$ are trickier. If we group
+the operations by $u^{T}\left(Av\right)$ then they are the composition
+of $*_{\tilde{v}v}\circ\left(\cdot_{v}^{\tilde{T}}\times*_{mv}\right)$
+starting from $u\times\left(A\times v\right)$. To define the order
+$\left(u^{T}A\right)v$ to yield the same result, we need a new elementary
+operation $*_{\tilde{v}m}:\tilde{F}^{m}\times F^{m\times n}\rightarrow\tilde{F}^{n}$
+for the row-vector–matrix product, so that we can write $*_{\tilde{v}v}\circ\left(*_{\tilde{v}m}\times I_{v}\right)$.
+In practice, however, expressions written in the vast majority of
+programming languages implicitly assume one grouping or the order,
+depending on whether operators are evaluated left-to-right or right-to-left.
+\end{itemize}
+Note now that $\cdot_{v}^{\tilde{T}}$ and $*_{\tilde{v}m}$, being
+the elementary operations that produce row vectors, cannot be expressed
+as any combination of the elementary matrix operations $\phi,$ $\theta$,
+$I,$ $*$ and $\cdot^{T}$. However we now can no longer insist on
+the equivalence of indexing and taking inner products with a set of
+basis vectors, we now have since for the inner product $\cdot=*_{\tilde{v}v}$,
+the expression $\left(x^{\prime}\right)_{i}=x\cdot e_{i}$ is now
+the result of the operation $*_{\tilde{v}v}$ on $x^{\prime}\times e_{i}$.
+A true inner product on $\tilde{F}^{m}\times F^{n}$ should be defined
+by $x\cdot y=\sum_{i}x_{i}^{*}y_{i}$, so the result is the complex
+conjugate of the same indexing operation on $x$.
+
+To summarize,
+\begin{itemize}
+\item If you have ``matrix first'' semantics $\phi$, $\theta$, $I,$
+$*_{mm}$ and $\cdot^{T}$, then indexing a vector requires trailing
+singleton dimensions or linear indexing rules or the embedding $\phi^{-1}$.
+You also need the embeddings $\phi$ and $\theta$.
+\item If you have ``vector first'' $*_{vm}$, $*_{mv}$, $*_{vv}$, $*_{mm}$,
+$\cdot_{v}^{T}$, $I$ and $I_{v}$, then you have a ``unphysical''
+vector-matrix product $*_{vm}$, and you cannot express the outer
+product $uv^{T}$ using these semantics.
+\item If you have ``vector and dual vector'' semantics $*_{\tilde{v}v}$,
+$*_{v\tilde{v}}$, $*_{\tilde{v}m}$, $*_{mv}$, $*$, $\cdot_{v}^{\tilde{T}}$
+and $I_{v}$, you need the extra operations $*_{v\tilde{v}},*_{\tilde{v}m}$
+for the outer product and guaranteeing associativity. However, you
+have to define row vectors as a new type of object, and you have to
+define  how to index row vectors. Now arrays are no longer uniquely
+mapped to just (column) vectors, but they can also be mapped to row
+vectors. Not only do you now have a parallel universe of row vectors,
+but the equivalence with the inner product operation $*_{\tilde{v}v}$
+requires complex conjugation for nonreal $F$, which some may find
+strange. Furthermore an indexing operation like $A[:,1]$ now returns
+a column vector, which is a different type from $A[1,:]$, a row vector.
+Users are forced to deal with the complexity of intermixing row and
+column vectors. (TODO SHOULD INTRODUCE EMBEDDINGS THAT PRODUCE TRAILING
+SINGLETONS. INSIST THAT EMBEDDINGS CHANGE THE NATURE OF INDEXING.)
+
 \end{itemize}
