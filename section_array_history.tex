@@ -6,7 +6,21 @@ defined algebraic objects, vectors are elements of a vector space and matrices a
 
 \subsection{A brief history}
 
+To computer scientists, a vector is a data structure that models of random access memory. For example, SICP describes
 
+\begin{quote}
+A conventional computer memory can be thought of as an array of cubbyholes, each of which can contain a piece of information. Each cubbyhole has a unique name, called its \textit{address} or \textit{location}. Typical memory systems provide two primitive operations: one that fetches the data stored in a specified location and one that assigns new data to a specified location. Memory addresses can be incremented to support sequential access to some set of the cubbyholes. More generally, many important data operations require that memory addresses be treated as data, which can be stored in memory locations and manipulated in machine registers. The representation of list structure is one application of such \textit{address arithmetic}.
+
+To model computer memory, we use a new kind of data structure called a \textit{vector}. Abstractly, a vector is a compound data object whose individual elements can be accessed by means of an integer index in an amount of time that is independent of the index. In order to describe memory operations, we use two primitive Scheme procedures for manipulating vectors:
+
+\begin{itemize}
+\item
+\code{(vector-ref <vector> <n>)} returns the $n$th element of the vector.
+
+\item
+\code{(vector-set! <vector> <n> <value>)} sets the $n$th element of the vector to the designated value.
+\end{itemize}--\cite[\S 5.3.1]{sicp}
+\end{quote}
 
 \subsection{More notes}
 
