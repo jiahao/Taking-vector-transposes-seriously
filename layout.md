@@ -1,7 +1,6 @@
 section_introduction.tex
+notation_table.tex
 section_psychology.tex
 section_indexing.tex
-section_math_history.tex
-section_array_history.tex
 section_reallanguages.tex
 section_closing.tex

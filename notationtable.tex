@@ -1,0 +1,20 @@
+\begin{table}
+
+\caption{Some common notations for the various products encountered in linear
+algebra.}
+
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & Classical & Householder & Dirac & NumPy/Python & Mathematica\tabularnewline
+\hline
+\hline
+inner/scalar product & $u\cdot v$, $\left\langle u,v\right\rangle $, $\left(u,v\right)$ & $u^{T}v$ & $\left\langle u|v\right\rangle $ & \verb|dot(u,v)| & \verb|u.v|, \verb|Dot[u,v]|\tabularnewline
+\hline
+matrix-vector product & $u=Av$ & $Av$ & $\left|Av\right\rangle $ & \verb|dot(A,v)| & \verb|A.v|, \verb|Dot[A,v]|\tabularnewline
+\hline
+outer product & $x\mapsto u\left(v,x\right)$ & $uv^{T}$ & $\left|u\right\rangle \left\langle v\right|$ & \verb|outer(u,v)| & \verb|Outer[Times,u,v]|\tabularnewline
+\hline
+matrix-matrix product & $AB$ & $AB$ & $AB$ & \verb|dot(A,B)| & \verb|A.B|, \verb|Dot[A,B]|\tabularnewline
+\hline
+\end{tabular}
+\end{table}
